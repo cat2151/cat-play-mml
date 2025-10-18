@@ -1,0 +1,10 @@
+{
+  "tasks": {
+    "dev": "deno run --allow-all main.ts",
+    "play": "deno run --allow-all main.ts"
+  },
+  "compilerOptions": {
+    "lib": ["deno.window", "deno.unstable"],
+    "strict": true
+  }
+}

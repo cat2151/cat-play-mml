@@ -190,6 +190,12 @@ cd src/go && go test ./...
 - エフェクト処理
 - GUI エディタ
 
+## 関連プロジェクト
+
+### cat-play-chord
+
+[cat-play-chord](https://github.com/cat2151/cat-play-chord) は、chord2mmlを利用してコード表記からMMLを生成して演奏するプロジェクトです（検討中）。
+
 ## ライセンス
 
 このプロジェクトは [MIT License](LICENSE) の下で公開されています。

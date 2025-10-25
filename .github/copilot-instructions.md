@@ -112,7 +112,7 @@ This project aims to implement the same MML player in multiple languages:
 4. **TypeScript/Browser** (planned - using Web Audio API)
 5. **TypeScript/Deno** (planned - using FFI or WASM)
 
-See `src/IMPLEMENTATION_PLAN_SUMMARY.md` for detailed plans.
+See `src/IMPLEMENTATION_PLAN_SUMMARY.md` for detailed plans (note: some documentation is in Japanese).
 
 ## Running the Application
 

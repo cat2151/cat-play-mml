@@ -2,6 +2,12 @@
 
 🎵 Music Macro Language (MML) Parser and Player
 
+## 状況
+
+まだagentに生成させた直後です
+
+これから動作確認します
+
 ## 概要
 
 `cat-play-mml` は、Music Macro Language (MML) を解析して音楽を再生するマルチ言語対応のプロジェクトです。tree-sitterを使用してMMLをASTにパースし、各言語で中間表現に変換して音楽を再生します。
@@ -192,9 +198,35 @@ cd src/go && go test ./...
 
 ## 関連プロジェクト
 
-### cat-play-chord
+### cat-play-chord 検討中
 
 [cat-play-chord](https://github.com/cat2151/cat-play-chord) は、chord2mmlを利用してコード表記からMMLを生成して演奏するプロジェクトです（検討中）。
+
+### mml to smf 検討中
+- 以下のpassを想定
+  - mml to CST by tree-sitter
+  - CST to 中間表現
+  - 中間表現 to 中間表現 ※n回
+  - 中間表現 to SMF ※SMFをtextで表現したjson to SMF の想定
+- MML方言はmmlabcを使う想定、ノウハウがあり、formatが明確
+- SMFを使うことで確認と開発がしやすくなり、開発が頓挫するリスクを下げられる想定
+
+### smf to Nuked-OPM friendly JSON 検討中
+- 例
+  - ディレイビブラート
+    - tone settings toml の tone modify delay vibratoの値を元に、
+      - OPMサウンドドライバ的に、
+        - 1tickごとにソフトLFOのregister eventを生成
+    - SMFとtomlを分離するのは、SMF側のMIDIインプリメンテーションをシンプルにする用
+      - toml側で音色やOPMサウンドドライバ的処理の破壊的変更をしやすくなる、ETC原則
+- 以下のpassを想定
+  - SMF to 中間表現 ※SMFをtextで表現したjsonを想定
+  - 中間表現 to 中間表現 ※n回 ※ディレイビブラートはここの想定
+  - 中間表現 to Nuked-OPM friendly JSON
+
+### Nuked-OPM friendly JSON player 検討中
+- 用途は、開発をしやすくする用
+- これならデバッグしやすく、開発が頓挫するリスクを下げられる想定
 
 ## ライセンス
 

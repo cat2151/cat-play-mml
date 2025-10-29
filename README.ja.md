@@ -210,6 +210,7 @@ cd src/go && go test ./...
   - 中間表現 to SMF ※SMFをtextで表現したjson to SMF の想定
 - MML方言はmmlabcを使う想定、ノウハウがあり、formatが明確
 - SMFを使うことで確認と開発がしやすくなり、開発が頓挫するリスクを下げられる想定
+- Linux Python TDD agent で進める想定、ハルシネーションが出たら検討する
 
 ### smf to Nuked-OPM friendly JSON 検討中
 - 例
@@ -223,10 +224,12 @@ cd src/go && go test ./...
   - SMF to 中間表現 ※SMFをtextで表現したjsonを想定
   - 中間表現 to 中間表現 ※n回 ※ディレイビブラートはここの想定
   - 中間表現 to Nuked-OPM friendly JSON
+- Linux Python TDD agent で進める想定、ハルシネーションが出たら検討する
 
 ### Nuked-OPM friendly JSON player 検討中
 - 用途は、開発をしやすくする用
 - これならデバッグしやすく、開発が頓挫するリスクを下げられる想定
+- 人力でやる想定、agentではTDD困難なためハルシネーションが多い想定
 
 ## ライセンス
 

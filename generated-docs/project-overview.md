@@ -1,34 +1,21 @@
-Last updated: 2025-11-02
+Last updated: 2025-11-03
 
 # Project Overview
 
 ## プロジェクト概要
-- Music Macro Language (MML) を解析し、音楽を再生する多言語対応のプロジェクトです。
-- tree-sitterを用いてMMLを構文解析し、Python、Rust、Go、TypeScriptなど複数の言語で実装されています。
-- 低レイテンシでのリアルタイム音楽再生と、シンプルなAPIによる簡単な利用が特徴です。
+- `cat-play-mml`は、Music Macro Language (MML) を解析し音楽を再生するマルチ言語対応プロジェクトです。
+- tree-sitterを用いてMMLをASTにパースし、Python、Rust、Go、TypeScriptで実装されています。
+- リアルタイムの低レイテンシ再生とシンプルなAPIを提供し、手軽にMML音楽を楽しめます。
 
 ## 技術スタック
-- フロントエンド:
-    - **Tone.js**: Web Audio APIの上に構築された、ブラウザでの音声生成と操作を容易にするJavaScriptフレームワーク。
-    - **Web Audio API**: ウェブブラウザで高度な音声処理を行うためのAPI（Tone.jsを介して利用）。
-- 音楽・オーディオ:
-    - **MML (Music Macro Language)**: 音楽をテキストで記述するための簡易的なプログラミング言語。プロジェクトの入力形式として使用されます。
-- 開発ツール:
-    - **Node.js runtime**: JavaScriptを実行するための環境で、TypeScript版のビルドや開発に利用されます。
-- テスト:
-    - (情報なし)
-- ビルドツール:
-    - (情報なし)
-- 言語機能:
-    - (情報なし)
-- 自動化・CI/CD:
-    - **GitHub Actions**: プロジェクトの継続的インテグレーションとデリバリーを自動化するサービス。以下のワークフローが含まれます。
-        - **プロジェクト要約自動生成**: プロジェクトの概要を自動で生成します。
-        - **Issue自動管理**: GitHubのIssue（課題）を自動で管理します。
-        - **README多言語翻訳**: READMEファイルを複数の言語に自動翻訳します。
-        - **i18n automation**: 国際化（i18n）関連の自動化処理を行います。
-- 開発標準:
-    - **EditorConfig**: 異なるエディタやIDE間でコードのスタイル（インデント、改行コードなど）を統一するための設定ファイルです。
+- フロントエンド: Tone.js (Web Audio APIを介した音声ライブラリ)、Web Audio API (ブラウザネイティブの音声処理技術)
+- 音楽・オーディオ: MML (Music Macro Language、音楽記法パーサーの対象言語)、Tone.js、Web Audio API
+- 開発ツール: Node.js runtime (JavaScript実行環境)
+- テスト: pytest (Python向けテストフレームワーク、`pytest.ini`より推測)
+- ビルドツール: (現在、特定のビルドツールの情報はありません)
+- 言語機能: (現在、特定の言語機能に焦点を当てた情報はありません)
+- 自動化・CI/CD: GitHub Actions (CI/CD自動化、プロジェクト要約自動生成、Issue自動管理、README多言語翻訳、i18n automation)
+- 開発標準: EditorConfig (コード統一ルール)、Ruff (Python向けLinter/Formatter、`ruff.toml`より推測)
 
 ## ファイル階層ツリー
 ```
@@ -91,56 +78,56 @@ Last updated: 2025-11-02
 ```
 
 ## ファイル詳細説明
--   **`.editorconfig`**: 異なるエディタやIDE間でコードスタイルを統一するための設定ファイルです。
--   **`.gitignore`**: Gitがバージョン管理の対象としないファイルやディレクトリを指定するファイルです。
--   **`.vscode/extensions.json`**: Visual Studio Codeのワークスペースで推奨される拡張機能リストです。
--   **`.vscode/settings.json`**: Visual Studio Codeのワークスペース固有の設定ファイルです。
--   **`LICENSE`**: プロジェクトのライセンス情報が記述されています。
--   **`README.ja.md`**: プロジェクトの概要、目的、使い方などを日本語で説明するドキュメントです。
--   **`README.md`**: プロジェクトの概要、目的、使い方などを英語で説明するドキュメントです。
--   **`docs/.gitkeep`**: 空の`docs`ディレクトリをGitで管理するためのプレースホルダーファイルです。
--   **`docs/AGENT_INSTRUCTIONS.md`**: プロジェクトの自動化エージェントに対する指示が記述されたドキュメントです。
--   **`docs/PROJECT_SETUP_COMPLETION.md`**: プロジェクトのセットアップ完了に関する情報が記述されたドキュメントです。
--   **`docs/QUICKSTART.md`**: プロジェクトを素早く使い始めるためのガイドドキュメントです。
--   **`generated-docs/`**: 自動生成されるドキュメントが格納されるディレクトリです。
--   **`grammar/.gitkeep`**: 空の`grammar`ディレクトリをGitで管理するためのプレースホルダーファイルです。tree-sitterのMML文法定義などが格納される可能性があります。
--   **`pytest.ini`**: Pythonのテストフレームワークであるpytestの設定ファイルです。
--   **`requirements.txt`**: Pythonプロジェクトの依存ライブラリをリストアップしたファイルです。
--   **`ruff.toml`**: Pythonの高速なリンター・フォーマッターであるRuffの設定ファイルです。
--   **`src/IMPLEMENTATION_PLAN_SUMMARY.md`**: 全体の実装計画の概要が記述されたドキュメントです。
--   **`src/go/IMPLEMENTATION_PLAN.md`**: Go言語版の実装計画が記述されたドキュメントです。
--   **`src/go/README.md`**: Go言語版MMLプレイヤーに関する説明ドキュメントです。
--   **`src/go/go.mod`**: Goモジュールの定義ファイルで、依存関係などが管理されます。
--   **`src/go/main.go`**: Go言語版MMLプレイヤーのメインエントリポイントとなるソースコードです。MMLの解析と再生ロジックが含まれます。
--   **`src/python/IMPLEMENTATION_PLAN.md`**: Python言語版の実装計画が記述されたドキュメントです。
--   **`src/python/README.md`**: Python言語版MMLプレイヤーに関する説明ドキュメントです。
--   **`src/python/audio_player.py`**: Python版MMLプレイヤーで音声再生を担当するロジックが含まれるファイルです。
--   **`src/python/mml_parser.py`**: Python版MMLプレイヤーでMML文字列の解析を担当するロジックが含まれるファイルです。
--   **`src/python/play_mml.py`**: Python版MMLプレイヤーのメインスクリプトで、MML文字列を受け取り、解析して音楽を再生する処理を行います。
--   **`src/rust/.gitignore`**: Rust版MMLプレイヤー固有のGit無視ファイルです。
--   **`src/rust/Cargo.toml`**: Rustプロジェクトのビルド設定や依存関係を定義するファイルです。
--   **`src/rust/IMPLEMENTATION_PLAN.md`**: Rust言語版の実装計画が記述されたドキュメントです。
--   **`src/rust/README.md`**: Rust言語版MMLプレイヤーに関する説明ドキュメントです。
--   **`src/rust/src/main.rs`**: Rust言語版MMLプレイヤーのメインエントリポイントとなるソースコードです。
--   **`src/typescript/browser/.gitignore`**: TypeScriptブラウザ版固有のGit無視ファイルです。
--   **`src/typescript/browser/IMPLEMENTATION_PLAN.md`**: TypeScriptブラウザ版の実装計画が記述されたドキュメントです。
--   **`src/typescript/browser/README.md`**: TypeScriptブラウザ版MMLプレイヤーに関する説明ドキュメントです。
--   **`src/typescript/browser/index.html`**: ブラウザでMMLプレイヤーを実行するためのHTMLファイルです。
--   **`src/typescript/browser/package.json`**: TypeScriptブラウザ版プロジェクトの依存関係やスクリプトを定義するファイルです。
--   **`src/typescript/browser/src/main.ts`**: TypeScriptブラウザ版MMLプレイヤーのメインエントリポイントとなるソースコードです。
--   **`src/typescript/browser/tsconfig.json`**: TypeScriptコンパイラの設定ファイルです。
--   **`src/typescript/deno/IMPLEMENTATION_PLAN.md`**: TypeScript Deno版の実装計画が記述されたドキュメントです。
--   **`src/typescript/deno/README.md`**: TypeScript Deno版MMLプレイヤーに関する説明ドキュメントです。
--   **`src/typescript/deno/deno.json`**: Denoプロジェクトの設定ファイルです。
--   **`src/typescript/deno/main.ts`**: TypeScript Deno版MMLプレイヤーのメインエントリポイントとなるソースコードです。
--   **`tests/.gitkeep`**: 空の`tests`ディレクトリをGitで管理するためのプレースホルダーファイルです。
+-   `.editorconfig`: エディタ設定ファイル。インデントスタイルや文字コードなど、プロジェクト全体のコードスタイルを統一するためのルールを定義します。
+-   `.gitignore`: Gitによるバージョン管理から除外するファイルやディレクトリを指定し、不要なファイルがリポジトリに含まれるのを防ぎます。
+-   `.vscode/extensions.json`: Visual Studio Codeユーザー向けに、プロジェクトでの開発を支援する推奨拡張機能をリストします。
+-   `.vscode/settings.json`: Visual Studio Codeのワークスペース設定ファイル。プロジェクト固有のエディタ動作やリンター設定などを定義します。
+-   `LICENSE`: プロジェクトのライセンス情報が記載されており、ソフトウェアの利用、配布、改変に関する条件を示します。
+-   `README.ja.md`: プロジェクトの概要、目的、使用方法、セットアップ手順などを日本語で説明するドキュメントです。
+-   `README.md`: プロジェクトのメインドキュメント。概要、機能、セットアップ方法などを英語で説明します。
+-   `docs/.gitkeep`: `docs`ディレクトリが空でもGitで管理されるようにするためのプレースホルダーファイルです。
+-   `docs/AGENT_INSTRUCTIONS.md`: 自動化エージェントがプロジェクト内で実行すべきタスクや指示に関するドキュメントです。
+-   `docs/PROJECT_SETUP_COMPLETION.md`: プロジェクトのセットアップが完了した際の確認事項や後続手順を記したドキュメントです。
+-   `docs/QUICKSTART.md`: プロジェクトを素早く開始し、基本的な機能を試すための簡潔なガイドを提供します。
+-   `generated-docs/`: プロジェクトのビルドプロセスなどによって自動生成されるドキュメントを格納するディレクトリです。
+-   `grammar/.gitkeep`: `grammar`ディレクトリが空でもGitで管理されるようにするためのプレースホルダーファイルです。MMLのtree-sitter文法定義がここに格納されることが想定されます。
+-   `pytest.ini`: Pythonのテストフレームワークである`pytest`の設定ファイルです。テストの実行方法や検出に関する設定を定義します。
+-   `requirements.txt`: Pythonプロジェクトが依存する外部ライブラリとそのバージョンを列挙したファイルです。
+-   `ruff.toml`: Pythonの高速なLinterおよびFormatterであるRuffの設定ファイルです。コードの品質と一貫性を保つためのルールを定義します。
+-   `src/IMPLEMENTATION_PLAN_SUMMARY.md`: プロジェクト全体の各言語実装における計画の概要をまとめたドキュメントです。
+-   `src/go/IMPLEMENTATION_PLAN.md`: Go言語によるMMLパーサーおよびプレイヤーの実装に関する具体的な計画を記したドキュメントです。
+-   `src/go/README.md`: Go言語実装の概要、使い方、特定の情報を提供するドキュメントです。
+-   `src/go/go.mod`: Goモジュールの依存関係管理ファイル。Go言語プロジェクトの依存ライブラリを定義します。
+-   `src/go/main.go`: Go言語版MMLプレイヤーのメインエントリーポイントファイル。MMLのパースと再生処理を制御します。
+-   `src/python/IMPLEMENTATION_PLAN.md`: PythonによるMMLパーサーおよびプレイヤーの実装に関する具体的な計画を記したドキュメントです。
+-   `src/python/README.md`: Python実装の概要、使い方、特定の情報を提供するドキュメントです。
+-   `src/python/audio_player.py`: Python版MMLプレイヤーの音声再生ロジックを扱うファイルです。
+-   `src/python/mml_parser.py`: Python版MMLプレイヤーのMML文字列を解析し、抽象構文木(AST)などを生成するロジックを実装しています。
+-   `src/python/play_mml.py`: Python版MMLプレイヤーの実行スクリプト。コマンドライン引数としてMML文字列を受け取り、パース・再生を行います。
+-   `src/rust/.gitignore`: Rust版プロジェクトに特化したGit無視設定ファイルです。
+-   `src/rust/Cargo.toml`: Rustプロジェクトの依存関係、メタデータ、ビルド設定を管理するファイルです。
+-   `src/rust/IMPLEMENTATION_PLAN.md`: RustによるMMLパーサーおよびプレイヤーの実装に関する具体的な計画を記したドキュメントです。
+-   `src/rust/README.md`: Rust実装の概要、使い方、特定の情報を提供するドキュメントです。
+-   `src/rust/src/main.rs`: Rust言語版MMLプレイヤーのメインエントリーポイントファイルです。
+-   `src/typescript/browser/.gitignore`: TypeScriptのブラウザ版プロジェクトに特化したGit無視設定ファイルです。
+-   `src/typescript/browser/IMPLEMENTATION_PLAN.md`: TypeScript (ブラウザ版) によるMMLパーサーおよびプレイヤーの実装に関する具体的な計画を記したドキュメントです。
+-   `src/typescript/browser/README.md`: TypeScript (ブラウザ版) 実装の概要、使い方、特定の情報を提供するドキュメントです。
+-   `src/typescript/browser/index.html`: ブラウザ版MMLプレイヤーのウェブページのエントリーポイント。HTML構造を定義し、スクリプトを読み込みます。
+-   `src/typescript/browser/package.json`: TypeScript (ブラウザ版) プロジェクトの依存関係、スクリプト、メタデータを管理するファイルです。
+-   `src/typescript/browser/src/main.ts`: TypeScript (ブラウザ版) のメインスクリプトファイル。ブラウザ上でのMMLのパースと再生ロジックを実装します。
+-   `src/typescript/browser/tsconfig.json`: TypeScriptコンパイラの設定ファイル。コンパイルオプションなどを定義します。
+-   `src/typescript/deno/IMPLEMENTATION_PLAN.md`: TypeScript (Deno版) によるMMLパーサーおよびプレイヤーの実装に関する具体的な計画を記したドキュメントです。
+-   `src/typescript/deno/README.md`: TypeScript (Deno版) 実装の概要、使い方、特定の情報を提供するドキュメントです。
+-   `src/typescript/deno/deno.json`: Denoプロジェクトの依存関係、スクリプト、タスクを定義するファイルです。
+-   `src/typescript/deno/main.ts`: TypeScript (Deno版) のメインスクリプトファイル。Deno環境でMMLのパースと再生ロジックを実装し、コマンドライン引数を処理します。
+-   `tests/.gitkeep`: `tests`ディレクトリが空でもGitで管理されるようにするためのプレースホルダーファイルです。
 
 ## 関数詳細説明
--   **`main` (src/typescript/deno/main.ts)**:
-    -   **役割**: Deno環境でMMLプレイヤーを実行する際のエントリポイントです。
-    -   **引数**: コマンドライン引数を受け取る可能性がありますが、現在の情報では明示されていません。
-    -   **戻り値**: なし。
-    -   **機能**: MML文字列の解析、音楽再生の開始といった主要な処理フローを制御すると推測されます。
+-   `main` (src/typescript/deno/main.ts)
+    -   役割: Deno環境でMMLプレイヤーの主要な処理を実行するエントリーポイント関数です。
+    -   引数: なし (Denoのグローバルな`Deno.args`を直接参照する可能性があります)。
+    -   戻り値: なし。
+    -   機能: コマンドライン引数を解析し、MML文字列の処理と音楽再生のロジックをオーケストレートすることが期待されます。
 
 ## 関数呼び出し階層ツリー
 ```
@@ -148,4 +135,4 @@ Last updated: 2025-11-02
   - main (src/typescript/deno/main.ts)
 
 ---
-Generated at: 2025-11-02 13:52:25 JST
+Generated at: 2025-11-03 07:03:23 JST

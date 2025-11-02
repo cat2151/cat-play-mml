@@ -1,4 +1,4 @@
-Last updated: 2025-11-02
+Last updated: 2025-11-03
 
 # 開発状況生成プロンプト（開発者向け）
 
@@ -243,6 +243,7 @@ Last updated: 2025-11-02
 
 ## 最近の変更（過去7日間）
 ### コミット履歴:
+6015829 Update project summaries (overview & development status) [auto]
 27f3238 Add initial content to README.md
 f8245a4 FM tone editor案
 bafc774 readme追記
@@ -256,8 +257,10 @@ b0cd62e 状況を反映
 .github/workflows/call-translate-readme.yml
 README.ja.md
 README.md
-docs/AGENT_INSTRUCTIONS.md
+generated-docs/development-status-generated-prompt.md
+generated-docs/development-status.md
+generated-docs/project-overview.md
 
 
 ---
-Generated at: 2025-11-02 13:52:04 JST
+Generated at: 2025-11-03 07:02:48 JST

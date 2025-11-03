@@ -16,17 +16,10 @@
 
 Windows Rust版 exe の基本実装が完了しました。コマンドライン引数でMMLを指定して音楽を再生できます。
 
-## 使用方法
+## クイックスタートガイド
 
-```bash
-# ドレミを再生
-cat-play-mml.exe cde
-
-# より複雑なMML
-cat-play-mml.exe "t120 o4 l4 cdefgab>c"
-
-# ヘルプを表示
-cat-play-mml.exe --help
+```powershell
+cargo run --release cegb
 ```
 
 ## 概要

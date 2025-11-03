@@ -223,12 +223,14 @@ cat-play-mml.exe "t120 o4 l4 cdefgab>c"
 
 ## Success Criteria
 
-1. ✅ Single Windows executable (`cat-play-mml.exe`)
-2. ✅ Accepts MML text as command-line argument
-3. ✅ Plays "cde" as Do-Re-Mi in real-time
-4. ✅ No intermediate files created
-5. ✅ Error messages are clear and actionable
-6. ✅ Audio playback uses YM2151 emulation via Nuked-OPM
+The implementation will be considered successful when all of the following are achieved:
+
+1. Single Windows executable (`cat-play-mml.exe`)
+2. Accepts MML text as command-line argument
+3. Plays "cde" as Do-Re-Mi in real-time
+4. No intermediate files created
+5. Error messages are clear and actionable
+6. Audio playback uses YM2151 emulation via Nuked-OPM
 
 ## Future Enhancements (Out of Scope)
 

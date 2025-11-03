@@ -38,13 +38,12 @@ cat-play-mml cegb
 
 ## 概要
 
-`cat-play-mml` は、Music Macro Language (MML) を解析して音楽を再生するマルチ言語対応のプロジェクトです。tree-sitterを使用してMMLをASTにパースし、中間表現に変換して音楽を再生します。
+`cat-play-mml` は、Music Macro Language (MML) によって音楽を再生するCLIツールです。文字列`cde`を入力すれば、音楽`ドレミ`を再生します。
 
 ### 主な特徴
 
-- **MMLパーサー**: tree-sitterベースのMML文法定義
+- **シンプル、すぐ鳴らせる**: 引数に"cde"を渡すだけでドレミを再生
 - **低レイテンシ**: リアルタイム音楽再生
-- **シンプルなコマンドライン引数**: 引数に"cde"を渡すだけでドレミを再生
 
 ## MML (Music Macro Language) とは
 
@@ -76,8 +75,9 @@ MMLは、テキストで音楽を記述する言語です。以下のような�
 - Zig cc（mingwとmsys2は禁止）
 - agentのTDD用にLinux runner（agentがTDDできさえすればよい） + ALSA SDKと設定（ヘッドレス環境でもTDD可能にするため）
 
-### 使用するオーディオライブラリ
+### 使用するライブラリ
 
+- Nuked-OPM
 - **Rust**: cpal
 
 ## プロジェクトのゴール

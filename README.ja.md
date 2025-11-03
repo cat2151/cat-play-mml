@@ -39,9 +39,11 @@ cat-play-mml cde
 
 - [mmlabc-to-smf-rust](https://github.com/cat2151/mmlabc-to-smf-rust/issues)：
   - MML `;` を実装する。`c;e;g` はドミソの和音となる。それぞれ今後別の音色を割り当てられるよう、ch1ドミソでなく、ch1ド,ch2ミ,ch3ソ（1base記述）である。
+  - MIDI プログラムチェンジ 0（0base記述）を、SMFの各ch先頭に出力する。note出力のないchには出力しない。
 
 - [smf-to-ym2151log-rust](https://github.com/cat2151/smf-to-ym2151log-rust/issues)
   - MML `;` 実装にともない、複数chに対応する。ch内の和音については別途検討とし今は未定義動作のままでよい。
+  - MIDI プログラムチェンジ 0（0base記述）は、アコースティックグランドピアノ 風の音色にする。より具体的には、sine waveでなければよい程度。
 
 - [ym2151-log-player-rust](https://github.com/cat2151/ym2151-log-player-rust/issues)
 

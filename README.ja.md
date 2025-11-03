@@ -21,18 +21,21 @@ Windows Rust版 exe の基本実装が完了しました。コマンドライン
 ### 環境構築
 - Windowsに、`Rust` と `Zig` をインストールしてください
 
-### ビルド
+### インストール ※GitHubからあなたのWindowsへインストール。これで「cat-play-mml cde」でドレミが鳴るようになります
+```
+cargo install --git https://github.com/cat2151/cat-play-mml.git --branch main --bin cat-play-mml
+```
+
+### 補足 以降はgit cloneを知っている人向け
+
 ```powershell
+# ビルド & 実行 ※cloneしたディレクトリにて
 cargo run --release cegb
-```
 
-### インストール（どこにいても実行できるようになります）
-```
+# インストール ※cloneしたディレクトリにて
 cargo install --path .
-```
 
-### 実行（インストール後）
-```
+# 実行 ※インストールすれば、このようにどのディレクトリからでも実行できます
 cat-play-mml cegb
 ```
 

@@ -14,7 +14,7 @@
 
 ## Status
 
-The basic implementation of the Windows Rust executable is complete. You can play music by specifying MML via command-line arguments.
+The basic implementation for the Windows Rust executable is complete. You can play music by specifying MML via command-line arguments.
 
 ## Quick Start Guide
 
@@ -24,26 +24,26 @@ cargo run --release cegb
 
 ## Overview
 
-`cat-play-mml` is a multi-language project that parses Music Macro Language (MML) and plays music. It uses tree-sitter to parse MML into an AST, converts it to an intermediate representation, and then plays the music.
+`cat-play-mml` is a multi-language project designed to parse Music Macro Language (MML) and play music. It uses tree-sitter to parse MML into an AST, converts it into an intermediate representation, and then plays the music.
 
 ### Key Features
 
-- **MML Parser**: tree-sitter-based MML grammar definition
+- **MML Parser**: tree-sitter based MML grammar definition
 - **Low Latency**: Real-time music playback
-- **Simple Command-Line Arguments**: Play C-D-E by simply passing "cde" as an argument
+- **Simple Command-line Arguments**: Play C-D-E by simply passing "cde" as an argument
 
-## What is MML (Music Macro Language)?
+## What is MML (Music Macro Language)
 
-MML is a language for describing music in text. It uses the following notation:
+MML is a language for describing music using text. It uses notation like the following:
 
-- `c`, `d`, `e`, `f`, `g`, `a`, `b`: Musical scale (Do, Re, Mi, Fa, Sol, La, Si)
+- `c`, `d`, `e`, `f`, `g`, `a`, `b`: Musical notes (C, D, E, F, G, A, B)
 
-### Planned for Future Implementation
+### Planned Features
 - `o4`: Octave setting (4th octave)
 - `l4`: Note length setting (quarter note)
 - `t120`: Tempo setting (BPM 120)
-- `<`, `>`: Octave up/down
-- `+`, `-`: Semitone up/down
+- `<`, `>`: Raising/lowering octave
+- `+`, `-`: Raising/lowering semitone
 - `r`: Rest
 
 ## Technical Details
@@ -52,7 +52,7 @@ MML is a language for describing music in text. It uses the following notation:
 
 1. **Parser**: Converts MML text to AST using tree-sitter
 2. **Intermediate Representation**: Converts AST to music data structure
-3. **Audio Generation**: Generates audio waveforms from the intermediate representation
+3. **Audio Generation**: Generates audio waveform from intermediate representation
 4. **Playback**: Outputs audio using an audio library
 
 ### Development Environment
@@ -60,7 +60,7 @@ MML is a language for describing music in text. It uses the following notation:
 - Windows
 - Rust
 - Zig cc (mingw and msys2 are prohibited)
-- Linux runner for agent TDD (as long as the agent can do TDD) + ALSA SDK and configuration (to enable TDD in a headless environment)
+- Linux runner for TDD agent (as long as the agent can perform TDD) + ALSA SDK and configuration (to enable TDD even in a headless environment)
 
 ### Audio Libraries Used
 
@@ -68,10 +68,13 @@ MML is a language for describing music in text. It uses the following notation:
 
 ## Project Goals
 
-- As a Windows Rust executable, playing C-D-E in real-time when "cde" is specified as a command-line argument.
+### Short-term Goal
+- [x] For the Windows Rust executable, when "cde" is specified as a command-line argument, C-D-E should play in real-time.
 
-## Expected Implementations
-
+### Next Goal
+- mmlabc grammar
+  - Priority
+    - `;`
 - File output of intermediate representation (including Standard MIDI Files)
 
 ## Out of Scope
@@ -83,63 +86,63 @@ MML is a language for describing music in text. It uses the following notation:
 
 ## Related Projects
 
-### cat-play-chord (Under Consideration)
+### cat-play-chord Under Consideration
 
-[cat-play-chord](https://github.com/cat2151/cat-play-chord) is a project (under consideration) that uses chord2mml to generate MML from chord notation and play it.
+[cat-play-chord](https://github.com/cat2151/cat-play-chord) is a project (under consideration) that generates and plays MML from chord notation using chord2mml.
 
-### Future Outlook for MML to SMF
+### Future Outlook for mml to smf
 - Status
-  - Only C-D-E has been implemented
-    - Goal: Initially focus on minimal implementation to smooth problem-solving until C-D-E plays in real-time.
+  - Only 'cde' has been implemented.
+    - Aim: By focusing on minimal implementation initially, we can smoothly resolve issues until real-time C-D-E playback is achieved.
   - Using SMF (Standard MIDI File)
-    - Goal: Using SMF makes verification and development easier, reducing the risk of development stalling.
-- The MML dialect is assumed to be mmlabc, as there is existing know-how and a clear format.
-- It is assumed to proceed with a TDD agent; hallucinations will be reviewed if they occur.
+    - Aim: Using SMF makes verification and development easier, reducing the risk of development stalling.
+  - Expected to use mmlabc as the MML dialect, as there is existing know-how and the format is well-defined.
+  - Planned to proceed with TDD agent; will consider alternatives if hallucinations occur.
 
-### SMF to Nuked-OPM Friendly JSON (Under Consideration)
+### smf to Nuked-OPM friendly JSON Under Consideration
 - Example
-  - Delay Vibrato
-    - Based on the `tone modify delay vibrato` value in `tone settings toml`,
-      - From an OPM sound driver perspective,
+  - Delay vibrato
+    - Based on the 'tone modify delay vibrato' value in tone settings toml,
+      - From an OPM sound driver perspective:
         - Generate a soft LFO register event for each tick.
-    - Separating SMF and TOML is intended to simplify the MIDI implementation on the SMF side.
-      - The TOML side allows for easier destructive changes to timbre and OPM sound driver-like processing, following the ETC principle.
+  - Separating SMF and toml is intended to simplify the MIDI implementation on the SMF side.
+    - This makes destructive changes to timbre and OPM sound driver-like processing easier on the toml side (ETC principle).
 - The following passes are envisioned:
-  - SMF to Intermediate Representation *Assumes JSON representation of SMF as text.
-  - Intermediate Representation to Intermediate Representation *n times *Delay vibrato is envisioned here.
+  - SMF to Intermediate Representation (assuming JSON that represents SMF as text)
+  - Intermediate Representation to Intermediate Representation (n times, delay vibrato is envisioned here)
   - Intermediate Representation to Nuked-OPM friendly JSON
-- It is assumed to proceed with a Linux Python TDD agent; hallucinations will be reviewed if they occur.
+- Planned to proceed with a Linux Python TDD agent; will consider alternatives if hallucinations occur.
 
-### Nuked-OPM Friendly JSON Player
+### Nuked-OPM friendly JSON player
 - Already implemented (log player in a separate repository)
 - Purpose: To facilitate development
-  - Easier to debug, reduces the risk of development stalling.
+  - Easier to debug, reducing the risk of development stalling
 
 ### Real-time FM Tone Editor (Provisional, Under Consideration)
-- Purpose of writing here
-  - Rubber Ducking
+- Purpose of this section
+  - Rubber ducking
 - Usage
   - For verification
 - Priority
-  - Prioritize ease of development and the ability to create rough sketches of tones with minimal operations.
-- Operation
-  - Right hand: Mouse x,y for increasing/decreasing assigned values respectively.
-  - Left hand: WASD+QE for cursor movement, SPACE to confirm, ESC to cancel, Z for UNDO (this part is vague).
-  - x,y switches between DecayRate, ModulatorTL, FB, MUL with cursor movement.
-  - WASD+QE, UNDO are vague.
-  - Instead of cursor movement and confirmation, pressing a specific key to instantly apply an effect for fast editing might increase editing speed; this will also be explored (e.g., via a settings TOML file).
+  - Prioritize ease of development and the ability to roughly sketch timbres with minimal operations.
+- Operations
+  - Right hand: Increase/decrease values assigned to mouse x,y respectively.
+  - Left hand: WASD+QE for cursor movement, SPACE for confirmation, ESC for cancel, Z for UNDO (details are fuzzy).
+  - x,y switch between DecayRate, ModulatorTL, FB, MUL via cursor movement.
+  - WASD+QE, UNDO are fuzzy.
+  - Instead of cursor movement and confirmation, pressing a specific key to instantly apply effects for fast editing would increase editing speed, so that will also be tried (e.g., via a settings toml file).
 - Sound
-  - Tone color switches between pluck and long tone with cursor movement.
+  - Timbre switches between pluck and long tone via cursor movement.
   - OP connection algorithm is 2-op parallel, detune has 4 different values.
 - Display
   - Windows TUI 80x24
-  - Tone parameter display in MDX note.x format.
-  - While running, tone saved to clipboard in MDX note.x format 1 second after the last numerical change; output limited to this (provisional).
-- All specifications are provisional; destructive changes will be frequent, prioritizing ease of development.
-- Even this is still too many specifications (too much for a small start), so we will start small with a more refined provisional implementation.
+  - Timbre parameter display is in mdx note.x format.
+  - While running, timbre is saved to clipboard in mdx note.x format 1 second after the last numerical change; output is limited to this for now (provisional).
+- All specifications are provisional, destructive changes will be frequent, prioritizing ease of development.
+- Even this is still too many specifications (too many to start small), so we will start small with a provisional implementation using more focused specifications.
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is released under the [MIT License](LICENSE).
 
-*The English README.md is automatically generated by GitHub Actions using Gemini's translation based on README.ja.md.
+*The English README.md is automatically generated from README.ja.md using Gemini's translation via GitHub Actions.

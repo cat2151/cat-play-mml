@@ -21,23 +21,19 @@ Windows Rust版 exe の基本実装が完了しました。コマンドライン
 ### 環境構築
 - Windowsに、`Rust` と `Zig` をインストールしてください
 
-### インストール ※GitHubからあなたのWindowsへインストール。これで「cat-play-mml cde」でドレミが鳴るようになります
+### インストール
 ```
 cargo install --git https://github.com/cat2151/cat-play-mml.git --branch main --bin cat-play-mml
 ```
 
-### 補足 以降はgit cloneを知っている人向け
+これだけ！GitHubからあなたのWindowsへインストールされます
 
-```powershell
-# ビルド & 実行 ※cloneしたディレクトリにて
-cargo run --release cegb
-
-# インストール ※cloneしたディレクトリにて
-cargo install --path .
-
-# 実行 ※インストールすれば、このようにどのディレクトリからでも実行できます
-cat-play-mml cegb
+### 演奏
 ```
+cat-play-mml cde
+```
+
+ドレミが鳴ります
 
 ## 概要
 
@@ -157,6 +153,21 @@ MMLは、テキストで音楽を記述する言語です。以下のような�
   - 起動中は、最後の数値変更から1秒でクリップボードにmdx note.x形式で音色保存、出力はこれだけに絞る、仮
 - すべての仕様は仮で、破壊的変更を頻繁に行う、開発が楽なことを優先
 - これだけでもまだ仕様が多すぎる（小さく始めるには多すぎる）ので、もっと絞った仕様での仮の実装から小さく始める
+
+## 補足
+
+### 開発者向けの、ビルドとinstallと実行の方法
+
+```powershell
+# ビルド & 実行 ※cloneしたディレクトリにて
+cargo run --release cegb
+
+# インストール ※cloneしたディレクトリにて
+cargo install --path .
+
+# 実行 ※インストールすれば、このようにどのディレクトリからでも実行できます
+cat-play-mml cegb
+```
 
 ## ライセンス
 

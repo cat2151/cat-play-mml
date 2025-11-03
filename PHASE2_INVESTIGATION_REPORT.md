@@ -150,15 +150,7 @@ path = "src/lib.rs"
 
 **統合に必要なAPI**: ✅ 利用可能
 
-JSONログからの再生には複数の方法が使用可能:
-
-**方法1: JSON文字列から直接再生** (要実装)
-```rust
-// JSONファイルへの保存が必要
-// または、EventLog をJSON文字列から直接デシリアライズする機能が必要
-```
-
-**方法2: 既存APIを使用** (推奨)
+JSON文字列からの再生は、既存APIと`serde_json`を組み合わせることで実現可能:
 ```rust
 use ym2151_log_player_rust::events::EventLog;
 use ym2151_log_player_rust::player::Player;

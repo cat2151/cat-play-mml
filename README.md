@@ -14,38 +14,45 @@
 
 ## Status
 
-Currently planning to implement the Windows Rust executable.
+The Windows Rust executable is currently planned for implementation.
 
 ## Overview
 
-`cat-play-mml` is a multi-language project that parses Music Macro Language (MML) and plays music. It uses tree-sitter to parse MML into an AST, converts it into an intermediate representation, and then plays the music.
+`cat-play-mml` is a multi-language project that parses Music Macro Language (MML) and plays music. It uses tree-sitter to parse MML into an AST, converts it to an intermediate representation, and then plays the music.
 
 ### Key Features
 
 - **MML Parser**: tree-sitter-based MML grammar definition
 - **Low Latency**: Real-time music playback
-- **Simple Command-line Arguments**: Just pass "cde" as an argument to play Do-Re-Mi
+- **Simple Command-line Arguments**: Play "Do-Re-Mi" by simply passing "cde" as an argument
 
-## What is MML (Music Macro Language)
+## What is MML (Music Macro Language)?
 
-MML is a language for describing music in text. It uses notation like the following:
+MML is a language for describing music using text. It uses notation such as:
 
-- `c`, `d`, `e`, `f`, `g`, `a`, `b`: Scale notes (Do, Re, Mi, Fa, Sol, La, Si)
+- `c`, `d`, `e`, `f`, `g`, `a`, `b`: Musical notes (Do, Re, Mi, Fa, Sol, La, Si)
 - `o4`: Octave setting (4th octave)
 - `l4`: Note length setting (quarter note)
 - `t120`: Tempo setting (BPM 120)
 - `<`, `>`: Raise/lower octave
-- `+`, `-`: Raise/lower by a semitone
+- `+`, `-`: Semitone up/down
 - `r`: Rest
 
 ## Technical Details
 
 ### Architecture
 
-1. **Parser**: Uses tree-sitter to convert MML text into an AST
-2. **Intermediate Representation**: Converts the AST into a music data structure
-3. **Audio Generation**: Generates audio waveforms from the intermediate representation
-4. **Playback**: Outputs audio using an audio library
+1.  **Parser**: Uses tree-sitter to convert MML text into an AST
+2.  **Intermediate Representation**: Converts the AST into a music data structure
+3.  **Audio Generation**: Generates audio waveforms from the intermediate representation
+4.  **Playback**: Outputs audio using an audio library
+
+### Development Environment
+
+- Windows
+- Rust
+- Zig cc (mingw and msys2 are prohibited)
+- Linux runner for agent TDD (as long as the agent can perform TDD) + ALSA SDK and settings (to enable TDD in a headless environment)
 
 ### Audio Libraries Used
 
@@ -53,7 +60,7 @@ MML is a language for describing music in text. It uses notation like the follow
 
 ## Project Goals
 
-As a Windows Rust executable, when "cde" is specified as a command-line argument, it should play Do-Re-Mi in real-time.
+- As a Windows Rust executable, when "cde" is specified as a command-line argument, it should play "Do-Re-Mi" in real-time.
 
 ## Anticipated Implementations
 
@@ -68,63 +75,63 @@ As a Windows Rust executable, when "cde" is specified as a command-line argument
 
 ## Related Projects
 
-### cat-play-chord Under Consideration
+### cat-play-chord (Under Consideration)
 
-[cat-play-chord](https://github.com/cat2151/cat-play-chord) is a project that generates MML from chord notation using chord2mml and plays it (under consideration).
+[cat-play-chord](https://github.com/cat2151/cat-play-chord) is a project that generates and plays MML from chord notation using chord2mml (under consideration).
 
 ### Future Outlook for MML to SMF
 - Status
-  - Only "cde" has been implemented
-    - Goal: Initially focusing on minimal implementation to streamline problem-solving until real-time Do-Re-Mi playback is achieved.
+  - Only "cde" has been implemented.
+    - Goal: Initially focusing on minimal implementation to smooth problem-solving until "Do-Re-Mi" plays in real-time.
   - Using SMF (Standard MIDI File)
-    - Goal: Using SMF makes verification and development easier, reducing the risk of project stagnation.
-- MML dialect is expected to be mmlabc, as there is existing know-how and a clear format.
-- Intended to proceed with a TDD agent; will consider alternatives if hallucinations occur.
+    - Goal: Using SMF makes verification and development easier, reducing the risk of development stalling.
+  - Assumed MML dialect is mmlabc, as there is expertise and the format is clear.
+  - Planned to proceed with a TDD agent; will consider if hallucinations occur.
 
-### smf to Nuked-OPM friendly JSON Under Consideration
+### SMF to Nuked-OPM friendly JSON (Under Consideration)
 - Example
   - Delay Vibrato
-    - Based on the 'tone modify delay vibrato' value in 'tone settings toml',
+    - Based on the 'tone modify delay vibrato' value in tone settings TOML,
       - From an OPM sound driver perspective,
         - Generate a soft LFO register event for each tick.
     - Separating SMF and TOML is intended to simplify the MIDI implementation on the SMF side.
-      - This makes destructive changes to timbre and OPM sound driver-like processing easier on the TOML side (ETC principle).
-- The following passes are envisioned:
-  - SMF to Intermediate Representation (assuming JSON that represents SMF as text)
+      - This makes it easier to implement destructive changes to timbres and OPM sound driver-like processing on the TOML side (ETC principle).
+- The following passes are anticipated:
+  - SMF to Intermediate Representation (assuming SMF expressed as text in JSON)
   - Intermediate Representation to Intermediate Representation (n times, delay vibrato is anticipated here)
   - Intermediate Representation to Nuked-OPM friendly JSON
-- Intended to proceed with a Linux Python TDD agent; will consider alternatives if hallucinations occur.
+- Planned to proceed with a Linux Python TDD agent; will consider if hallucinations occur.
 
-### Nuked-OPM friendly JSON player
+### Nuked-OPM friendly JSON Player
 - Implemented (log player in a separate repository)
 - Purpose: To facilitate development
-  - Makes debugging easier and reduces the risk of project stagnation.
+  - Easier to debug, reducing the risk of development stalling.
 
-### Real-time FM tone editor (Provisional) Under Consideration
+### Real-time FM Tone Editor (Provisional, Under Consideration)
 - Purpose of writing this here
-  - Rubber ducking
-- Purpose
+  - Rubber Ducking
+- Usage
   - For verification
 - Priority
   - Prioritize ease of development and the ability to quickly sketch timbres with minimal operations.
 - Operations
-  - Right hand: Increase/decrease values assigned to mouse x,y respectively.
-  - Left hand: WASD+QE for cursor movement, SPACE for confirmation, ESC for cancel, Z for UNDO (details are fuzzy).
-  - x,y switch between DecayRate, ModulatorTL, FB, MUL via cursor movement.
-  - WASD+QE, UNDO are fuzzy.
-  - Instead of cursor movement and confirmation, pressing a specific key to instantly apply effects and achieve fast editing might be better for editing speed, so that will also be tried (e.g., via a settings TOML file).
+  - Right hand: Mouse x, y for increasing/decreasing assigned values respectively.
+  - Left hand: WASD+QE for cursor movement, SPACE for confirmation, ESC for cancellation, Z for UNDO (vague).
+  - x, y switch between DecayRate, ModulatorTL, FB, MUL with cursor movement.
+  - WASD+QE, UNDO are vague.
+  - Instead of cursor movement and confirmation, try a method where pressing a specific key immediately applies an effect for faster editing (e.g., via a settings TOML file), as this might increase editing speed.
 - Sound
-  - Switch between pluck and long tone timbres via cursor movement.
-  - OP connection algorithm is 2-op parallel, detune has 4 different values.
+  - Switch between pluck and long tone timbres with cursor movement.
+  - OP connection algorithm is 2-op parallel, detune has 4 distinct values.
 - Display
   - Windows TUI 80x24
   - Timbre parameter display in mdx note.x format.
-  - During runtime, save timbre to clipboard in mdx note.x format 1 second after the last value change; output will be limited to this (provisional).
+  - While running, save the timbre in mdx note.x format to the clipboard 1 second after the last numerical change; limit output to this only (provisional).
 - All specifications are provisional, destructive changes will be frequent, prioritizing ease of development.
-- Even this is still too many specifications (too many to start small), so we will start smaller with a provisional implementation based on more focused specifications.
+- Even this is still too many specifications (too many to start small), so start small with a more focused provisional implementation.
 
 ## License
 
 This project is released under the [MIT License](LICENSE).
 
-*The English README.md is automatically generated by GitHub Actions using Gemini's translation based on README.ja.md
+*The English README.md is automatically generated by GitHub Actions using Gemini's translation based on README.ja.md.

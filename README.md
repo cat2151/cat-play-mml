@@ -14,7 +14,20 @@
 
 ## Status
 
-The Windows Rust executable is currently planned for implementation.
+The basic implementation of the Windows Rust executable is complete. You can play music by specifying MML as a command-line argument.
+
+## Usage
+
+```bash
+# Play "Do-Re-Mi"
+cat-play-mml.exe cde
+
+# More complex MML
+cat-play-mml.exe "t120 o4 l4 cdefgab>c"
+
+# Show help
+cat-play-mml.exe --help
+```
 
 ## Overview
 

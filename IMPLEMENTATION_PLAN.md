@@ -72,6 +72,8 @@ path = "src/main.rs"
 
 [dependencies]
 # Reference the three crates from their GitHub repositories
+# Note: For production, pin to specific tags/commits for reproducible builds
+# Example: { git = "...", tag = "v0.1.0" } or { git = "...", rev = "abc123" }
 mmlabc-to-smf = { git = "https://github.com/cat2151/mmlabc-to-smf-rust" }
 smf-to-ym2151log = { git = "https://github.com/cat2151/smf-to-ym2151log-rust" }
 ym2151-log-player-rust = { git = "https://github.com/cat2151/ym2151-log-player-rust" }
@@ -111,7 +113,10 @@ For the integration to work, each crate needs to expose its functionality as a l
 - Example API:
   ```rust
   pub fn play_ym2151_log(json_log: &str) -> Result<(), Error>
+  // Or for better control:
+  // pub fn play_ym2151_log_blocking(json_log: &str) -> Result<(), Error>
   ```
+- Note: The API design should consider playback duration and blocking behavior
 
 ### 4. Main Application Implementation
 

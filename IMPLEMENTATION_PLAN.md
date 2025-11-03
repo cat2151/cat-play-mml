@@ -72,7 +72,7 @@ path = "src/main.rs"
 
 [dependencies]
 # Reference the three crates from their GitHub repositories
-mmlabc-to-smf = { git = "https://github.com/cat2151/mmlabc-to-smf-rust", package = "mmlabc-to-smf" }
+mmlabc-to-smf = { git = "https://github.com/cat2151/mmlabc-to-smf-rust" }
 smf-to-ym2151log = { git = "https://github.com/cat2151/smf-to-ym2151log-rust" }
 ym2151-log-player-rust = { git = "https://github.com/cat2151/ym2151-log-player-rust" }
 

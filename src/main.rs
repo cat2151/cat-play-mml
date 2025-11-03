@@ -38,6 +38,7 @@ fn main() -> Result<()> {
     let player = Player::new(event_log);
     let mut audio_player = AudioPlayer::new(player)?;
     println!("  Audio playback started. Press Ctrl+C to stop.");
+    // Block until playback completes
     audio_player.wait();
 
     println!("Playback completed.");

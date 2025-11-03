@@ -146,10 +146,10 @@ The main application in `src/main.rs` will:
 
 ### 5. Windows-Specific Considerations
 
-- **Console Window**: Use `#![windows_subsystem = "console"]` for command-line usage
+- **Console Window**: Default console subsystem is appropriate for command-line usage (no special attributes needed)
 - **Audio Backend**: The `ym2151-log-player-rust` uses `cpal`, which supports Windows via WASAPI
 - **Build Target**: `x86_64-pc-windows-msvc` or `x86_64-pc-windows-gnu`
-- **Dependencies**: Ensure C compiler is available for building Nuked-OPM C code
+- **Dependencies**: Ensure C compiler is available for building Nuked-OPM C code (MSVC or MinGW)
 
 ## Development Phases
 

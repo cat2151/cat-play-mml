@@ -12,9 +12,9 @@
 |------|--------|
 | 📊 開発状況 | [generated-docs/development-status](generated-docs/development-status.md) |
 
-## 状況
+## 概要
 
-Windows Rust版 exe の基本実装が完了しました。コマンドライン引数でMMLを指定して音楽を再生できます。
+`cat-play-mml` は、Music Macro Language (MML) によって音楽を再生するCLIツールです。文字列`cde`を入力すれば、音楽`ドレミ`を再生します。Windows用です。
 
 ## クイックスタートガイド
 
@@ -35,9 +35,15 @@ cat-play-mml cde
 
 ドレミが鳴ります
 
-## 概要
+## 今後、関連プロジェクトのissuesに書く予定の候補
 
-`cat-play-mml` は、Music Macro Language (MML) によって音楽を再生するCLIツールです。文字列`cde`を入力すれば、音楽`ドレミ`を再生します。
+- [mmlabc-to-smf-rust](https://github.com/cat2151/mmlabc-to-smf-rust/issues)：
+  - MML `;` を実装する。`c;e;g` はドミソの和音となる。それぞれ今後別の音色を割り当てられるよう、ch1ドミソでなく、ch1ド,ch2ミ,ch3ソ（1base記述）である。
+
+- [smf-to-ym2151log-rust](https://github.com/cat2151/smf-to-ym2151log-rust/issues)
+  - MML `;` 実装にともない、複数chに対応する。ch内の和音については別途検討とし今は未定義動作のままでよい。
+
+- [ym2151-log-player-rust](https://github.com/cat2151/ym2151-log-player-rust/issues)
 
 ### 主な特徴
 

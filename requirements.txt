@@ -1,5 +1,0 @@
-# Audio processing and synthesis
-sounddevice>=0.4.0
-
-# Numerical computing
-numpy>=1.21.0

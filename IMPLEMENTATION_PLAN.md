@@ -163,9 +163,9 @@ clap = { version = "4.5", features = ["derive"] }
 - [ ] 関係者との計画レビュー
 
 ### フェーズ2: 上流ライブラリの準備
-- [ ] `mmlabc-to-smf-rust`にライブラリインターフェースを追加
-- [ ] `smf-to-ym2151log-rust`のライブラリインターフェースを確認
-- [ ] `ym2151-log-player-rust`にライブラリインターフェースを追加
+- [x] `mmlabc-to-smf-rust`にライブラリインターフェースを追加
+- [x] `smf-to-ym2151log-rust`のライブラリインターフェースを確認
+- [x] `ym2151-log-player-rust`にライブラリインターフェースを追加
 
 ### フェーズ3: 統合実装
 - [ ] git依存関係を含む`Cargo.toml`を作成

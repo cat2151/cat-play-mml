@@ -2,6 +2,16 @@
 
 🎵 Music Macro Language (MML) Parser and Player
 
+<p align="left">
+  <a href="README.ja.md"><img src="https://img.shields.io/badge/🇯🇵-Japanese-red.svg" alt="Japanese"></a>
+  <a href="README.md"><img src="https://img.shields.io/badge/🇺🇸-English-blue.svg" alt="English"></a>
+</p>
+
+## Quick Links
+| 項目 | リンク |
+|------|--------|
+| 📊 開発状況 | [generated-docs/development-status](generated-docs/development-status.md) |
+
 ## 状況
 
 これからWindows Rust版 exe を実装予定です
@@ -116,3 +126,5 @@ MMLは、テキストで音楽を記述する言語です。以下のような�
 ## ライセンス
 
 このプロジェクトは [MIT License](LICENSE) の下で公開されています。
+
+※英語版README.mdは、README.ja.mdを元にGeminiの翻訳でGitHub Actionsにより自動生成しています

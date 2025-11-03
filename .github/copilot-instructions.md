@@ -81,9 +81,14 @@ Follow the `.editorconfig` file in the repository root:
 
 ### In Scope
 - File output of intermediate representation (including Standard MIDI Files)
-- Basic MML commands: notes (c,d,e,f,g,a,b), octave (o), length (l), tempo (t), rest (r)
-- Octave shifting (<, >)
-- Semitone adjustment (+, -)
+- Basic MML commands:
+  - Notes: `c`, `d`, `e`, `f`, `g`, `a`, `b` (e.g., `c4` for quarter note C)
+  - Octave: `o` (e.g., `o4` for 4th octave)
+  - Length: `l` (e.g., `l8` for eighth notes)
+  - Tempo: `t` (e.g., `t120` for 120 BPM)
+  - Rest: `r` (e.g., `r4` for quarter rest)
+- Octave shifting: `<` (lower), `>` (raise)
+- Semitone adjustment: `+` (raise), `-` (lower)
 
 ### Out of Scope
 - Complex MML features
@@ -215,9 +220,9 @@ cat-play-mml/
 ├── .github/              # GitHub-specific files (workflows, this instructions file)
 ├── .vscode/              # VS Code settings
 ├── issue-notes/          # Issue documentation
-├── src/                  # Source code (to be created)
-├── Cargo.toml            # Rust project configuration (to be created)
-├── README.md             # English documentation
+├── src/                  # Source code
+├── Cargo.toml            # Rust project configuration
+├── README.md             # English documentation (auto-translated)
 ├── README.ja.md          # Japanese documentation (source)
 ├── IMPLEMENTATION_PLAN.md # Detailed implementation planning
 ├── LICENSE               # MIT License

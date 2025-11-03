@@ -5,6 +5,7 @@ edition = "2021"
 authors = ["cat2151"]
 license = "MIT"
 description = "Music Macro Language (MML) Parser and Player"
+default-run = "cat-play-mml"
 
 [[bin]]
 name = "cat-play-mml"

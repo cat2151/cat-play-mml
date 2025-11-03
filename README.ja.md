@@ -18,8 +18,22 @@ Windows Rust版 exe の基本実装が完了しました。コマンドライン
 
 ## クイックスタートガイド
 
+### 環境構築
+- Windowsに、`Rust` と `Zig` をインストールしてください
+
+### ビルド
 ```powershell
 cargo run --release cegb
+```
+
+### インストール（どこにいても実行できるようになります）
+```
+cargo install --path .
+```
+
+### 実行（インストール後）
+```
+cat-play-mml cegb
 ```
 
 ## 概要

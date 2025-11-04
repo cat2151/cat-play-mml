@@ -12,33 +12,40 @@
 |------|--------|
 | 📊 開発状況 | [generated-docs/development-status](generated-docs/development-status.md) |
 
-## 状況
+## 概要
 
-Windows Rust版 exe の基本実装が完了しました。コマンドライン引数でMMLを指定して音楽を再生できます。
+`cat-play-mml` は、Music Macro Language (MML) によって音楽を再生するCLIツールです。文字列`cde`を入力すれば、音楽`ドレミ`を再生します。Windows用です。
 
 ## クイックスタートガイド
 
 ### 環境構築
 - Windowsに、`Rust` と `Zig` をインストールしてください
 
-### ビルド
-```powershell
-cargo run --release cegb
+### インストール
+```
+cargo install --git https://github.com/cat2151/cat-play-mml.git --branch main --bin cat-play-mml
 ```
 
-### インストール（どこにいても実行できるようになります）
+これだけ！GitHubからあなたのWindowsへインストールされます
+
+### 演奏
 ```
-cargo install --path .
+cat-play-mml cde
 ```
 
-### 実行（インストール後）
-```
-cat-play-mml cegb
-```
+ドレミが鳴ります
 
-## 概要
+## 今後、関連プロジェクトのissuesに書く予定の候補
 
-`cat-play-mml` は、Music Macro Language (MML) によって音楽を再生するCLIツールです。文字列`cde`を入力すれば、音楽`ドレミ`を再生します。
+- [mmlabc-to-smf-rust](https://github.com/cat2151/mmlabc-to-smf-rust/issues)：
+  - MML `;` を実装する。`c;e;g` はドミソの和音となる。それぞれ今後別の音色を割り当てられるよう、ch1ドミソでなく、ch1ド,ch2ミ,ch3ソ（1base記述）である。
+  - MIDI プログラムチェンジ 0（0base記述）を、SMFの各ch先頭に出力する。note出力のないchには出力しない。
+
+- [smf-to-ym2151log-rust](https://github.com/cat2151/smf-to-ym2151log-rust/issues)
+  - MML `;` 実装にともない、複数chに対応する。ch内の和音については別途検討とし今は未定義動作のままでよい。
+  - MIDI プログラムチェンジ 0（0base記述）は、アコースティックグランドピアノ 風の音色にする。より具体的には、sine waveでなければよい程度。
+
+- [ym2151-log-player-rust](https://github.com/cat2151/ym2151-log-player-rust/issues)
 
 ### 主な特徴
 
@@ -154,6 +161,21 @@ MMLは、テキストで音楽を記述する言語です。以下のような�
   - 起動中は、最後の数値変更から1秒でクリップボードにmdx note.x形式で音色保存、出力はこれだけに絞る、仮
 - すべての仕様は仮で、破壊的変更を頻繁に行う、開発が楽なことを優先
 - これだけでもまだ仕様が多すぎる（小さく始めるには多すぎる）ので、もっと絞った仕様での仮の実装から小さく始める
+
+## 補足
+
+### 開発者向けの、ビルドとinstallと実行の方法
+
+```powershell
+# ビルド & 実行 ※cloneしたディレクトリにて
+cargo run --release cegb
+
+# インストール ※cloneしたディレクトリにて
+cargo install --path .
+
+# 実行 ※インストールすれば、このようにどのディレクトリからでも実行できます
+cat-play-mml cegb
+```
 
 ## ライセンス
 

@@ -1,58 +1,50 @@
-Last updated: 2025-11-04
+Last updated: 2025-11-05
 
 # Development Status
 
 ## 現在のIssues
-- オープン中のIssueはありません。
-- プロジェクトは現在、既存の課題を抱えておらず、クリーンな状態にあります。
-- これは、大きなブロック要因がなく、新たな開発や改善に着手しやすい状況を示しています。
+オープン中のIssueはありません。そのため、3行での要約およびIssue番号の記載はできません。
 
 ## 次の一手候補
-1.  既存のGitHub Actionsワークフローを主要ディレクトリへ統合 (新規タスク)
-    -   最初の小さな一歩: `.github/actions-tmp/.github/workflows/daily-project-summary.yml`とその呼び出し側を、主要な`.github/workflows/`ディレクトリへ移動するための手順を計画する。
-    -   Agent実行プロンプ:
-        ```
-        対象ファイル:
-        - .github/actions-tmp/.github/workflows/daily-project-summary.yml
-        - .github/actions-tmp/.github/workflows/call-daily-project-summary.yml
-        - .github/workflows/call-daily-project-summary.yml
+※以下の候補は、現在オープン中のIssueがないため、新たな開発方向性として提案するものです。既存のIssue番号は存在しないため、Markdownリンク形式での記載はしておりません。
 
-        実行内容: `daily-project-summary.yml`ワークフロー (とその呼び出し側ワークフロー) を、`.github/actions-tmp/`から本流の`.github/workflows/`ディレクトリへ統合する手順を分析し、変更点を記述してください。
-
-        確認事項: 既存の`call-daily-project-summary.yml`ファイルとの重複や依存関係、パスの変更による影響、および他のワークフローからの呼び出し方を確認してください。
-
-        期待する出力: `daily-project-summary.yml`ワークフローを`.github/workflows/`に移動し、必要に応じて`call-daily-project-summary.yml`を更新するための具体的なファイル変更計画をmarkdown形式で出力してください。
-        ```
-
-2.  プロジェクト概要にRustコード分析を追加 (新規タスク)
-    -   最初の小さな一歩: `src/main.rs`の内容を分析し、主要な機能、構造、および依存関係を特定する。
+1.  MMLパーサーの機能拡張（エラーハンドリング強化）
+    -   最初の小さな一歩: `src/main.rs`内のMMLパース処理において、不正なMMLコマンドや引数に対するエラーメッセージを具体的に改善する箇所を特定する。
     -   Agent実行プロンプト:
         ```
-        対象ファイル:
-        - src/main.rs
-        - .github/actions-tmp/.github_automation/project_summary/scripts/overview/CodeAnalyzer.cjs
-        - .github/actions-tmp/.github_automation/project_summary/scripts/overview/ProjectOverviewGenerator.cjs
+        対象ファイル: `src/main.rs`
 
-        実行内容: `src/main.rs`の内容を分析し、主要な機能、構造、および依存関係を特定してください。その後、これらの情報を既存の`ProjectOverviewGenerator.cjs`に統合して、プロジェクト概要レポートにRustコードの分析結果を含める方法を検討してください。
+        実行内容: `src/main.rs`内のMMLパース処理を分析し、特に無効なMMLコマンドやパラメータが入力された際に現在出力されるエラーメッセージを確認してください。よりユーザーフレンドリーで具体的なデバッグ情報を提供するエラーメッセージを生成するための改善点を洗い出してください。
 
-        確認事項: `CodeAnalyzer.cjs`が他の言語をどのように分析しているか、既存の分析フローにRustの分析を統合する際の互換性、および生成される`project-overview.md`の構成への影響を確認してください。
+        確認事項: 既存のMML文法解析ロジックと、`src/main.rs`内のエラーハンドリングメカニズムとの整合性を確認してください。変更が既存の正常なMML処理に影響を与えないことを保証してください。
 
-        期待する出力: `src/main.rs`の主要な要素をMarkdownで概要化し、`ProjectOverviewGenerator.cjs`にRustコード分析機能を追加するための実装方針（例：新しい関数またはモジュールの追加）をmarkdown形式で出力してください。
+        期待する出力: `src/main.rs`において、エラーメッセージを改善するための具体的なコード変更案をMarkdown形式で提案してください。特に、どのMMLコマンドのどの部分でエラーが発生したかをユーザーに伝える方法に焦点を当ててください。
         ```
 
-3.  開発状況生成プロンプトとロジックの改善 (新規タスク)
-    -   最初の小さな一歩: 現在の`development-status-prompt.md`と`DevelopmentStatusGenerator.cjs`をレビューし、オープン中のIssueがない場合に「現在のIssues」セクションがより有益な情報を提供するように、改善点を特定する。
+2.  開発状況生成プロンプトの改善
+    -   最初の小さな一歩: `development-status-prompt.md`の現在の内容と、過去に生成された開発状況レポートを比較し、改善点を特定する。
     -   Agent実行プロンプト:
         ```
-        対象ファイル:
-        - .github/actions-tmp/.github_automation/project_summary/prompts/development-status-prompt.md
-        - .github/actions-tmp/.github_automation/project_summary/scripts/development/DevelopmentStatusGenerator.cjs
+        対象ファイル: `.github/actions-tmp/.github_automation/project_summary/prompts/development-status-prompt.md` および `generated-docs/development-status.md` (または過去に生成された類似レポート)
 
-        実行内容: 現在の`development-status-prompt.md`の内容と、`DevelopmentStatusGenerator.cjs`による出力生成ロジックを分析してください。特に、オープン中のIssueがない場合に「現在のIssues」セクションがより有益な情報を提供するように、プロンプトまたはスクリプトの改善点を特定してください。
+        実行内容: `.github/actions-tmp/.github_automation/project_summary/prompts/development-status-prompt.md` の内容を分析し、それが現在のプロジェクトの状況（オープンイシューなし、特定のコミット履歴など）に対して、より的確で有用な「次の一手候補」を提案できるようにするための改善点を検討してください。特に、現在のプロンプトが「ハルシネーションの温床」とならないようにするための調整を検討してください。
 
-        確認事項: プロンプトの変更がハルシネーションを引き起こさないか、または生成される情報の品質を低下させないかを確認してください。また、`DevelopmentStatusGenerator.cjs`が他のコンポーネントとどのように連携しているか、および変更が他の生成タスクに影響を与えないかを確認してください。
+        確認事項: プロンプトの変更が、生成されるレポートの「生成しないもの」セクションのガイドライン（特にハルシネーションの回避）に違反しないことを確認してください。
 
-        期待する出力: オープン中のIssueがない場合でも、プロジェクトの健全性や次の開発の方向性を示すような「現在のIssues」の要約を生成するための、`development-status-prompt.md`の改訂案または`DevelopmentStatusGenerator.cjs`の修正方針をmarkdown形式で出力してください。
+        期待する出力: `development-status-prompt.md`を改善するための具体的な修正案をMarkdown形式で提案してください。変更は、既存のプロジェクトの状況をより深く洞察し、より実行可能な次の一手を導き出すことに焦点を当てるものとします。
+        ```
+
+3.  Callgraphドキュメントの最新化と活用促進
+    -   最初の小さな一歩: `generated-docs/callgraph.html` が最新のコードベースを正確に反映しているか、およびその情報が開発者にとってどれほど有用かを確認する。
+    -   Agent実行プロンプト:
+        ```
+        対象ファイル: `.github/actions-tmp/.github_automation/callgraph/docs/callgraph.md` と `generated-docs/callgraph.html`、および関連するCodeQLクエリファイル (`.github/actions-tmp/.github_automation/callgraph/codeql-queries/callgraph.ql`)
+
+        実行内容: `callgraph.md` のドキュメントと生成された `callgraph.html` を分析し、現在のプロジェクトのコードベース（特に `src/main.rs` など）に対するコールグラフが正確かつ最新であることを確認してください。また、開発者がこのコールグラフを日常の開発でどのように活用できるか、具体的なユースケースを検討してください。
+
+        確認事項: `callgraph.ql` が現在のRustコードベースに適用可能であるか、また、生成されるHTMLがCodeQLの出力に基づいていることを確認してください。ドキュメントと実際のツールの間に乖離がないことを確認してください。
+
+        期待する出力: `callgraph.md` を更新し、`callgraph.html` の生成プロセスと活用方法に関するより明確な説明を追加するためのMarkdown形式の提案を生成してください。具体的には、コールグラフが古い場合に更新する方法、または特定の機能（例: MMLパース部分）のコールグラフのみを生成する方法について言及してください。
 
 ---
-Generated at: 2025-11-04 07:03:34 JST
+Generated at: 2025-11-05 07:03:24 JST

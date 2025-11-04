@@ -1,4 +1,4 @@
-Last updated: 2025-11-04
+Last updated: 2025-11-05
 
 # 開発状況生成プロンプト（開発者向け）
 
@@ -204,10 +204,12 @@ Last updated: 2025-11-04
 - PHASE2_STATUS.md
 - README.ja.md
 - README.md
+- _config.yml
 - issue-notes/11.md
 - issue-notes/13.md
 - issue-notes/15.md
 - issue-notes/17.md
+- issue-notes/19.md
 - src/main.rs
 
 ## 現在のオープンIssues
@@ -218,21 +220,28 @@ Last updated: 2025-11-04
 
 ## 最近の変更（過去7日間）
 ### コミット履歴:
-5b1f53d Auto-translate README.ja.md to README.md [auto]
-347872d Merge branch 'main' of github.com:cat2151/cat-play-mml into main
-3e4e613 改善
-f42ae62 Auto-translate README.ja.md to README.md [auto]
-b12cdbb Merge branch 'main' of github.com:cat2151/cat-play-mml into main
-5edcaca クイックスタートガイドをupdate
-6665ae5 Auto-translate README.ja.md to README.md [auto]
-34fa81e Merge branch 'main' of github.com:cat2151/cat-play-mml into main
-3be9c90 状況を反映
-af73527 Auto-translate README.ja.md to README.md [auto]
+967b4a6 Auto-translate README.ja.md to README.md [auto]
+6b29f2a edit追記
+47a7f7b Merge branch 'main' of github.com:cat2151/cat-play-mml into main
+f45d161 jekyll settings
+49705f4 Merge pull request #20 from cat2151/copilot/add-file-name-argument-support
+1af3621 Auto-translate README.ja.md to README.md [auto]
+602d085 Update README.ja.md with MIDI program change info
+ee1efa2 Implement file input support with auto-detection for .mml, .mid, and .json files
+5aca221 Auto-translate README.ja.md to README.md [auto]
+27180bf Revise README.ja.md for clarity and project details
 
 ### 変更されたファイル:
+Cargo.toml
 README.ja.md
 README.md
+_config.yml
+generated-docs/development-status-generated-prompt.md
+generated-docs/development-status.md
+generated-docs/project-overview.md
+issue-notes/19.md
+src/main.rs
 
 
 ---
-Generated at: 2025-11-04 07:03:04 JST
+Generated at: 2025-11-05 07:02:50 JST

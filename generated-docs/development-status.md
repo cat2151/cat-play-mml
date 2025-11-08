@@ -1,50 +1,51 @@
-Last updated: 2025-11-05
+Last updated: 2025-11-09
 
 # Development Status
 
 ## 現在のIssues
-オープン中のIssueはありません。そのため、3行での要約およびIssue番号の記載はできません。
+- 現在オープン中のIssueは存在しません。
+- そのため、具体的な課題や解決すべき既存のタスクはリストされていません。
+- プロジェクトは安定しており、新たな機能開発や既存機能の改善に進む準備ができています。
 
 ## 次の一手候補
-※以下の候補は、現在オープン中のIssueがないため、新たな開発方向性として提案するものです。既存のIssue番号は存在しないため、Markdownリンク形式での記載はしておりません。
+1. `ym2151-log-play-server`機能の安定性向上とロギング強化 (新規タスク)
+   - 最初の小さな一歩: `src/main.rs` の既存の`main`関数を分析し、主要な処理ステップ（例えば、サーバーの起動、クライアントからの接続処理など）を特定し、各ステップの開始時と終了時に標準出力へデバッグログを出力するための拡張ポイントを特定する。
+   - Agent実行プロンプト:
+     ```
+     対象ファイル: `src/main.rs`
 
-1.  MMLパーサーの機能拡張（エラーハンドリング強化）
-    -   最初の小さな一歩: `src/main.rs`内のMMLパース処理において、不正なMMLコマンドや引数に対するエラーメッセージを具体的に改善する箇所を特定する。
-    -   Agent実行プロンプト:
-        ```
-        対象ファイル: `src/main.rs`
+     実行内容: `src/main.rs` 内の `main` 関数について、主要な処理ステップを特定し、各ステップの開始時と終了時に標準出力へデバッグログを出力するコードを追加するための分析を行ってください。具体的には、サーバー起動、クライアントからのデータ受信、処理実行、応答送信などのフェーズを特定します。
 
-        実行内容: `src/main.rs`内のMMLパース処理を分析し、特に無効なMMLコマンドやパラメータが入力された際に現在出力されるエラーメッセージを確認してください。よりユーザーフレンドリーで具体的なデバッグ情報を提供するエラーメッセージを生成するための改善点を洗い出してください。
+     確認事項: 現在の `src/main.rs` の構造と、既存のロギングメカニズム（もしあれば）を確認してください。追加するログ出力が既存の機能のパフォーマンスや安定性に悪影響を与えないことを確認してください。
 
-        確認事項: 既存のMML文法解析ロジックと、`src/main.rs`内のエラーハンドリングメカニズムとの整合性を確認してください。変更が既存の正常なMML処理に影響を与えないことを保証してください。
+     期待する出力: 分析結果をmarkdown形式で出力し、どの行にどのようなログ（例えば、`println!("Server started successfully.");`）を追加すべきか、具体的なコードスニペットを含めて提案してください。
+     ```
 
-        期待する出力: `src/main.rs`において、エラーメッセージを改善するための具体的なコード変更案をMarkdown形式で提案してください。特に、どのMMLコマンドのどの部分でエラーが発生したかをユーザーに伝える方法に焦点を当ててください。
-        ```
+2. オープンIssueがない場合の開発状況レポート内容の改善 (新規タスク)
+   - 最初の小さな一歩: `DevelopmentStatusGenerator.cjs` がIssue情報を受け取る部分を特定し、オープンIssueがない場合に現在の「現在のIssues」セクションがどのように生成されるかを確認する。
+   - Agent実行プロンプト:
+     ```
+     対象ファイル: `.github/actions-tmp/.github_automation/project_summary/scripts/development/DevelopmentStatusGenerator.cjs`
 
-2.  開発状況生成プロンプトの改善
-    -   最初の小さな一歩: `development-status-prompt.md`の現在の内容と、過去に生成された開発状況レポートを比較し、改善点を特定する。
-    -   Agent実行プロンプト:
-        ```
-        対象ファイル: `.github/actions-tmp/.github_automation/project_summary/prompts/development-status-prompt.md` および `generated-docs/development-status.md` (または過去に生成された類似レポート)
+     実行内容: `DevelopmentStatusGenerator.cjs` のコードを分析し、Issueのリストが空の場合に、レポートの「現在のIssues」セクションがどのように生成されるかを特定してください。また、その際に、過去のコミット履歴や最新の成果物から、次に着手すべき可能性のある一般的な改善点（例: テストカバレッジの向上、依存ライブラリの更新、ドキュメントの最新化など）を提示するロジックを追加する設計について考察してください。
 
-        実行内容: `.github/actions-tmp/.github_automation/project_summary/prompts/development-status-prompt.md` の内容を分析し、それが現在のプロジェクトの状況（オープンイシューなし、特定のコミット履歴など）に対して、より的確で有用な「次の一手候補」を提案できるようにするための改善点を検討してください。特に、現在のプロンプトが「ハルシネーションの温床」とならないようにするための調整を検討してください。
+     確認事項: IssueTracker (`IssueTracker.cjs`)からのIssueデータの受け渡し方法と、レポート生成ロジックの依存関係を確認してください。現在の開発状況生成プロンプト（このプロンプト自身）の内容も参照し、ハルシネーションを避けるための制約を再確認してください。
 
-        確認事項: プロンプトの変更が、生成されるレポートの「生成しないもの」セクションのガイドライン（特にハルシネーションの回避）に違反しないことを確認してください。
+     期待する出力: `DevelopmentStatusGenerator.cjs`における「オープンIssueがない場合の処理ロジック」の分析結果をmarkdown形式で出力し、そのロジックを改善するための具体的な提案（擬似コードまたは設計案）を含めてください。これにより、レポートがより洞察に富んだものになることを目指します。
+     ```
 
-        期待する出力: `development-status-prompt.md`を改善するための具体的な修正案をMarkdown形式で提案してください。変更は、既存のプロジェクトの状況をより深く洞察し、より実行可能な次の一手を導き出すことに焦点を当てるものとします。
-        ```
+3. `callgraph`自動生成ワークフローの定期的な検証と出力改善 (新規タスク)
+   - 最初の小さな一歩: `callgraph.yml` ワークフローが最近実行されたかどうかを確認し、最新の `generated-docs/callgraph.html` が存在するか、またその内容がプロジェクトの現状（特に`src/main.rs`の変更）を反映しているかを手動で確認する。
+   - Agent実行プロンプト:
+     ```
+     対象ファイル: `.github/actions-tmp/.github/workflows/callgraph.yml`, `.github/actions-tmp/.github_automation/callgraph/scripts/generate-html-graph.cjs`
 
-3.  Callgraphドキュメントの最新化と活用促進
-    -   最初の小さな一歩: `generated-docs/callgraph.html` が最新のコードベースを正確に反映しているか、およびその情報が開発者にとってどれほど有用かを確認する。
-    -   Agent実行プロンプト:
-        ```
-        対象ファイル: `.github/actions-tmp/.github_automation/callgraph/docs/callgraph.md` と `generated-docs/callgraph.html`、および関連するCodeQLクエリファイル (`.github/actions-tmp/.github_automation/callgraph/codeql-queries/callgraph.ql`)
+     実行内容: `callgraph.yml` ワークフローの設定と、HTMLグラフを生成する`generate-html-graph.cjs`スクリプトを分析し、その実行頻度と、`generated-docs/callgraph.html` を生成するメカニズムを理解してください。直近のコミット履歴（`src/main.rs`の変更など）と`generated-docs/callgraph.html`の内容を比較し、htmlファイルが最新のコードベースを適切に反映しているか、または更新が必要か評価してください。さらに、生成されるHTMLグラフの視認性や情報量を改善するためのスクリプト修正案についても考察してください。
 
-        実行内容: `callgraph.md` のドキュメントと生成された `callgraph.html` を分析し、現在のプロジェクトのコードベース（特に `src/main.rs` など）に対するコールグラフが正確かつ最新であることを確認してください。また、開発者がこのコールグラフを日常の開発でどのように活用できるか、具体的なユースケースを検討してください。
+     確認事項: `callgraph.yml`が利用している`analyze-codeql.cjs`等のスクリプトの依存関係、およびCodeQLデータベースの生成タイミングを確認してください。`generated-docs/callgraph.html`のタイムスタンプや内容が、期待される更新頻度と一致しているか検証してください。
 
-        確認事項: `callgraph.ql` が現在のRustコードベースに適用可能であるか、また、生成されるHTMLがCodeQLの出力に基づいていることを確認してください。ドキュメントと実際のツールの間に乖離がないことを確認してください。
-
-        期待する出力: `callgraph.md` を更新し、`callgraph.html` の生成プロセスと活用方法に関するより明確な説明を追加するためのMarkdown形式の提案を生成してください。具体的には、コールグラフが古い場合に更新する方法、または特定の機能（例: MMLパース部分）のコールグラフのみを生成する方法について言及してください。
+     期待する出力: `callgraph`ワークフローと関連スクリプトの分析結果、`generated-docs/callgraph.html`が最新のコードベースを反映しているかどうかの評価をmarkdown形式で出力してください。もし更新が必要な場合、そのための具体的な手順（例: ワークフローの手動実行、`generate-html-graph.cjs`の機能改善提案など）を記述してください。
+     ```
 
 ---
-Generated at: 2025-11-05 07:03:24 JST
+Generated at: 2025-11-09 07:03:12 JST

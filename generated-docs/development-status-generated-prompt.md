@@ -1,4 +1,4 @@
-Last updated: 2025-11-05
+Last updated: 2025-11-09
 
 # 開発状況生成プロンプト（開発者向け）
 
@@ -199,17 +199,21 @@ Last updated: 2025-11-05
 - Cargo.lock
 - Cargo.toml
 - IMPLEMENTATION_PLAN.md
+- IMPLEMENTATION_SUMMARY.md
 - LICENSE
 - PHASE2_INVESTIGATION_REPORT.md
 - PHASE2_STATUS.md
+- QUICK_REFERENCE.md
 - README.ja.md
 - README.md
+- TESTING_GUIDE.md
 - _config.yml
 - issue-notes/11.md
 - issue-notes/13.md
 - issue-notes/15.md
 - issue-notes/17.md
 - issue-notes/19.md
+- issue-notes/21.md
 - src/main.rs
 
 ## 現在のオープンIssues
@@ -220,28 +224,32 @@ Last updated: 2025-11-05
 
 ## 最近の変更（過去7日間）
 ### コミット履歴:
+7ef4405 Auto-translate README.ja.md to README.md [auto]
+77103e3 Merge pull request #22 from cat2151/copilot/update-server-client-functionality
+517b145 Add quick reference guide for users
+e6f645e Add comprehensive testing guide and implementation summary
+2d2e5af Implement server/client architecture using ym2151-log-play-server
+3cc8270 Initial plan
+7baa415 Add issue note for #21 [auto]
+7cff38f Update project summaries (overview & development status) [auto]
 967b4a6 Auto-translate README.ja.md to README.md [auto]
 6b29f2a edit追記
-47a7f7b Merge branch 'main' of github.com:cat2151/cat-play-mml into main
-f45d161 jekyll settings
-49705f4 Merge pull request #20 from cat2151/copilot/add-file-name-argument-support
-1af3621 Auto-translate README.ja.md to README.md [auto]
-602d085 Update README.ja.md with MIDI program change info
-ee1efa2 Implement file input support with auto-detection for .mml, .mid, and .json files
-5aca221 Auto-translate README.ja.md to README.md [auto]
-27180bf Revise README.ja.md for clarity and project details
 
 ### 変更されたファイル:
+Cargo.lock
 Cargo.toml
+IMPLEMENTATION_SUMMARY.md
+QUICK_REFERENCE.md
 README.ja.md
 README.md
-_config.yml
+TESTING_GUIDE.md
 generated-docs/development-status-generated-prompt.md
 generated-docs/development-status.md
 generated-docs/project-overview.md
 issue-notes/19.md
+issue-notes/21.md
 src/main.rs
 
 
 ---
-Generated at: 2025-11-05 07:02:50 JST
+Generated at: 2025-11-09 07:02:46 JST

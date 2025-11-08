@@ -4,7 +4,9 @@ use mmlabc_to_smf::{pass1_parser, pass2_ast, pass3_events, pass4_midi};
 use smf_to_ym2151log::convert_smf_to_ym2151_log;
 use std::fs;
 use std::path::Path;
-use ym2151_log_player_rust::{audio::AudioPlayer, events::EventLog, player::Player};
+use std::process::Command;
+use ym2151_log_play_server::client;
+use ym2151_log_play_server::server::Server;
 
 /// Music Macro Language (MML) Parser and Player
 #[derive(Parser, Debug)]
@@ -12,7 +14,19 @@ use ym2151_log_player_rust::{audio::AudioPlayer, events::EventLog, player::Playe
 struct Args {
     /// MML text, MML file (.mml), MIDI file (.mid), or YM2151 log (.json) to play
     #[arg(value_name = "INPUT")]
-    input: String,
+    input: Option<String>,
+
+    /// Run as server with the specified JSON file
+    #[arg(long)]
+    server: Option<String>,
+
+    /// Stop playback on running server
+    #[arg(long)]
+    stop: bool,
+
+    /// Shutdown the running server
+    #[arg(long)]
+    shutdown: bool,
 }
 
 enum InputType {
@@ -52,14 +66,51 @@ fn detect_input_type(input: &str) -> Result<InputType> {
     Ok(InputType::MmlString(input.to_string()))
 }
 
-fn main() -> Result<()> {
-    // コマンドライン引数を解析
-    let args = Args::parse();
+fn is_server_running() -> bool {
+    // Try to connect to the server's named pipe
+    // If successful, server is running
+    match ym2151_log_play_server::ipc::pipe_windows::NamedPipe::connect_default() {
+        Ok(_) => true,
+        Err(_) => false,
+    }
+}
 
-    // 入力タイプを検出
-    let input_type = detect_input_type(&args.input)?;
+fn spawn_server_process(json_path: &str) -> Result<()> {
+    let exe_path = std::env::current_exe().context("Failed to get current executable path")?;
 
-    // 入力タイプに応じて処理を分岐
+    println!("Starting server process with JSON: {}", json_path);
+
+    // Spawn the server as a detached child process
+    #[cfg(target_os = "windows")]
+    {
+        use std::os::windows::process::CommandExt;
+        const CREATE_NEW_PROCESS_GROUP: u32 = 0x00000200;
+        const DETACHED_PROCESS: u32 = 0x00000008;
+
+        Command::new(exe_path)
+            .arg("--server")
+            .arg(json_path)
+            .creation_flags(CREATE_NEW_PROCESS_GROUP | DETACHED_PROCESS)
+            .spawn()
+            .context("Failed to spawn server process")?;
+    }
+
+    #[cfg(not(target_os = "windows"))]
+    {
+        Command::new(exe_path)
+            .arg("--server")
+            .arg(json_path)
+            .spawn()
+            .context("Failed to spawn server process")?;
+    }
+
+    println!("Server process spawned successfully");
+    Ok(())
+}
+
+fn generate_json_from_input(input: &str) -> Result<String> {
+    let input_type = detect_input_type(input)?;
+
     let ym2151_json = match input_type {
         InputType::MmlString(mml) | InputType::MmlFile(mml) => {
             println!("Processing MML input...");
@@ -88,20 +139,66 @@ fn main() -> Result<()> {
             json
         }
         InputType::JsonFile(json) => {
-            println!("Processing YM2151 JSON file input...");
+            println!("Using YM2151 JSON file input...");
             json
         }
     };
 
-    // ステップ3: YM2151ログを再生
-    println!("Step 3: Playing YM2151 log...");
-    let event_log: EventLog = serde_json::from_str(&ym2151_json)?;
-    let player = Player::new(event_log);
-    let mut audio_player = AudioPlayer::new(player)?;
-    println!("  Audio playback started. Press Ctrl+C to stop.");
-    // Block until playback completes
-    audio_player.wait();
+    Ok(ym2151_json)
+}
 
-    println!("Playback completed.");
+fn main() -> Result<()> {
+    // コマンドライン引数を解析
+    let args = Args::parse();
+
+    // Handle --server mode
+    if let Some(json_path) = args.server {
+        println!("Running in server mode with: {}", json_path);
+        let server = Server::new();
+        return server.run(&json_path);
+    }
+
+    // Handle --stop command
+    if args.stop {
+        println!("Sending stop command to server...");
+        return client::stop_playback().context("Failed to stop playback");
+    }
+
+    // Handle --shutdown command
+    if args.shutdown {
+        println!("Sending shutdown command to server...");
+        return client::shutdown_server().context("Failed to shutdown server");
+    }
+
+    // Normal playback mode
+    let input = args
+        .input
+        .context("INPUT is required unless using --server, --stop, or --shutdown")?;
+
+    // Generate JSON from input
+    let json_content = generate_json_from_input(&input)?;
+
+    // Save JSON to a temporary file
+    let temp_json_path = std::env::temp_dir().join("cat_play_mml_temp.json");
+    fs::write(&temp_json_path, &json_content)
+        .context("Failed to write temporary JSON file")?;
+
+    let temp_json_str = temp_json_path
+        .to_str()
+        .context("Failed to convert temp path to string")?;
+
+    // Check if server is running
+    if is_server_running() {
+        println!("Server is running. Sending JSON to server as client...");
+        client::play_file(temp_json_str)
+            .context("Failed to send JSON to server")?;
+    } else {
+        println!("Server is not running. Starting server...");
+        spawn_server_process(temp_json_str)?;
+        // Give server a moment to start
+        std::thread::sleep(std::time::Duration::from_millis(500));
+    }
+
+    println!("Operation completed.");
     Ok(())
 }

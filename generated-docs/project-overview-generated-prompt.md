@@ -1,4 +1,4 @@
-Last updated: 2025-11-09
+Last updated: 2025-11-10
 
 
 # プロジェクト概要生成プロンプト（来訪者向け）
@@ -373,4 +373,4 @@ issue-notes/21.md
 
 
 ---
-Generated at: 2025-11-09 22:28:08 JST
+Generated at: 2025-11-10 07:02:55 JST

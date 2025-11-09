@@ -1,4 +1,4 @@
-Last updated: 2025-11-09
+Last updated: 2025-11-10
 
 # 開発状況生成プロンプト（開発者向け）
 
@@ -233,6 +233,7 @@ Last updated: 2025-11-09
 
 ## 最近の変更（過去7日間）
 ### コミット履歴:
+bc80ebf Update project summaries (overview & development status) [auto]
 6507de5 Update project summaries (overview & development status) [auto]
 dfe2c4f Update project summaries (overview & development status) [auto]
 0e700ae 新しいアプリケーションコントローラーを追加し、コマンドライン引数を処理する機能を実装しました。クライアントマネージャー、入力検出、JSON生成、サーバープロセス管理のためのモジュールを追加しました。
@@ -242,7 +243,6 @@ dfe2c4f Update project summaries (overview & development status) [auto]
 517b145 Add quick reference guide for users
 e6f645e Add comprehensive testing guide and implementation summary
 2d2e5af Implement server/client architecture using ym2151-log-play-server
-3cc8270 Initial plan
 
 ### 変更されたファイル:
 Cargo.lock
@@ -254,8 +254,8 @@ README.md
 TESTING_GUIDE.md
 generated-docs/development-status-generated-prompt.md
 generated-docs/development-status.md
+generated-docs/project-overview-generated-prompt.md
 generated-docs/project-overview.md
-issue-notes/21.md
 src/app.rs
 src/cli.rs
 src/client_manager.rs
@@ -267,4 +267,4 @@ src/temp_file.rs
 
 
 ---
-Generated at: 2025-11-09 22:28:08 JST
+Generated at: 2025-11-10 07:02:55 JST

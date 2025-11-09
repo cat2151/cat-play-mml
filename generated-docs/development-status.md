@@ -1,50 +1,52 @@
-Last updated: 2025-11-09
+Last updated: 2025-11-10
 
 # Development Status
 
 ## 現在のIssues
-- 現在オープン中のIssueはありません。
-- これは、直近のタスクが完了したか、正式な課題として登録されていないことを示します。
-- そのため、次の一手は既存の制約にとらわれず、プロジェクトのさらなる発展のための新しい領域に焦点を当てます。
+オープン中のIssueはありません
 
 ## 次の一手候補
-1. 新規課題 #30: コアアプリケーションの入力処理とJSON変換の堅牢化
-   - 最初の小さな一歩: `src/input.rs`のコードを分析し、現在サポートされている入力形式、エラー処理の現状、および改善の余地がある点を洗い出す。
-   - Agent実行プロンプ:
-     ```
-     対象ファイル: `src/input.rs`
+1.  既存のサーバー/クライアント機能のテストカバレッジ向上
+    -   最初の小さな一歩: `src/main.rs` と `src/app.rs` の主要な公開関数に対して、基本的なユニットテストを追加する。
+    -   Agent実行プロンプト:
+        ```
+        対象ファイル: `src/main.rs`, `src/app.rs`, `Cargo.toml`
 
-     実行内容: `src/input.rs`の内容を分析し、現在サポートされている入力形式（例: ファイルパス、標準入力など）と、それらを読み込むロジックを詳細に説明してください。特に、エラーが発生しうる入力パターン（例: 存在しないファイル、読み取り権限がないファイル、不正な形式のデータ）に対する現在の処理方法と、改善の余地がある点を洗い出してください。
+        実行内容: `src/main.main()` 関数、および `src/app.rs` 内の `App` 構造体に関連する主要な公開関数（例: `App::new()`, `App::run()` の一部）に対して、基本的なユニットテストを記述してください。各テストは、その関数が期待通りに動作するか、またはエラーケースを適切に処理するかを確認するものです。テストコードはファイルの末尾に `#[cfg(test)]` モジュール内に記述し、`Cargo.toml` にはテストに必要な依存関係があれば追加してください。
 
-     確認事項: `src/main.rs`での`input`モジュールの利用方法、および`src/cli.rs`でのコマンドライン引数との連携を確認してください。
+        確認事項: 既存のコードロジックを変更しないこと。各関数が受け取る引数と返り値の型を正確に把握すること。テスト対象の関数が private な場合は、公開可能な範囲でテスト用ヘルパー関数を作成するか、その関数のテストはスキップすること。
 
-     期待する出力: `src/input.rs`の入力処理フロー、エラーハンドリングの現状、および改善提案をmarkdown形式で出力してください。
-     ```
+        期待する出力: ユニットテストが追加された `src/main.rs` と `src/app.rs` の更新内容（`#[cfg(test)]` ブロック内のコード）、および必要に応じて更新された `Cargo.toml` の変更をMarkdown形式で出力してください。
+        ```
 
-2. 新規課題 #31: 開発状況レポートのコミット履歴分析の深化
-   - 最初の小さな一歩: `DevelopmentStatusGenerator.cjs`と`GitUtils.cjs`を調査し、コミット履歴がどのように収集、分析され、「最近の変更」セクションに反映されているかを理解する。
-   - Agent実行プロンプ:
-     ```
-     対象ファイル: `.github/actions-tmp/.github_automation/project_summary/scripts/development/DevelopmentStatusGenerator.cjs`, `.github/actions-tmp/.github_automation/project_summary/scripts/development/GitUtils.cjs`
+2.  RustアプリケーションのCIワークフロー追加
+    -   最初の小さな一歩: Rustプロジェクトのビルドとテストを実行するGitHub Actionsワークフローのドラフトファイル `.github/workflows/rust-ci.yml` を作成する。
+    -   Agent実行プロンプト:
+        ```
+        対象ファイル: `.github/workflows/rust-ci.yml` (新規作成)
 
-     実行内容: `DevelopmentStatusGenerator.cjs`が`GitUtils.cjs`を利用してどのようにコミット履歴を収集・分析し、`development-status.md`を生成しているかを分析してください。特に、「最近の変更」セクションをより詳細に、かつ洞察に富んだ形で出力するための改善点を検討してください。例えば、特定の機能追加やバグ修正に関連するコミットグループを識別する方法など。
+        実行内容: `cargo build` と `cargo test` を実行する基本的なGitHub Actionsワークフローを `./github/workflows/rust-ci.yml` として作成してください。このワークフローは、`main` ブランチへのプッシュ時とプルリクエスト時に実行されるように設定し、Ubuntu環境で最新のStable Rustツールチェインを使用します。依存関係のキャッシュを活用し、ビルド時間を短縮するステップも含まれるようにしてください。
 
-     確認事項: `generate-project-summary.cjs`における`DevelopmentStatusGenerator`の呼び出し方法、および`prompts/development-status-prompt.md`の内容との整合性を確認してください。
+        確認事項: ワークフローファイルがYAML形式の構文規則に準拠していること。キャッシュの利用など、ビルド時間を短縮する最適化を含めること。
 
-     期待する出力: `DevelopmentStatusGenerator.cjs`のコミット分析ロジックの現状と、より詳細で有用な「最近の変更」セクションを生成するための具体的な改善案をmarkdown形式で出力してください。
-     ```
+        期待する出力: 新規作成される `.github/workflows/rust-ci.yml` の完全な内容をMarkdownコードブロックで出力してください。
+        ```
 
-3. 新規課題 #32: サーバープロセス管理のエラーハンドリング強化
-   - 最初の小さな一歩: `src/process_manager.rs`のコードをレビューし、`ym2151-log-play-server`プロセスの起動、管理、終了時に発生しうる全ての潜在的な失敗点を特定する。
-   - Agent実行プロンプ:
-     ```
-     対象ファイル: `src/process_manager.rs`
+3.  `QUICK_REFERENCE.md` の具体的な使用例の追加
+    -   最初の小さな一歩: `QUICK_REFERENCE.md` に、アプリケーションのビルド方法、起動方法、および特定のログファイルを処理する簡単なコマンド実行例を追加する。
+    -   Agent実行プロンプト:
+        ```
+        対象ファイル: `QUICK_REFERENCE.md`
 
-     実行内容: `src/process_manager.rs`のコードを分析し、`ym2151-log-play-server`プロセスの起動、停止、状態監視において発生しうるエラーケース（例: プロセスが見つからない、起動に失敗する、予期せず終了する）と、それらに対する現在のエラーハンドリングの実装を洗い出してください。現状のエラーハンドリングが不十分な場合、どのような改善が可能か提案してください。
+        実行内容: `QUICK_REFERENCE.md` ファイルを更新し、「使用方法」のようなセクションを設け、以下の項目を追加してください。
+        1.  アプリケーションのビルド方法 (例: `cargo build --release`)
+        2.  アプリケーションの起動方法 (例: `target/release/<app_name>`)
+        3.  特定のログファイル（例: `sample.log`）を入力として処理し、`output.json` として出力するコマンド例 (例: `./target/release/ym_log_processor --input sample.log --output output.json`)
+        4.  コマンド実行時に想定される出力（例: JSON形式のデータ）の簡易的な説明。
 
-     確認事項: `src/app.rs`や`src/client_manager.rs`で`ProcessManager`がどのように利用されているか、およびエラーが上位層にどのように伝播しているかを確認してください。
+        確認事項: 既存のコンテンツの整合性を維持すること。コマンド例がプロジェクトの現在のCLIインターフェース（`src/cli.rs` で定義されているはず）と一致していること。ファイルパスがプロジェクト構造と一致していること（`target/release/` 配下に実行可能ファイルが生成されることを想定）。
 
-     期待する出力: `src/process_manager.rs`におけるプロセス管理のエラーハンドリングの現状と、堅牢性を高めるための具体的な改善策をmarkdown形式で出力してください。
+        期待する出力: 更新された `QUICK_REFERENCE.md` の内容全体をMarkdown形式で出力してください。特に、追加された新しい使用方法セクションが明確にわかるように強調してください。
 
 ---
-Generated at: 2025-11-09 22:28:29 JST
+Generated at: 2025-11-10 07:03:09 JST

@@ -144,7 +144,6 @@ Last updated: 2025-11-09
 - .github/actions-tmp/.github_automation/project_summary/scripts/overview/ProjectDataCollector.cjs
 - .github/actions-tmp/.github_automation/project_summary/scripts/overview/ProjectDataFormatter.cjs
 - .github/actions-tmp/.github_automation/project_summary/scripts/overview/ProjectOverviewGenerator.cjs
-- .github/actions-tmp/.github_automation/project_summary/scripts/overview/TechStackAnalyzer.cjs
 - .github/actions-tmp/.github_automation/project_summary/scripts/shared/BaseGenerator.cjs
 - .github/actions-tmp/.github_automation/project_summary/scripts/shared/FileSystemUtils.cjs
 - .github/actions-tmp/.github_automation/project_summary/scripts/shared/ProjectFileUtils.cjs
@@ -182,6 +181,7 @@ Last updated: 2025-11-09
 - .github/actions-tmp/issue-notes/26.md
 - .github/actions-tmp/issue-notes/27.md
 - .github/actions-tmp/issue-notes/28.md
+- .github/actions-tmp/issue-notes/29.md
 - .github/actions-tmp/issue-notes/3.md
 - .github/actions-tmp/issue-notes/4.md
 - .github/actions-tmp/issue-notes/7.md
@@ -232,6 +232,7 @@ Last updated: 2025-11-09
 
 ## 最近の変更（過去7日間）
 ### コミット履歴:
+dfe2c4f Update project summaries (overview & development status) [auto]
 0e700ae 新しいアプリケーションコントローラーを追加し、コマンドライン引数を処理する機能を実装しました。クライアントマネージャー、入力検出、JSON生成、サーバープロセス管理のためのモジュールを追加しました。
 460e043 Update project summaries (overview & development status) [auto]
 7ef4405 Auto-translate README.ja.md to README.md [auto]
@@ -241,7 +242,6 @@ e6f645e Add comprehensive testing guide and implementation summary
 2d2e5af Implement server/client architecture using ym2151-log-play-server
 3cc8270 Initial plan
 7baa415 Add issue note for #21 [auto]
-7cff38f Update project summaries (overview & development status) [auto]
 
 ### 変更されたファイル:
 Cargo.lock
@@ -266,4 +266,4 @@ src/temp_file.rs
 
 
 ---
-Generated at: 2025-11-09 21:53:11 JST
+Generated at: 2025-11-09 22:12:58 JST

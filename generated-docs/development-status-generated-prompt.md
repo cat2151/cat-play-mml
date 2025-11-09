@@ -209,6 +209,7 @@ Last updated: 2025-11-09
 - README.md
 - TESTING_GUIDE.md
 - _config.yml
+- generated-docs/project-overview-generated-prompt.md
 - issue-notes/11.md
 - issue-notes/13.md
 - issue-notes/15.md
@@ -232,6 +233,7 @@ Last updated: 2025-11-09
 
 ## 最近の変更（過去7日間）
 ### コミット履歴:
+6507de5 Update project summaries (overview & development status) [auto]
 dfe2c4f Update project summaries (overview & development status) [auto]
 0e700ae 新しいアプリケーションコントローラーを追加し、コマンドライン引数を処理する機能を実装しました。クライアントマネージャー、入力検出、JSON生成、サーバープロセス管理のためのモジュールを追加しました。
 460e043 Update project summaries (overview & development status) [auto]
@@ -241,7 +243,6 @@ dfe2c4f Update project summaries (overview & development status) [auto]
 e6f645e Add comprehensive testing guide and implementation summary
 2d2e5af Implement server/client architecture using ym2151-log-play-server
 3cc8270 Initial plan
-7baa415 Add issue note for #21 [auto]
 
 ### 変更されたファイル:
 Cargo.lock
@@ -266,4 +267,4 @@ src/temp_file.rs
 
 
 ---
-Generated at: 2025-11-09 22:12:58 JST
+Generated at: 2025-11-09 22:28:08 JST

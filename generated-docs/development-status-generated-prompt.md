@@ -155,6 +155,7 @@ Last updated: 2025-11-09
 - .github/actions-tmp/LICENSE
 - .github/actions-tmp/README.ja.md
 - .github/actions-tmp/README.md
+- .github/actions-tmp/_config.yml
 - .github/actions-tmp/generated-docs/callgraph.html
 - .github/actions-tmp/generated-docs/callgraph.js
 - .github/actions-tmp/generated-docs/development-status-generated-prompt.md
@@ -214,7 +215,14 @@ Last updated: 2025-11-09
 - issue-notes/17.md
 - issue-notes/19.md
 - issue-notes/21.md
+- src/app.rs
+- src/cli.rs
+- src/client_manager.rs
+- src/converter.rs
+- src/input.rs
 - src/main.rs
+- src/process_manager.rs
+- src/temp_file.rs
 
 ## 現在のオープンIssues
 オープン中のIssueはありません
@@ -224,6 +232,8 @@ Last updated: 2025-11-09
 
 ## 最近の変更（過去7日間）
 ### コミット履歴:
+0e700ae 新しいアプリケーションコントローラーを追加し、コマンドライン引数を処理する機能を実装しました。クライアントマネージャー、入力検出、JSON生成、サーバープロセス管理のためのモジュールを追加しました。
+460e043 Update project summaries (overview & development status) [auto]
 7ef4405 Auto-translate README.ja.md to README.md [auto]
 77103e3 Merge pull request #22 from cat2151/copilot/update-server-client-functionality
 517b145 Add quick reference guide for users
@@ -232,8 +242,6 @@ e6f645e Add comprehensive testing guide and implementation summary
 3cc8270 Initial plan
 7baa415 Add issue note for #21 [auto]
 7cff38f Update project summaries (overview & development status) [auto]
-967b4a6 Auto-translate README.ja.md to README.md [auto]
-6b29f2a edit追記
 
 ### 変更されたファイル:
 Cargo.lock
@@ -246,10 +254,16 @@ TESTING_GUIDE.md
 generated-docs/development-status-generated-prompt.md
 generated-docs/development-status.md
 generated-docs/project-overview.md
-issue-notes/19.md
 issue-notes/21.md
+src/app.rs
+src/cli.rs
+src/client_manager.rs
+src/converter.rs
+src/input.rs
 src/main.rs
+src/process_manager.rs
+src/temp_file.rs
 
 
 ---
-Generated at: 2025-11-09 07:02:46 JST
+Generated at: 2025-11-09 21:53:11 JST

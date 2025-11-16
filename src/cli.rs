@@ -8,9 +8,9 @@ pub struct Args {
     #[arg(value_name = "INPUT")]
     pub input: Option<String>,
 
-    /// Run as server with the specified JSON file
+    /// Run as server in idle state (no initial playback)
     #[arg(long)]
-    pub server: Option<String>,
+    pub server: bool,
 
     /// Stop playback on running server
     #[arg(long)]

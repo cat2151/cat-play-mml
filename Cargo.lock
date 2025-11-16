@@ -156,7 +156,6 @@ dependencies = [
  "serde_json",
  "smf-to-ym2151log-rust",
  "ym2151-log-play-server",
- "ym2151-log-player-rust",
 ]
 
 [[package]]
@@ -1460,7 +1459,7 @@ checksum = "f17a85883d4e6d00e8a97c586de764dabcc06133f7f1d55dce5cdc070ad7fe59"
 [[package]]
 name = "ym2151-log-play-server"
 version = "0.1.0"
-source = "git+https://github.com/cat2151/ym2151-log-play-server#2d971e6218e1c26458b8c503eeb1f2e369b4c246"
+source = "git+https://github.com/cat2151/ym2151-log-play-server#d89082f6dac4549a633c9cad2c11045e58e5f1cd"
 dependencies = [
  "anyhow",
  "cc",
@@ -1471,17 +1470,4 @@ dependencies = [
  "serde_json",
  "which",
  "windows 0.58.0",
-]
-
-[[package]]
-name = "ym2151-log-player-rust"
-version = "0.1.0"
-source = "git+https://github.com/cat2151/ym2151-log-player-rust#9293170c74e0ed16709db4991926e0931f8308db"
-dependencies = [
- "anyhow",
- "cc",
- "cpal",
- "hound",
- "serde",
- "serde_json",
 ]

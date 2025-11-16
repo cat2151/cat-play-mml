@@ -1,4 +1,4 @@
-Last updated: 2025-11-10
+Last updated: 2025-11-17
 
 # 開発状況生成プロンプト（開発者向け）
 
@@ -159,6 +159,7 @@ Last updated: 2025-11-10
 - .github/actions-tmp/generated-docs/callgraph.js
 - .github/actions-tmp/generated-docs/development-status-generated-prompt.md
 - .github/actions-tmp/generated-docs/development-status.md
+- .github/actions-tmp/generated-docs/project-overview-generated-prompt.md
 - .github/actions-tmp/generated-docs/project-overview.md
 - .github/actions-tmp/generated-docs/style.css
 - .github/actions-tmp/issue-notes/10.md
@@ -183,6 +184,7 @@ Last updated: 2025-11-10
 - .github/actions-tmp/issue-notes/28.md
 - .github/actions-tmp/issue-notes/29.md
 - .github/actions-tmp/issue-notes/3.md
+- .github/actions-tmp/issue-notes/30.md
 - .github/actions-tmp/issue-notes/4.md
 - .github/actions-tmp/issue-notes/7.md
 - .github/actions-tmp/issue-notes/8.md
@@ -216,6 +218,10 @@ Last updated: 2025-11-10
 - issue-notes/17.md
 - issue-notes/19.md
 - issue-notes/21.md
+- issue-notes/23.md
+- issue-notes/25.md
+- issue-notes/27.md
+- issue-notes/29.md
 - src/app.rs
 - src/cli.rs
 - src/client_manager.rs
@@ -223,7 +229,6 @@ Last updated: 2025-11-10
 - src/input.rs
 - src/main.rs
 - src/process_manager.rs
-- src/temp_file.rs
 
 ## 現在のオープンIssues
 オープン中のIssueはありません
@@ -233,38 +238,29 @@ Last updated: 2025-11-10
 
 ## 最近の変更（過去7日間）
 ### コミット履歴:
-bc80ebf Update project summaries (overview & development status) [auto]
-6507de5 Update project summaries (overview & development status) [auto]
-dfe2c4f Update project summaries (overview & development status) [auto]
-0e700ae 新しいアプリケーションコントローラーを追加し、コマンドライン引数を処理する機能を実装しました。クライアントマネージャー、入力検出、JSON生成、サーバープロセス管理のためのモジュールを追加しました。
-460e043 Update project summaries (overview & development status) [auto]
-7ef4405 Auto-translate README.ja.md to README.md [auto]
-77103e3 Merge pull request #22 from cat2151/copilot/update-server-client-functionality
-517b145 Add quick reference guide for users
-e6f645e Add comprehensive testing guide and implementation summary
-2d2e5af Implement server/client architecture using ym2151-log-play-server
+cbffdeb Add issue note for #29 [auto]
+0b506ae 依存関係を更新
+b238d80 依存関係を更新
+be0a427 サーバーにjsonを一時ファイル経由で送信するムダなcodeがまだ残っていたので削除した
+d110c1c Merge pull request #28 from cat2151/copilot/suppress-print-in-server-mode
+cab9526 Add --verbose flag and suppress prints in --server mode
+8ea5ff5 Initial plan
+a0f4fc7 Add issue note for #27 [auto]
+6668b14 依存関係を更新
+c437cc2 Windows版でビルドが通るよう修正。ym2151-log-play-serverの依存関係定義を修正
 
 ### 変更されたファイル:
 Cargo.lock
-Cargo.toml
-IMPLEMENTATION_SUMMARY.md
-QUICK_REFERENCE.md
-README.ja.md
-README.md
-TESTING_GUIDE.md
-generated-docs/development-status-generated-prompt.md
-generated-docs/development-status.md
-generated-docs/project-overview-generated-prompt.md
-generated-docs/project-overview.md
+issue-notes/27.md
+issue-notes/29.md
 src/app.rs
 src/cli.rs
 src/client_manager.rs
 src/converter.rs
-src/input.rs
 src/main.rs
 src/process_manager.rs
 src/temp_file.rs
 
 
 ---
-Generated at: 2025-11-10 07:02:55 JST
+Generated at: 2025-11-17 07:02:57 JST

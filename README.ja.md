@@ -52,10 +52,30 @@ cat-play-mml cde
 - **シンプル、すぐ鳴らせる**: 引数に"cde"を渡すだけでドレミを再生
 - **低レイテンシ**: リアルタイム音楽再生
 - **バックグラウンド演奏**: サーバーモードで演奏しながら他の操作が可能
+- **WAVファイル出力**: --outputオプションで音楽をWAVファイルとして保存可能
 
 ### 使い方
 
-#### 基本的な使い方（自動サーバー起動）
+#### WAVファイル出力
+
+MMLからWAVファイルを生成します：
+
+```
+cat-play-mml --output music.wav cde
+```
+
+MMLファイルからWAVファイルを生成：
+
+```
+cat-play-mml --output output.wav input.mml
+```
+
+生成されるWAVファイルの仕様：
+- フォーマット: 16bit PCM ステレオ
+- サンプリングレート: 55930 Hz（OPMネイティブレート）
+- 自動的に余韻を含む自然な減衰
+
+#### 基本的な使い方（自動サーバー起動、Windows専用）
 
 ```
 cat-play-mml cde
@@ -69,7 +89,7 @@ cat-play-mml cde
 cat-play-mml efg
 ```
 
-#### サーバーの制御
+#### サーバーの制御（Windows専用）
 
 演奏を停止：
 
@@ -83,7 +103,7 @@ cat-play-mml --stop
 cat-play-mml --shutdown
 ```
 
-#### 手動サーバー起動（上級者向け）
+#### 手動サーバー起動（上級者向け、Windows専用）
 
 JSONファイルを指定してサーバーを起動：
 

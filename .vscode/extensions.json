@@ -1,11 +1,6 @@
 {
   "recommendations": [
-    "ms-python.python",
-    "ms-python.vscode-pylance",
-    "charliermarsh.ruff",
     "editorconfig.editorconfig",
     "rust-lang.rust-analyzer",
-    "golang.go",
-    "denoland.vscode-deno"
   ]
 }

@@ -1460,7 +1460,7 @@ checksum = "f17a85883d4e6d00e8a97c586de764dabcc06133f7f1d55dce5cdc070ad7fe59"
 [[package]]
 name = "ym2151-log-play-server"
 version = "0.1.0"
-source = "git+https://github.com/cat2151/ym2151-log-play-server#3ca3ee5ff943813136d50fe151523bb615acc33f"
+source = "git+https://github.com/cat2151/ym2151-log-play-server#2d971e6218e1c26458b8c503eeb1f2e369b4c246"
 dependencies = [
  "anyhow",
  "cc",
@@ -1476,7 +1476,7 @@ dependencies = [
 [[package]]
 name = "ym2151-log-player-rust"
 version = "0.1.0"
-source = "git+https://github.com/cat2151/ym2151-log-player-rust#fb0f589fe4df59f2cc06713ba68cdb46d43ddc9d"
+source = "git+https://github.com/cat2151/ym2151-log-player-rust#9293170c74e0ed16709db4991926e0931f8308db"
 dependencies = [
  "anyhow",
  "cc",

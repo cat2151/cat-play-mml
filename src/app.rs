@@ -25,7 +25,7 @@ impl App {
         let args = Args::parse();
 
         match self.determine_mode(&args) {
-            AppMode::Server(json_path) => self.run_server_mode(&json_path),
+            AppMode::Server => self.run_server_mode(),
             AppMode::StopPlayback => self.handle_stop_command(),
             AppMode::Shutdown => self.handle_shutdown_command(),
             AppMode::PlayInput(input) => self.handle_play_input(&input),
@@ -34,8 +34,8 @@ impl App {
 
     /// Determines the application mode based on command-line arguments
     fn determine_mode(&self, args: &Args) -> AppMode {
-        if let Some(ref json_path) = args.server {
-            return AppMode::Server(json_path.clone());
+        if args.server {
+            return AppMode::Server;
         }
 
         if args.stop {
@@ -55,10 +55,10 @@ impl App {
     }
 
     /// Runs the application in server mode
-    fn run_server_mode(&self, json_path: &str) -> Result<()> {
-        println!("Running in server mode with: {}", json_path);
+    fn run_server_mode(&self) -> Result<()> {
+        println!("Running in server mode (idle state)");
         let server = Server::new();
-        server.run(json_path)
+        server.run()
     }
 
     /// Handles stop playback command
@@ -105,9 +105,12 @@ impl App {
             Err(e) => {
                 if self.client.is_server_not_running_error(&e) {
                     println!("Server is not running. Starting server...");
-                    spawn_server_process(json_path)?;
+                    spawn_server_process()?;
                     // Give server a moment to start
                     std::thread::sleep(std::time::Duration::from_millis(500));
+                    // Now try to send the file to the server
+                    self.client.play_file(json_path)?;
+                    println!("Successfully sent to newly started server.");
                     Ok(())
                 } else {
                     Err(e).context("Failed to send JSON to server")
@@ -119,7 +122,7 @@ impl App {
 
 /// Represents different application execution modes
 enum AppMode {
-    Server(String),
+    Server,
     StopPlayback,
     Shutdown,
     PlayInput(String),

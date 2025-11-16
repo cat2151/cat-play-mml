@@ -11,10 +11,10 @@ impl ClientManager {
         Self
     }
 
-    /// Attempts to play a file on the server
-    pub fn play_file(&self, json_path: &str, verbosity: &VerbosityConfig) -> Result<()> {
-        verbosity.println("Attempting to send to server...");
-        client::play_file(json_path).context("Failed to send JSON to server")
+    /// Sends JSON content directly to the server
+    pub fn send_json(&self, json_content: &str, verbosity: &VerbosityConfig) -> Result<()> {
+        verbosity.println("Sending JSON directly to server...");
+        client::send_json(json_content).context("Failed to send JSON to server")
     }
 
     /// Stops playback on the server

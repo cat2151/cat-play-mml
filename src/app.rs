@@ -6,7 +6,6 @@ use crate::cli::Args;
 use crate::client_manager::ClientManager;
 use crate::converter::generate_json_from_input;
 use crate::process_manager::spawn_server_process;
-use crate::temp_file::TempFileManager;
 
 /// Configuration for controlling output verbosity
 #[derive(Clone, Copy)]
@@ -107,14 +106,9 @@ impl App {
         // Generate JSON from input
         let json_content = generate_json_from_input(input, verbosity)?;
 
-        // Create temporary file
-        let mut temp_manager = TempFileManager::new();
-        let temp_json_path = temp_manager.create_temp_json(&json_content)?;
+        // Try to send JSON directly to server, start server if needed
+        let result = self.try_play_or_start_server(&json_content, verbosity);
 
-        // Try to send to server, start server if needed
-        let result = self.try_play_or_start_server(&temp_json_path, verbosity);
-
-        // Cleanup is handled by TempFileManager's Drop implementation
         result?;
         verbosity.println("Operation completed.");
         Ok(())
@@ -123,12 +117,12 @@ impl App {
     /// Attempts to play on existing server, starts server if not running
     fn try_play_or_start_server(
         &self,
-        json_path: &str,
+        json_content: &str,
         verbosity: &VerbosityConfig,
     ) -> Result<()> {
-        match self.client.play_file(json_path, verbosity) {
+        match self.client.send_json(json_content, verbosity) {
             Ok(_) => {
-                verbosity.println("Successfully sent to existing server.");
+                verbosity.println("Successfully sent JSON to existing server.");
                 Ok(())
             }
             Err(e) => {
@@ -137,9 +131,9 @@ impl App {
                     spawn_server_process(verbosity)?;
                     // Give server a moment to start
                     std::thread::sleep(std::time::Duration::from_millis(500));
-                    // Now try to send the file to the server
-                    self.client.play_file(json_path, verbosity)?;
-                    verbosity.println("Successfully sent to newly started server.");
+                    // Now try to send the JSON directly to the server
+                    self.client.send_json(json_content, verbosity)?;
+                    verbosity.println("Successfully sent JSON to newly started server.");
                     Ok(())
                 } else {
                     Err(e).context("Failed to send JSON to server")

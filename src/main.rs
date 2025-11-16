@@ -6,7 +6,6 @@ mod client_manager;
 mod converter;
 mod input;
 mod process_manager;
-mod temp_file;
 
 use app::App;
 

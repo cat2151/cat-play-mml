@@ -1,4 +1,4 @@
-Last updated: 2025-11-10
+Last updated: 2025-11-17
 
 
 # プロジェクト概要生成プロンプト（来訪者向け）
@@ -329,6 +329,10 @@ cat-play-mml cegb
   📖 17.md
   📖 19.md
   📖 21.md
+  📖 23.md
+  📖 25.md
+  📖 27.md
+  📖 29.md
 📁 src/
   📄 app.rs
   📄 cli.rs
@@ -337,7 +341,6 @@ cat-play-mml cegb
   📄 input.rs
   📄 main.rs
   📄 process_manager.rs
-  📄 temp_file.rs
 
 ## ファイル詳細分析
 
@@ -362,6 +365,10 @@ issue-notes/15.md
 issue-notes/17.md
 issue-notes/19.md
 issue-notes/21.md
+issue-notes/23.md
+issue-notes/25.md
+issue-notes/27.md
+issue-notes/29.md
 
 上記の情報を基に、プロンプトで指定された形式でプロジェクト概要を生成してください。
 特に以下の点を重視してください：
@@ -373,4 +380,4 @@ issue-notes/21.md
 
 
 ---
-Generated at: 2025-11-10 07:02:55 JST
+Generated at: 2025-11-17 07:02:56 JST

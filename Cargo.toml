@@ -16,7 +16,7 @@ path = "src/main.rs"
 mmlabc-to-smf = { git = "https://github.com/cat2151/mmlabc-to-smf-rust" }
 smf-to-ym2151log-rust = { git = "https://github.com/cat2151/smf-to-ym2151log-rust" }
 ym2151-log-player-rust = { git = "https://github.com/cat2151/ym2151-log-player-rust", features = ["realtime-audio"] }
-ym2151-log-play-server = { git = "https://github.com/cat2151/ym2151-log-play-server", rev = "267e35b6f36775eee22c18156705465b36776fe7" }
+ym2151-log-play-server = { git = "https://github.com/cat2151/ym2151-log-play-server" }
 
 # 追加の依存関係
 anyhow = "1.0"

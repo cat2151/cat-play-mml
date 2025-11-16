@@ -1,6 +1,8 @@
 use anyhow::{Context, Result};
 use ym2151_log_play_server::client;
 
+use crate::app::VerbosityConfig;
+
 /// Handles client communication with the server
 pub struct ClientManager;
 
@@ -10,20 +12,20 @@ impl ClientManager {
     }
 
     /// Attempts to play a file on the server
-    pub fn play_file(&self, json_path: &str) -> Result<()> {
-        println!("Attempting to send to server...");
+    pub fn play_file(&self, json_path: &str, verbosity: &VerbosityConfig) -> Result<()> {
+        verbosity.println("Attempting to send to server...");
         client::play_file(json_path).context("Failed to send JSON to server")
     }
 
     /// Stops playback on the server
-    pub fn stop_playback(&self) -> Result<()> {
-        println!("Sending stop command to server...");
+    pub fn stop_playback(&self, verbosity: &VerbosityConfig) -> Result<()> {
+        verbosity.println("Sending stop command to server...");
         client::stop_playback().context("Failed to stop playback")
     }
 
     /// Shuts down the server
-    pub fn shutdown_server(&self) -> Result<()> {
-        println!("Sending shutdown command to server...");
+    pub fn shutdown_server(&self, verbosity: &VerbosityConfig) -> Result<()> {
+        verbosity.println("Sending shutdown command to server...");
         client::shutdown_server().context("Failed to shutdown server")
     }
 

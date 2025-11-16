@@ -19,4 +19,8 @@ pub struct Args {
     /// Shutdown the running server
     #[arg(long)]
     pub shutdown: bool,
+
+    /// Enable verbose output (useful with --server for debugging)
+    #[arg(long)]
+    pub verbose: bool,
 }

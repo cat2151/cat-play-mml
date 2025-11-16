@@ -1,11 +1,13 @@
 use anyhow::{Context, Result};
 use std::process::Command;
 
+use crate::app::VerbosityConfig;
+
 /// Spawns a server process in detached mode
-pub fn spawn_server_process() -> Result<()> {
+pub fn spawn_server_process(verbosity: &VerbosityConfig) -> Result<()> {
     let exe_path = std::env::current_exe().context("Failed to get current executable path")?;
 
-    println!("Starting server process...");
+    verbosity.println("Starting server process...");
 
     // Spawn the server as a detached child process
     #[cfg(target_os = "windows")]
@@ -29,6 +31,6 @@ pub fn spawn_server_process() -> Result<()> {
             .context("Failed to spawn server process")?;
     }
 
-    println!("Server process spawned successfully");
+    verbosity.println("Server process spawned successfully");
     Ok(())
 }

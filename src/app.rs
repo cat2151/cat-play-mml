@@ -8,6 +8,30 @@ use crate::converter::generate_json_from_input;
 use crate::process_manager::spawn_server_process;
 use crate::temp_file::TempFileManager;
 
+/// Configuration for controlling output verbosity
+#[derive(Clone, Copy)]
+pub struct VerbosityConfig {
+    /// Whether to suppress output (true when in server mode without verbose flag)
+    pub suppress_output: bool,
+}
+
+impl VerbosityConfig {
+    /// Create a new VerbosityConfig based on command-line arguments
+    pub fn from_args(args: &Args) -> Self {
+        Self {
+            // Suppress output when in server mode unless verbose flag is set
+            suppress_output: args.server && !args.verbose,
+        }
+    }
+
+    /// Print a message if output is not suppressed
+    pub fn println(&self, msg: &str) {
+        if !self.suppress_output {
+            println!("{}", msg);
+        }
+    }
+}
+
 /// Main application controller that orchestrates the entire workflow
 pub struct App {
     client: ClientManager,
@@ -23,12 +47,13 @@ impl App {
     /// Runs the application with given command-line arguments
     pub fn run(&self) -> Result<()> {
         let args = Args::parse();
+        let verbosity = VerbosityConfig::from_args(&args);
 
         match self.determine_mode(&args) {
-            AppMode::Server => self.run_server_mode(),
-            AppMode::StopPlayback => self.handle_stop_command(),
-            AppMode::Shutdown => self.handle_shutdown_command(),
-            AppMode::PlayInput(input) => self.handle_play_input(&input),
+            AppMode::Server => self.run_server_mode(&verbosity),
+            AppMode::StopPlayback => self.handle_stop_command(&verbosity),
+            AppMode::Shutdown => self.handle_shutdown_command(&verbosity),
+            AppMode::PlayInput(input) => self.handle_play_input(&input, &verbosity),
         }
     }
 
@@ -55,24 +80,24 @@ impl App {
     }
 
     /// Runs the application in server mode
-    fn run_server_mode(&self) -> Result<()> {
-        println!("Running in server mode (idle state)");
+    fn run_server_mode(&self, verbosity: &VerbosityConfig) -> Result<()> {
+        verbosity.println("Running in server mode (idle state)");
         let server = Server::new();
         server.run()
     }
 
     /// Handles stop playback command
-    fn handle_stop_command(&self) -> Result<()> {
-        self.client.stop_playback()
+    fn handle_stop_command(&self, verbosity: &VerbosityConfig) -> Result<()> {
+        self.client.stop_playback(verbosity)
     }
 
     /// Handles shutdown command
-    fn handle_shutdown_command(&self) -> Result<()> {
-        self.client.shutdown_server()
+    fn handle_shutdown_command(&self, verbosity: &VerbosityConfig) -> Result<()> {
+        self.client.shutdown_server(verbosity)
     }
 
     /// Handles input playback
-    fn handle_play_input(&self, input: &str) -> Result<()> {
+    fn handle_play_input(&self, input: &str, verbosity: &VerbosityConfig) -> Result<()> {
         if input.is_empty() {
             return Err(anyhow::anyhow!(
                 "INPUT is required unless using --server, --stop, or --shutdown"
@@ -80,37 +105,41 @@ impl App {
         }
 
         // Generate JSON from input
-        let json_content = generate_json_from_input(input)?;
+        let json_content = generate_json_from_input(input, verbosity)?;
 
         // Create temporary file
         let mut temp_manager = TempFileManager::new();
         let temp_json_path = temp_manager.create_temp_json(&json_content)?;
 
         // Try to send to server, start server if needed
-        let result = self.try_play_or_start_server(&temp_json_path);
+        let result = self.try_play_or_start_server(&temp_json_path, verbosity);
 
         // Cleanup is handled by TempFileManager's Drop implementation
         result?;
-        println!("Operation completed.");
+        verbosity.println("Operation completed.");
         Ok(())
     }
 
     /// Attempts to play on existing server, starts server if not running
-    fn try_play_or_start_server(&self, json_path: &str) -> Result<()> {
-        match self.client.play_file(json_path) {
+    fn try_play_or_start_server(
+        &self,
+        json_path: &str,
+        verbosity: &VerbosityConfig,
+    ) -> Result<()> {
+        match self.client.play_file(json_path, verbosity) {
             Ok(_) => {
-                println!("Successfully sent to existing server.");
+                verbosity.println("Successfully sent to existing server.");
                 Ok(())
             }
             Err(e) => {
                 if self.client.is_server_not_running_error(&e) {
-                    println!("Server is not running. Starting server...");
-                    spawn_server_process()?;
+                    verbosity.println("Server is not running. Starting server...");
+                    spawn_server_process(verbosity)?;
                     // Give server a moment to start
                     std::thread::sleep(std::time::Duration::from_millis(500));
                     // Now try to send the file to the server
-                    self.client.play_file(json_path)?;
-                    println!("Successfully sent to newly started server.");
+                    self.client.play_file(json_path, verbosity)?;
+                    verbosity.println("Successfully sent to newly started server.");
                     Ok(())
                 } else {
                     Err(e).context("Failed to send JSON to server")

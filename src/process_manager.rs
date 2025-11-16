@@ -2,10 +2,10 @@ use anyhow::{Context, Result};
 use std::process::Command;
 
 /// Spawns a server process in detached mode
-pub fn spawn_server_process(json_path: &str) -> Result<()> {
+pub fn spawn_server_process() -> Result<()> {
     let exe_path = std::env::current_exe().context("Failed to get current executable path")?;
 
-    println!("Starting server process with JSON: {}", json_path);
+    println!("Starting server process...");
 
     // Spawn the server as a detached child process
     #[cfg(target_os = "windows")]
@@ -16,7 +16,6 @@ pub fn spawn_server_process(json_path: &str) -> Result<()> {
 
         Command::new(exe_path)
             .arg("--server")
-            .arg(json_path)
             .creation_flags(CREATE_NEW_PROCESS_GROUP | DETACHED_PROCESS)
             .spawn()
             .context("Failed to spawn server process")?;
@@ -26,7 +25,6 @@ pub fn spawn_server_process(json_path: &str) -> Result<()> {
     {
         Command::new(exe_path)
             .arg("--server")
-            .arg(json_path)
             .spawn()
             .context("Failed to spawn server process")?;
     }

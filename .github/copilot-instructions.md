@@ -39,7 +39,7 @@ MML Text Input (e.g., "cde")
 2. **smf-to-ym2151log-rust**: https://github.com/cat2151/smf-to-ym2151log-rust
    - Converts SMF to YM2151 register write log (JSON format)
 
-3. **ym2151-log-player-rust**: https://github.com/cat2151/ym2151-log-player-rust
+3. **ym2151-log-play-server**: https://github.com/cat2151/ym2151-log-play-server
    - Plays YM2151 register logs using Nuked-OPM emulator
 
 ## Code Style and Conventions

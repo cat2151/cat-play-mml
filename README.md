@@ -45,7 +45,7 @@ You'll hear "Do-Re-Mi".
   - With the implementation of MML `;`, support multiple channels. For chords within a channel, this will be considered separately and can remain undefined behavior for now.
   - MIDI Program Change 0 (0-based notation) will be set to an acoustic grand piano-like timbre. More specifically, it just needs to not be a sine wave.
 
-- [ym2151-log-player-rust](https://github.com/cat2151/ym2151-log-player-rust/issues)
+- [ym2151-log-play-server](https://github.com/cat2151/ym2151-log-play-server/issues)
 
 ### Key Features
 

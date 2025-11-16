@@ -45,7 +45,7 @@ cat-play-mml cde
   - MML `;` 実装にともない、複数chに対応する。ch内の和音については別途検討とし今は未定義動作のままでよい。
   - MIDI プログラムチェンジ 0（0base記述）は、アコースティックグランドピアノ 風の音色にする。より具体的には、sine waveでなければよい程度。
 
-- [ym2151-log-player-rust](https://github.com/cat2151/ym2151-log-player-rust/issues)
+- [ym2151-log-play-server](https://github.com/cat2151/ym2151-log-play-server/issues)
 
 ### 主な特徴
 

@@ -1,10 +1,14 @@
 use anyhow::{Context, Result};
 use clap::Parser;
+
+#[cfg(windows)]
 use ym2151_log_play_server::server::Server;
 
 use crate::cli::Args;
+#[cfg(windows)]
 use crate::client_manager::ClientManager;
 use crate::converter::generate_json_from_input;
+#[cfg(windows)]
 use crate::process_manager::spawn_server_process;
 
 /// Configuration for controlling output verbosity
@@ -33,12 +37,14 @@ impl VerbosityConfig {
 
 /// Main application controller that orchestrates the entire workflow
 pub struct App {
+    #[cfg(windows)]
     client: ClientManager,
 }
 
 impl App {
     pub fn new() -> Self {
         Self {
+            #[cfg(windows)]
             client: ClientManager::new(),
         }
     }
@@ -49,25 +55,61 @@ impl App {
         let verbosity = VerbosityConfig::from_args(&args);
 
         match self.determine_mode(&args) {
+            AppMode::WavOutput { input, output_path } => {
+                self.handle_wav_output(&input, &output_path, &verbosity)
+            }
+            #[cfg(windows)]
             AppMode::Server => self.run_server_mode(&verbosity),
+            #[cfg(windows)]
             AppMode::StopPlayback => self.handle_stop_command(&verbosity),
+            #[cfg(windows)]
             AppMode::Shutdown => self.handle_shutdown_command(&verbosity),
+            #[cfg(not(windows))]
+            AppMode::UnsupportedOnPlatform => Err(anyhow::anyhow!(
+                "Server mode (--server, --stop, --shutdown) is only supported on Windows"
+            )),
             AppMode::PlayInput(input) => self.handle_play_input(&input, &verbosity),
         }
     }
 
     /// Determines the application mode based on command-line arguments
     fn determine_mode(&self, args: &Args) -> AppMode {
-        if args.server {
-            return AppMode::Server;
+        // WAV output mode takes precedence if --output is specified
+        if let Some(ref output_path) = args.output {
+            if let Some(ref input) = args.input {
+                return AppMode::WavOutput {
+                    input: input.clone(),
+                    output_path: output_path.clone(),
+                };
+            } else {
+                // This should be caught by validation, but handle gracefully
+                return AppMode::WavOutput {
+                    input: "".to_string(),
+                    output_path: output_path.clone(),
+                };
+            }
         }
 
-        if args.stop {
-            return AppMode::StopPlayback;
+        #[cfg(windows)]
+        {
+            if args.server {
+                return AppMode::Server;
+            }
+
+            if args.stop {
+                return AppMode::StopPlayback;
+            }
+
+            if args.shutdown {
+                return AppMode::Shutdown;
+            }
         }
 
-        if args.shutdown {
-            return AppMode::Shutdown;
+        #[cfg(not(windows))]
+        {
+            if args.server || args.stop || args.shutdown {
+                return AppMode::UnsupportedOnPlatform;
+            }
         }
 
         if let Some(ref input) = args.input {
@@ -79,6 +121,7 @@ impl App {
     }
 
     /// Runs the application in server mode
+    #[cfg(windows)]
     fn run_server_mode(&self, verbosity: &VerbosityConfig) -> Result<()> {
         verbosity.println("Running in server mode (idle state)");
         let server = Server::new();
@@ -86,16 +129,53 @@ impl App {
     }
 
     /// Handles stop playback command
+    #[cfg(windows)]
     fn handle_stop_command(&self, verbosity: &VerbosityConfig) -> Result<()> {
         self.client.stop_playback(verbosity)
     }
 
     /// Handles shutdown command
+    #[cfg(windows)]
     fn handle_shutdown_command(&self, verbosity: &VerbosityConfig) -> Result<()> {
         self.client.shutdown_server(verbosity)
     }
 
+    /// Handles WAV file output
+    fn handle_wav_output(
+        &self,
+        input: &str,
+        output_path: &str,
+        verbosity: &VerbosityConfig,
+    ) -> Result<()> {
+        if input.is_empty() {
+            return Err(anyhow::anyhow!("INPUT is required for WAV output"));
+        }
+
+        verbosity.println(&format!("Generating WAV file: {}", output_path));
+
+        // Generate JSON from input
+        let json_content = generate_json_from_input(input, verbosity)?;
+
+        // Parse JSON to EventLog
+        use ym2151_log_player_rust::events::EventLog;
+        let event_log: EventLog = serde_json::from_str(&json_content)
+            .context("Failed to parse YM2151 JSON log")?;
+
+        // Create player from event log
+        use ym2151_log_player_rust::player::Player;
+        let player = Player::new(event_log);
+
+        // Generate WAV file
+        use ym2151_log_player_rust::wav_writer;
+        wav_writer::generate_wav(player, output_path)
+            .context("Failed to generate WAV file")?;
+
+        verbosity.println(&format!("✅ WAV file created: {}", output_path));
+        Ok(())
+    }
+
     /// Handles input playback
+    #[cfg(windows)]
     fn handle_play_input(&self, input: &str, verbosity: &VerbosityConfig) -> Result<()> {
         if input.is_empty() {
             return Err(anyhow::anyhow!(
@@ -114,7 +194,16 @@ impl App {
         Ok(())
     }
 
+    /// Handles input playback (non-Windows)
+    #[cfg(not(windows))]
+    fn handle_play_input(&self, _input: &str, _verbosity: &VerbosityConfig) -> Result<()> {
+        Err(anyhow::anyhow!(
+            "Real-time playback is only supported on Windows. Use --output to generate a WAV file instead."
+        ))
+    }
+
     /// Attempts to play on existing server, starts server if not running
+    #[cfg(windows)]
     fn try_play_or_start_server(
         &self,
         json_content: &str,
@@ -145,8 +234,14 @@ impl App {
 
 /// Represents different application execution modes
 enum AppMode {
+    WavOutput { input: String, output_path: String },
+    #[cfg(windows)]
     Server,
+    #[cfg(windows)]
     StopPlayback,
+    #[cfg(windows)]
     Shutdown,
+    #[cfg(not(windows))]
+    UnsupportedOnPlatform,
     PlayInput(String),
 }

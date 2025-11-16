@@ -23,4 +23,8 @@ pub struct Args {
     /// Enable verbose output (useful with --server for debugging)
     #[arg(long)]
     pub verbose: bool,
+
+    /// Output WAV file path (instead of playing audio)
+    #[arg(long, value_name = "FILE")]
+    pub output: Option<String>,
 }

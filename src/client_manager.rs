@@ -30,7 +30,8 @@ impl ClientManager {
     /// Checks if the error indicates the server is not running
     pub fn is_server_not_running_error(&self, error: &anyhow::Error) -> bool {
         let error_msg = format!("{:?}", error);
-        error_msg.contains("パイプを開くことができません")
+        error_msg.contains("Failed to connect to server")
+            || error_msg.contains("パイプを開くことができません")
             || error_msg.contains("ファイルが見つかりません")
             || error_msg.contains("0x80070002")
     }

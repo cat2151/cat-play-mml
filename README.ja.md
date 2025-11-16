@@ -56,23 +56,32 @@ cat-play-mml cde
 
 ### 使い方
 
-#### WAVファイル出力
+#### WAVファイル出力（デバッグモード）
 
-MMLからWAVファイルを生成します：
+MMLから3種類のWAVファイルを生成します（音質デバッグ用）：
 
 ```
-cat-play-mml --output music.wav cde
+cat-play-mml --output foo.wav cde
 ```
 
-MMLファイルからWAVファイルを生成：
+生成されるファイル：
+- **foo_realtime.wav**: AudioPlayerのwav_buffer（サーバーと同じ動作、55930 Hz）
+  - Windows（realtime-audio機能有効時）のみ生成
+  - Linux等では スキップ
+- **foo_debug48k.wav**: リサンプリング後（48000 Hz）
+  - wav_writer + Resamplerを使用
+- **foo_debug55k.wav**: ネイティブレート（55930 Hz）
+  - wav_writerを使用、リサンプリングなし
+
+MMLファイルからも生成可能：
 
 ```
 cat-play-mml --output output.wav input.mml
 ```
 
-生成されるWAVファイルの仕様：
+各ファイルの仕様：
 - フォーマット: 16bit PCM ステレオ
-- サンプリングレート: 55930 Hz（OPMネイティブレート）
+- サンプリングレート: 55930 Hz または 48000 Hz（ファイルにより異なる）
 - 自動的に余韻を含む自然な減衰
 
 #### 基本的な使い方（自動サーバー起動、Windows専用）

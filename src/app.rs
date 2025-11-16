@@ -140,7 +140,7 @@ impl App {
         self.client.shutdown_server(verbosity)
     }
 
-    /// Handles WAV file output
+    /// Handles WAV file output - generates 3 debug files
     fn handle_wav_output(
         &self,
         input: &str,
@@ -151,26 +151,147 @@ impl App {
             return Err(anyhow::anyhow!("INPUT is required for WAV output"));
         }
 
-        verbosity.println(&format!("Generating WAV file: {}", output_path));
+        verbosity.println(&format!("Generating debug WAV files from: {}", output_path));
 
         // Generate JSON from input
         let json_content = generate_json_from_input(input, verbosity)?;
 
-        // Parse JSON to EventLog
+        // Determine base path (remove .wav extension if present)
+        let base_path = if output_path.ends_with(".wav") {
+            &output_path[..output_path.len() - 4]
+        } else {
+            output_path
+        };
+
+        // 1. Generate using AudioPlayer (captures buffer at 55930 Hz, same as server)
+        verbosity.println("  [1/3] Generating foo_realtime.wav (AudioPlayer wav_buffer, 55930 Hz)...");
+        self.generate_realtime_wav(&json_content, &format!("{}_realtime.wav", base_path), verbosity)?;
+
+        // 2. Generate using wav_writer with Resampler (48000 Hz)
+        verbosity.println("  [2/3] Generating foo_debug48k.wav (wav_writer + resampling, 48000 Hz)...");
+        self.generate_resampled_wav(&json_content, &format!("{}_debug48k.wav", base_path), verbosity)?;
+
+        // 3. Generate using wav_writer without resampling (55930 Hz)
+        verbosity.println("  [3/3] Generating foo_debug55k.wav (wav_writer, 55930 Hz)...");
+        self.generate_native_wav(&json_content, &format!("{}_debug55k.wav", base_path), verbosity)?;
+
+        verbosity.println("✅ All debug WAV files created successfully!");
+        Ok(())
+    }
+
+    /// Generate WAV using AudioPlayer wav_buffer (captures at 55930 Hz, NOT resampled)
+    /// This simulates what the server saves during real-time playback
+    #[cfg(feature = "realtime-audio")]
+    fn generate_realtime_wav(
+        &self,
+        json_content: &str,
+        output_path: &str,
+        verbosity: &VerbosityConfig,
+    ) -> Result<()> {
+        use ym2151_log_player_rust::audio::AudioPlayer;
         use ym2151_log_player_rust::events::EventLog;
-        let event_log: EventLog = serde_json::from_str(&json_content)
+        use ym2151_log_player_rust::player::Player;
+        use ym2151_log_player_rust::wav_writer;
+
+        let event_log: EventLog = serde_json::from_str(json_content)
             .context("Failed to parse YM2151 JSON log")?;
 
-        // Create player from event log
+        let player = Player::new(event_log);
+        let mut audio_player = AudioPlayer::new(player)
+            .context("Failed to create AudioPlayer")?;
+
+        // Wait for playback to complete
+        audio_player.wait();
+
+        // Get the wav_buffer (stores at 55930 Hz, NOT resampled)
+        let buffer = audio_player.get_wav_buffer();
+        
+        // Write to WAV file at 55930 Hz (native OPM rate)
+        wav_writer::write_wav(output_path, &buffer, 55930)
+            .context("Failed to write realtime WAV file")?;
+
+        verbosity.println(&format!("    ✓ Created: {} ({} samples, 55930 Hz)", output_path, buffer.len() / 2));
+        Ok(())
+    }
+
+    /// Generate WAV using AudioPlayer (non-audio feature, skip)
+    #[cfg(not(feature = "realtime-audio"))]
+    fn generate_realtime_wav(
+        &self,
+        _json_content: &str,
+        output_path: &str,
+        verbosity: &VerbosityConfig,
+    ) -> Result<()> {
+        verbosity.println(&format!("    ⚠ Skipped: {} (realtime-audio feature not available)", output_path));
+        Ok(())
+    }
+
+    /// Generate WAV using wav_writer with manual resampling (48000 Hz)
+    fn generate_resampled_wav(
+        &self,
+        json_content: &str,
+        output_path: &str,
+        verbosity: &VerbosityConfig,
+    ) -> Result<()> {
+        use ym2151_log_player_rust::events::EventLog;
         use ym2151_log_player_rust::player::Player;
+        use ym2151_log_player_rust::resampler::AudioResampler;
+        use ym2151_log_player_rust::wav_writer;
+
+        let event_log: EventLog = serde_json::from_str(json_content)
+            .context("Failed to parse YM2151 JSON log")?;
+
+        let mut player = Player::new(event_log);
+        let mut resampler = AudioResampler::new()
+            .context("Failed to create resampler")?;
+
+        const GENERATION_BUFFER_SIZE: usize = 2048;
+        let mut generation_buffer = vec![0i16; GENERATION_BUFFER_SIZE * 2];
+        let mut resampled_output = Vec::new();
+
+        // Generate and resample samples
+        loop {
+            player.generate_samples(&mut generation_buffer);
+            
+            let resampled = resampler.resample(&generation_buffer)
+                .context("Failed to resample audio")?;
+            
+            resampled_output.extend_from_slice(&resampled);
+
+            if !player.should_continue_tail() {
+                break;
+            }
+        }
+
+        // Write to WAV file at 48000 Hz
+        wav_writer::write_wav(output_path, &resampled_output, 48000)
+            .context("Failed to write resampled WAV file")?;
+
+        verbosity.println(&format!("    ✓ Created: {} ({} samples, 48000 Hz)", output_path, resampled_output.len() / 2));
+        Ok(())
+    }
+
+    /// Generate WAV using wav_writer without resampling (55930 Hz)
+    fn generate_native_wav(
+        &self,
+        json_content: &str,
+        output_path: &str,
+        verbosity: &VerbosityConfig,
+    ) -> Result<()> {
+        use ym2151_log_player_rust::events::EventLog;
+        use ym2151_log_player_rust::player::Player;
+        use ym2151_log_player_rust::wav_writer;
+
+        let event_log: EventLog = serde_json::from_str(json_content)
+            .context("Failed to parse YM2151 JSON log")?;
+
         let player = Player::new(event_log);
 
-        // Generate WAV file
-        use ym2151_log_player_rust::wav_writer;
+        // Use existing generate_wav function
         wav_writer::generate_wav(player, output_path)
-            .context("Failed to generate WAV file")?;
+            .context("Failed to generate native WAV file")?;
 
-        verbosity.println(&format!("✅ WAV file created: {}", output_path));
+        verbosity.println(&format!("    ✓ Created: {} (55930 Hz)", output_path));
         Ok(())
     }
 

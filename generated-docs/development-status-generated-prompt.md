@@ -1,4 +1,4 @@
-Last updated: 2025-11-17
+Last updated: 2025-11-18
 
 # 開発状況生成プロンプト（開発者向け）
 
@@ -201,27 +201,11 @@ Last updated: 2025-11-17
 - .vscode/settings.json
 - Cargo.lock
 - Cargo.toml
-- IMPLEMENTATION_PLAN.md
-- IMPLEMENTATION_SUMMARY.md
 - LICENSE
-- PHASE2_INVESTIGATION_REPORT.md
-- PHASE2_STATUS.md
-- QUICK_REFERENCE.md
 - README.ja.md
 - README.md
-- TESTING_GUIDE.md
 - _config.yml
 - generated-docs/project-overview-generated-prompt.md
-- issue-notes/11.md
-- issue-notes/13.md
-- issue-notes/15.md
-- issue-notes/17.md
-- issue-notes/19.md
-- issue-notes/21.md
-- issue-notes/23.md
-- issue-notes/25.md
-- issue-notes/27.md
-- issue-notes/29.md
 - src/app.rs
 - src/cli.rs
 - src/client_manager.rs
@@ -238,29 +222,43 @@ Last updated: 2025-11-17
 
 ## 最近の変更（過去7日間）
 ### コミット履歴:
+ac97655 Auto-translate README.ja.md to README.md [auto]
+f5b69a2 状況を反映
+91f1169 Auto-translate README.ja.md to README.md [auto]
+d8dca44 陳腐化したagent生成documentsをメンテ
+4583110 陳腐化していたagent生成ドキュメントを削除
+c83017e ym2151-log-player-rustには依存していない（serverには依存している）のでlockとtoml修正
+54940ef Merge branch 'main' of github.com:cat2151/cat-play-mml into main
+a4f9549 依存関係を更新。VSCode設定のextentions推奨を修正
+d3f84a2 Update project summaries (overview & development status) [auto]
 cbffdeb Add issue note for #29 [auto]
-0b506ae 依存関係を更新
-b238d80 依存関係を更新
-be0a427 サーバーにjsonを一時ファイル経由で送信するムダなcodeがまだ残っていたので削除した
-d110c1c Merge pull request #28 from cat2151/copilot/suppress-print-in-server-mode
-cab9526 Add --verbose flag and suppress prints in --server mode
-8ea5ff5 Initial plan
-a0f4fc7 Add issue note for #27 [auto]
-6668b14 依存関係を更新
-c437cc2 Windows版でビルドが通るよう修正。ym2151-log-play-serverの依存関係定義を修正
 
 ### 変更されたファイル:
+.github/copilot-instructions.md
 Cargo.lock
+Cargo.toml
+IMPLEMENTATION_PLAN.md
+IMPLEMENTATION_SUMMARY.md
+PHASE2_INVESTIGATION_REPORT.md
+PHASE2_STATUS.md
+QUICK_REFERENCE.md
+README.ja.md
+README.md
+TESTING_GUIDE.md
+generated-docs/development-status-generated-prompt.md
+generated-docs/development-status.md
+generated-docs/project-overview-generated-prompt.md
+generated-docs/project-overview.md
+issue-notes/11.md
+issue-notes/13.md
+issue-notes/15.md
+issue-notes/17.md
+issue-notes/19.md
+issue-notes/21.md
+issue-notes/23.md
+issue-notes/25.md
 issue-notes/27.md
-issue-notes/29.md
-src/app.rs
-src/cli.rs
-src/client_manager.rs
-src/converter.rs
-src/main.rs
-src/process_manager.rs
-src/temp_file.rs
 
 
 ---
-Generated at: 2025-11-17 07:02:57 JST
+Generated at: 2025-11-18 07:03:07 JST

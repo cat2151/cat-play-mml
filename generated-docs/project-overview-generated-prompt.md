@@ -1,4 +1,4 @@
-Last updated: 2025-11-17
+Last updated: 2025-11-18
 
 
 # プロジェクト概要生成プロンプト（来訪者向け）
@@ -159,8 +159,6 @@ cat-play-mml --server output.json
 MMLは、テキストで音楽を記述する言語です。以下のような記法を使用します：
 
 - `c`, `d`, `e`, `f`, `g`, `a`, `b`: 音階（ド、レ、ミ、ファ、ソ、ラ、シ）
-
-### 今後実装予定
 - `o4`: オクターブ設定（4番目のオクターブ）
 - `l4`: 音長設定（4分音符）
 - `t120`: テンポ設定（BPM 120）
@@ -311,28 +309,11 @@ cat-play-mml cegb
   📊 settings.json
 📄 Cargo.lock
 📄 Cargo.toml
-📖 IMPLEMENTATION_PLAN.md
-📖 IMPLEMENTATION_SUMMARY.md
 📄 LICENSE
-📖 PHASE2_INVESTIGATION_REPORT.md
-📖 PHASE2_STATUS.md
-📖 QUICK_REFERENCE.md
 📖 README.ja.md
 📖 README.md
-📖 TESTING_GUIDE.md
 📄 _config.yml
 📁 generated-docs/
-📁 issue-notes/
-  📖 11.md
-  📖 13.md
-  📖 15.md
-  📖 17.md
-  📖 19.md
-  📖 21.md
-  📖 23.md
-  📖 25.md
-  📖 27.md
-  📖 29.md
 📁 src/
   📄 app.rs
   📄 cli.rs
@@ -351,24 +332,8 @@ cat-play-mml cegb
 ## プロジェクト構造（ファイル一覧）
 .vscode/extensions.json
 .vscode/settings.json
-IMPLEMENTATION_PLAN.md
-IMPLEMENTATION_SUMMARY.md
-PHASE2_INVESTIGATION_REPORT.md
-PHASE2_STATUS.md
-QUICK_REFERENCE.md
 README.ja.md
 README.md
-TESTING_GUIDE.md
-issue-notes/11.md
-issue-notes/13.md
-issue-notes/15.md
-issue-notes/17.md
-issue-notes/19.md
-issue-notes/21.md
-issue-notes/23.md
-issue-notes/25.md
-issue-notes/27.md
-issue-notes/29.md
 
 上記の情報を基に、プロンプトで指定された形式でプロジェクト概要を生成してください。
 特に以下の点を重視してください：
@@ -380,4 +345,4 @@ issue-notes/29.md
 
 
 ---
-Generated at: 2025-11-17 07:02:56 JST
+Generated at: 2025-11-18 07:03:06 JST

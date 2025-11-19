@@ -1,272 +1,93 @@
-# GitHub Copilot Instructions for cat-play-mml
+# cat-play-mml 向け AI コーディングエージェント指示書
 
-## Project Overview
+## プロジェクト概要
+`cat-play-mml` は、Windows に特化した MML (Music Macro Language) から音声への変換パイプラインで、`"cde"` のようなテキストをリアルタイム音声再生（「ド・レ・ミ」）に変換します。アーキテクチャは、各段階に独立したクレートを持つ **4 層変換パイプライン** に従っています。
 
-`cat-play-mml` is a Music Macro Language (MML) Parser and Player project designed to parse MML text and play music in real-time. The project aims to create a Windows Rust executable that can play Do-Re-Mi when "cde" is specified as a command-line argument.
+## アーキテクチャとデータフロー
+アプリケーションは、複数の Git リポジトリにわたる **モジュラー変換パイプライン** を使用しています：
+1. **MML → SMF**: `mmlabc-to-smf-rust` (4 パス: parser → AST → events → MIDI)
+2. **SMF → YM2151 Log**: `smf-to-ym2151log-rust`
+3. **YM2151 Log → Audio**: `ym2151-log-play-server` (Nuked-OPM synthesis)
+4. **Client Orchestration**: このリポジトリがパイプラインを調整
 
-## Technical Stack
+`src/` 内の主要コンポーネント：
+- `app.rs`: 出力制御のための `VerbosityConfig` を持つメインオーケストレーター
+- `converter.rs`: パイプライン統合 (`generate_json_from_input`)
+- `input.rs`: ファイル形式検出 (MML/MIDI/JSON)
+- `client_manager.rs`: 名前付きパイプ経由でのサーバー通信
+- `process_manager.rs`: デタッチされたサーバーモードでの Windows プロセス生成
 
-### Primary Technologies
-- **Rust**: Main implementation language for the Windows executable
-- **tree-sitter**: MML grammar parsing
-- **cpal**: Cross-platform audio library (WASAPI on Windows)
-- **Nuked-OPM**: YM2151 sound chip emulator
+## 重要な開発パターン
 
-### Supporting Technologies
-- **Python**: Development and testing scripts
-- **Go**: Potential future components
-- **TypeScript/JavaScript**: Potential future components
+### サーバーアーキテクチャ
+- **デュアルモード動作**: クライアントコマンド vs. バックグラウンドサーバー (`--server`)
+- **自動サーバー起動**: サーバーが動作していない場合、クライアントが自動的にサーバーを開始
+- **Windows 固有プロセス処理**: `CREATE_NEW_PROCESS_GROUP | DETACHED_PROCESS` を使用
 
-## Architecture
+### エラーハンドリング戦略
+- 全体を通して `anyhow::Result` を使用
+- サーバー接続エラーは `client_manager.rs` 内の自動起動ロジックを起動
+- Windows ロケールサポートのための日本語エラーメッセージ検出
 
-The project follows a pipeline architecture:
+### ビルドと依存関係管理
+- **Zig cc 必須**: プロジェクトは mingw/msys2 を明示的に禁止
+- **Git 依存関係**: すべての音楽処理クレートは Git サブモジュール
+- **Windows ファースト設計**: Linux サポートはエージェント TDD ワークフローのみ
 
-```
-MML Text Input (e.g., "cde")
-    ↓
-[mmlabc-to-smf] → Standard MIDI File (in-memory)
-    ↓
-[smf-to-ym2151log] → YM2151 Register Log (JSON)
-    ↓
-[ym2151-log-player] → Audio Playback
-```
+## 主要な開発コマンド
+```powershell
+# 開発ワークフロー
+cargo run --release cde          # 基本再生テスト
+cargo install --path .           # ローカルインストール
+cat-play-mml --server --verbose  # デバッグサーバーモード
 
-### Component Repositories
-
-1. **mmlabc-to-smf-rust**: https://github.com/cat2151/mmlabc-to-smf-rust
-   - Parses MML text using tree-sitter and converts to Standard MIDI File format
-
-2. **smf-to-ym2151log-rust**: https://github.com/cat2151/smf-to-ym2151log-rust
-   - Converts SMF to YM2151 register write log (JSON format)
-
-3. **ym2151-log-play-server**: https://github.com/cat2151/ym2151-log-play-server
-   - Plays YM2151 register logs using Nuked-OPM emulator
-
-## Code Style and Conventions
-
-### EditorConfig Standards
-Follow the `.editorconfig` file in the repository root:
-
-- **All files**: UTF-8 encoding, LF line endings, insert final newline, trim trailing whitespace
-- **Rust files**: 4 spaces, max line length 100 characters
-- **Python files**: 4 spaces, max line length 120 characters
-- **Go files**: Tab indentation, size 4
-- **TypeScript/JavaScript**: 2 spaces
-- **YAML/JSON**: 2 spaces
-- **TOML**: 2 spaces
-- **Markdown**: 2 spaces, preserve trailing whitespace
-
-### Rust-Specific Guidelines
-
-- Use `anyhow` for error handling in applications
-- Use `clap` with derive feature for command-line argument parsing
-- Prefer memory-based data passing over file I/O for performance
-- Use Cargo git dependencies for integrating external crates
-- Follow Rust naming conventions (snake_case for functions/variables, CamelCase for types)
-- Keep code modular and maintainable with clear separation of concerns
-
-### Git and Version Control
-
-- Use meaningful commit messages
-- Follow conventional commits format when applicable
-- Tag releases with semantic versioning (e.g., v0.1.0)
-
-## Project Goals and Constraints
-
-### Current Goals
-- Implement a single Windows executable that accepts MML as command-line argument
-- Real-time music playback with low latency
-- No intermediate file creation (all processing in memory)
-- Support for basic MML syntax (initially "cde" for Do-Re-Mi)
-
-### In Scope
-- File output of intermediate representation (including Standard MIDI Files)
-- Basic MML commands:
-  - Notes: `c`, `d`, `e`, `f`, `g`, `a`, `b` (e.g., `c4` for quarter note C)
-  - Octave: `o` (e.g., `o4` for 4th octave)
-  - Length: `l` (e.g., `l8` for eighth notes)
-  - Tempo: `t` (e.g., `t120` for 120 BPM)
-  - Rest: `r` (e.g., `r4` for quarter rest)
-- Octave shifting: `<` (lower), `>` (raise)
-- Semitone adjustment: `+` (raise), `-` (lower)
-
-### Out of Scope
-- Complex MML features
-- Real-time MIDI message output
-- Effects processing (LPF, overdrive/distortion, delay)
-- GUI editor
-- Non-Windows platforms (currently)
-
-## Development Approach
-
-### Test-Driven Development (TDD)
-- Consider using TDD agents for new feature development
-- Write tests before implementing functionality when practical
-- Ensure tests cover edge cases and error scenarios
-
-### Error Handling
-- Provide clear, user-friendly error messages
-- Handle common error scenarios:
-  - Invalid MML syntax
-  - SMF conversion errors
-  - Audio backend initialization failures
-  - Audio device unavailable
-
-### Performance Considerations
-- Minimize latency for real-time playback
-- Optimize memory usage for large MML files
-- Use efficient data structures for audio processing
-- Profile code to identify bottlenecks
-
-## Documentation Standards
-
-### README Files
-- Maintain both English (`README.md`) and Japanese (`README.ja.md`) versions
-- Japanese version is the source, English is auto-translated via GitHub Actions
-- Keep technical details accurate and up-to-date
-- Include usage examples and command-line syntax
-
-### Code Comments
-- Document public APIs and complex algorithms
-- Explain non-obvious design decisions
-- Use doc comments for Rust modules, functions, and types
-- Keep comments concise and relevant
-
-### Implementation Plans
-- Document major architectural decisions
-- Include alternatives considered and reasons for choices
-- Maintain traceability between requirements and implementation
-
-## Testing Guidelines
-
-### Unit Tests
-- Write unit tests for core functionality
-- Test edge cases and error conditions
-- Use descriptive test names that explain what is being tested
-- Keep tests focused and independent
-
-### Integration Tests
-- Test the complete pipeline from MML input to audio output
-- Verify data flow between components
-- Test with various MML inputs (starting with "cde")
-
-### Manual Testing
-- Test on Windows platform with actual audio hardware
-- Verify real-time playback latency
-- Test command-line interface usability
-
-## Dependency Management
-
-### Cargo Dependencies
-- Use git dependencies for integrating the three main components
-- Pin to specific tags or commit hashes for reproducible builds
-- Document required dependency versions in `Cargo.toml`
-- Minimize external dependencies to reduce build complexity
-
-### Upstream Changes
-- Upstream repositories must provide library interfaces (not just binaries)
-- Coordinate changes with upstream maintainers when needed
-- Test integration after updating upstream dependencies
-
-## Build and Deployment
-
-### Build Process
-- Use `cargo build` for development builds
-- Use `cargo build --release` for optimized builds
-- Ensure C compiler availability (MSVC or MinGW) for Nuked-OPM
-- Target: `x86_64-pc-windows-msvc` or `x86_64-pc-windows-gnu`
-
-### Windows-Specific Considerations
-- Use default console subsystem for command-line usage
-- Ensure WASAPI audio backend support via cpal
-- Handle Windows-specific file path conventions
-
-## Workflow and Automation
-
-### GitHub Actions
-- Daily project summaries generated automatically
-- README translation from Japanese to English on push to main
-- Issue notes automatically processed
-
-### Secrets and API Keys
-- `GEMINI_API_KEY` used for AI-powered workflows
-- Never commit secrets to source code
-- Use GitHub secrets for sensitive data
-
-## Best Practices
-
-### Code Quality
-- Run `cargo clippy` for Rust linting
-- Run `cargo fmt` for consistent formatting
-- Address compiler warnings before committing
-- Review code for security vulnerabilities
-
-### Collaboration
-- Write clear issue descriptions with acceptance criteria
-- Review pull requests thoroughly
-- Provide constructive feedback
-- Keep discussions focused and professional
-
-### Security
-- Never commit credentials or API keys
-- Validate all user inputs
-- Handle audio device permissions appropriately
-- Be cautious with external dependencies
-
-## Folder Structure
-
-```
-cat-play-mml/
-├── .github/              # GitHub-specific files (workflows, this instructions file)
-├── .vscode/              # VS Code settings
-├── issue-notes/          # Issue documentation
-├── src/                  # Source code
-├── Cargo.toml            # Rust project configuration
-├── README.md             # English documentation (auto-translated)
-├── README.ja.md          # Japanese documentation (source)
-├── IMPLEMENTATION_PLAN.md # Detailed implementation planning
-├── LICENSE               # MIT License
-├── .editorconfig         # Editor configuration
-└── .gitignore            # Git ignore patterns
+# バックグラウンドサーバー制御
+cat-play-mml cde                 # 自動サーバー開始＋再生
+cat-play-mml --stop             # 再生停止
+cat-play-mml --shutdown         # サーバー終了
 ```
 
-## Language-Specific Notes
+## 入力処理規約
+`input.rs` モジュールは拡張子検出により **4 つの入力タイプ** を処理します：
+- 生 MML 文字列（デフォルトフォールバック）
+- `.mml` ファイル → MML コンテンツ
+- `.mid` ファイル → SMF バイナリデータ
+- `.json` ファイル → 直接 YM2151 ログ形式
 
-### When Working with Rust
-- Follow the Rust API Guidelines
-- Use `Result<T, E>` for operations that can fail
-- Prefer owned types over references when it simplifies the API
-- Use builder patterns for complex object construction
-- Leverage the type system for compile-time guarantees
+処理前に **必ず** `detect_input_type()` を使用してください - 入力形式を仮定しないでください。
 
-### When Working with Python (if applicable)
-- Follow PEP 8 style guide
-- Use type hints for function signatures
-- Keep functions focused and single-purpose
-- Use virtual environments for dependency isolation
+## プロジェクト固有の規約
 
-### When Working with YAML
-- Use 2-space indentation
-- Keep workflow files clear and well-commented
-- Use reusable workflows when appropriate
+### 詳細度制御
+出力抑制のために `VerbosityConfig::from_args()` パターンを使用：
+- サーバーモードは `--verbose` でない限り出力を抑制
+- すべてのユーザー向けメッセージは `verbosity.println()` を通します
 
-## Communication
+### 複数リポジトリ調整
+- **中間形式としての SMF**: 検証/デバッグを可能にします
+- **YM2151 シンセシス**: Nuked-OPM によるハードウェア正確な FM シンセシス
 
-### Issue Tracking
-- Create clear, focused issues with specific goals
-- Include reproduction steps for bugs
-- Tag issues appropriately
-- Update issue status as work progresses
+## 一般的な落とし穴
+1. **`VerbosityConfig` を迂回しない** - コンソール出力に関して
+2. **Windows パス処理**: セルフスポーンには `std::env::current_exe()` を使用
+3. **サーバーライフサイクル**: サーバー状態を仮定する前に常に接続を確認
+4. **JSON パイプライン**: SMF → YM2151 ログ変換は静かに失敗する場合があります - エラーコンテキストを確認
+5. **入力検証**: 空の MML 文字列は適切にエラーを出すべきです
 
-### Pull Requests
-- Keep PRs focused on a single concern
-- Write descriptive PR titles and descriptions
-- Link to related issues
-- Ensure CI passes before requesting review
+## テストとデバッグ
+- パイプラインステップを追跡するには `--verbose` フラグを使用
+- サーバーログ出力は音声シンセシス問題のデバッグに役立ちます
+- SMF 中間ファイルは外部 MIDI ツールで検査可能
+- YM2151 ログ JSON 形式は手動音声検証を可能にします
 
-## Related Resources
+## 関連プロジェクトとの統合
+エコシステム全体で作業する際：
+- **mmlabc-to-smf-rust**: パーサーと MIDI 生成
+- **smf-to-ym2151log-rust**: MIDI からシンセシスイベントへ
+- **ym2151-log-play-server**: リアルタイム音声再生
 
-- [Cargo Book: Git Dependencies](https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#specifying-dependencies-from-git-repositories)
-- [cpal Audio Library](https://github.com/RustAudio/cpal)
-- [tree-sitter](https://tree-sitter.github.io/tree-sitter/)
-- [MML Syntax Reference](https://en.wikipedia.org/wiki/Music_Macro_Language)
+## userからの指示
+- このプロジェクトは、ライブラリとして **ym2151-log-play-server** を使用しています。
+  - それを用いて、サーバーモードでの起動、クライアントとしてサーバーへの接続、を実現しています。
+  - クライアント・サーバー機能で問題があったときは、まず、 **ym2151-log-play-server** について調査してください。
+  - サーバーモード時は、 **ym2151-log-play-server** の機能により、受信メッセージに従ってインタラクティブモードと非インタラクティブモードを切り替えることができます。

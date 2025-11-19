@@ -1,4 +1,4 @@
-Last updated: 2025-11-18
+Last updated: 2025-11-20
 
 # 開発状況生成プロンプト（開発者向け）
 
@@ -222,6 +222,8 @@ Last updated: 2025-11-18
 
 ## 最近の変更（過去7日間）
 ### コミット履歴:
+531c5b5 agent指示書をupdate
+99e0db5 Update project summaries (overview & development status) [auto]
 ac97655 Auto-translate README.ja.md to README.md [auto]
 f5b69a2 状況を反映
 91f1169 Auto-translate README.ja.md to README.md [auto]
@@ -230,13 +232,9 @@ d8dca44 陳腐化したagent生成documentsをメンテ
 c83017e ym2151-log-player-rustには依存していない（serverには依存している）のでlockとtoml修正
 54940ef Merge branch 'main' of github.com:cat2151/cat-play-mml into main
 a4f9549 依存関係を更新。VSCode設定のextentions推奨を修正
-d3f84a2 Update project summaries (overview & development status) [auto]
-cbffdeb Add issue note for #29 [auto]
 
 ### 変更されたファイル:
 .github/copilot-instructions.md
-Cargo.lock
-Cargo.toml
 IMPLEMENTATION_PLAN.md
 IMPLEMENTATION_SUMMARY.md
 PHASE2_INVESTIGATION_REPORT.md
@@ -258,7 +256,8 @@ issue-notes/21.md
 issue-notes/23.md
 issue-notes/25.md
 issue-notes/27.md
+issue-notes/29.md
 
 
 ---
-Generated at: 2025-11-18 07:03:07 JST
+Generated at: 2025-11-20 07:03:12 JST

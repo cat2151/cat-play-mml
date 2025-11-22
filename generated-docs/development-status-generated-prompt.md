@@ -1,4 +1,4 @@
-Last updated: 2025-11-20
+Last updated: 2025-11-23
 
 # 開発状況生成プロンプト（開発者向け）
 
@@ -222,6 +222,9 @@ Last updated: 2025-11-20
 
 ## 最近の変更（過去7日間）
 ### コミット履歴:
+a969eae Merge branch 'main' of github.com:cat2151/cat-play-mml into main
+e8f1c6b JSON送信エラー時は直接printするようにした
+4320d33 Update project summaries (overview & development status) [auto]
 531c5b5 agent指示書をupdate
 99e0db5 Update project summaries (overview & development status) [auto]
 ac97655 Auto-translate README.ja.md to README.md [auto]
@@ -229,35 +232,17 @@ f5b69a2 状況を反映
 91f1169 Auto-translate README.ja.md to README.md [auto]
 d8dca44 陳腐化したagent生成documentsをメンテ
 4583110 陳腐化していたagent生成ドキュメントを削除
-c83017e ym2151-log-player-rustには依存していない（serverには依存している）のでlockとtoml修正
-54940ef Merge branch 'main' of github.com:cat2151/cat-play-mml into main
-a4f9549 依存関係を更新。VSCode設定のextentions推奨を修正
 
 ### 変更されたファイル:
 .github/copilot-instructions.md
-IMPLEMENTATION_PLAN.md
-IMPLEMENTATION_SUMMARY.md
-PHASE2_INVESTIGATION_REPORT.md
-PHASE2_STATUS.md
-QUICK_REFERENCE.md
 README.ja.md
 README.md
-TESTING_GUIDE.md
 generated-docs/development-status-generated-prompt.md
 generated-docs/development-status.md
 generated-docs/project-overview-generated-prompt.md
 generated-docs/project-overview.md
-issue-notes/11.md
-issue-notes/13.md
-issue-notes/15.md
-issue-notes/17.md
-issue-notes/19.md
-issue-notes/21.md
-issue-notes/23.md
-issue-notes/25.md
-issue-notes/27.md
-issue-notes/29.md
+src/client_manager.rs
 
 
 ---
-Generated at: 2025-11-20 07:03:12 JST
+Generated at: 2025-11-23 07:03:06 JST

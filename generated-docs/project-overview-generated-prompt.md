@@ -1,4 +1,4 @@
-Last updated: 2025-11-18
+Last updated: 2025-11-20
 
 
 # プロジェクト概要生成プロンプト（来訪者向け）
@@ -345,4 +345,4 @@ README.md
 
 
 ---
-Generated at: 2025-11-18 07:03:06 JST
+Generated at: 2025-11-20 07:03:11 JST

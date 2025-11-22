@@ -14,7 +14,14 @@ impl ClientManager {
     /// Sends JSON content directly to the server
     pub fn send_json(&self, json_content: &str, verbosity: &VerbosityConfig) -> Result<()> {
         verbosity.println("Sending JSON directly to server...");
-        client::send_json(json_content).context("Failed to send JSON to server")
+        match client::send_json(json_content) {
+            Ok(_) => Ok(()),
+            Err(e) => {
+                // エラー時はVerbosityConfigに関係なく必ずprint
+                println!("Failed to send JSON to server: {}\nDebug: {:?}", e, e);
+                Err(e).context("Failed to send JSON to server")
+            }
+        }
     }
 
     /// Stops playback on the server

@@ -15,7 +15,7 @@ pub fn generate_json_from_input(input: &str, verbosity: &VerbosityConfig) -> Res
         }
         InputType::MidFile(smf_data) => convert_smf_to_json(&smf_data, verbosity)?,
         InputType::JsonFile(json) => {
-            verbosity.println("Using YM2151 JSON file input...");
+            verbosity.print_verbose("Using YM2151 JSON file input...");
             json
         }
     };
@@ -25,15 +25,15 @@ pub fn generate_json_from_input(input: &str, verbosity: &VerbosityConfig) -> Res
 
 /// Converts MML string to YM2151 JSON
 fn convert_mml_to_json(mml: &str, verbosity: &VerbosityConfig) -> Result<String> {
-    verbosity.println("Processing MML input...");
+    verbosity.print_verbose("Processing MML input...");
 
     // ステップ1: MML → SMF (4パスの統合)
-    verbosity.println("Step 1: Converting MML to SMF...");
+    verbosity.print_verbose("Step 1: Converting MML to SMF...");
     let tokens = pass1_parser::parse_mml(mml);
     let ast = pass2_ast::tokens_to_ast(&tokens);
     let events = pass3_events::ast_to_events(&ast);
     let smf_data = pass4_midi::events_to_midi(&events)?;
-    verbosity.println(&format!("  SMF data generated: {} bytes", smf_data.len()));
+    verbosity.print_verbose(&format!("  SMF data generated: {} bytes", smf_data.len()));
 
     // ステップ2: SMF → YM2151ログ (1関数で完結)
     convert_smf_to_json(&smf_data, verbosity)
@@ -41,8 +41,8 @@ fn convert_mml_to_json(mml: &str, verbosity: &VerbosityConfig) -> Result<String>
 
 /// Converts SMF data to YM2151 JSON
 fn convert_smf_to_json(smf_data: &[u8], verbosity: &VerbosityConfig) -> Result<String> {
-    verbosity.println("Step 2: Converting SMF to YM2151 log...");
+    verbosity.print_verbose("Step 2: Converting SMF to YM2151 log...");
     let json = convert_smf_to_ym2151_log(smf_data)?;
-    verbosity.println(&format!("  YM2151 log generated: {} bytes", json.len()));
+    verbosity.print_verbose(&format!("  YM2151 log generated: {} bytes", json.len()));
     Ok(json)
 }

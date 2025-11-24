@@ -5,7 +5,6 @@ mod cli;
 mod client_manager;
 mod converter;
 mod input;
-mod process_manager;
 
 use app::App;
 

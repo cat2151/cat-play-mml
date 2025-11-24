@@ -1,4 +1,4 @@
-Last updated: 2025-11-23
+Last updated: 2025-11-25
 
 # Development Status
 
@@ -6,43 +6,47 @@ Last updated: 2025-11-23
 オープン中のIssueはありません。
 
 ## 次の一手候補
-1. 自動翻訳ワークフローの効率と保守性のレビュー [Issue #None]
-   - 最初の小さな一歩: `README.ja.md`から`README.md`への自動翻訳を行っているワークフロー(`.github/workflows/call-translate-readme.yml`と関連ファイル)の処理フローを理解する。
+1. Rustアプリケーションのエラーハンドリングの強化
+   - 最初の小さな一歩: `src/client_manager.rs` 内のエラー処理を分析し、カスタムエラー型を導入する準備として、既存のエラーハンドリング箇所を特定する。
    - Agent実行プロンプト:
      ```
-     対象ファイル: .github/workflows/call-translate-readme.yml, .github/actions-tmp/.github/workflows/translate-readme.yml, .github/actions-tmp/.github_automation/translate/scripts/translate-readme.cjs
+     対象ファイル: `src/client_manager.rs`
 
-     実行内容: これらのファイルがどのように連携し、`README.ja.md`の変更をトリガーとして`README.md`を更新しているかを分析し、その処理フローと利用されているツール（GitHub Actionsの機能、`translate-readme.cjs`スクリプトなど）を詳細に説明してください。
+     実行内容: `src/client_manager.rs` 内のクライアント通信関連のエラーハンドリングロジックを分析し、より詳細な情報を提供できるカスタムエラー型（例: `ClientError`）を導入するための提案をmarkdown形式で出力してください。具体的には、既存のエラー処理の課題点と、カスタムエラー型を導入した場合の改善点を記述し、その定義の初期ドラフトを含めてください。
 
-     確認事項: 翻訳のトリガー条件、翻訳エンジンの利用方法（もしあれば）、コミットの自動化方法を確認してください。
+     確認事項: エラーハンドリングの変更が既存のクライアント通信ロジックの動作に予期せぬ影響を与えないことを確認してください。また、`src/main.rs` など、エラーを受け取る可能性のある他のモジュールとの整合性を考慮してください。
 
-     期待する出力: 自動翻訳ワークフローの全体像を示すシーケンス図またはフローチャートを含むMarkdown形式のドキュメント。さらに、改善点（例: 実行時間の短縮、依存関係の明確化、エラーハンドリングの強化）があれば提案してください。
+     期待する出力: `src/client_manager.rs` のエラーハンドリング改善提案として、カスタムエラー型の定義案と導入方針をmarkdown形式で出力してください。
      ```
 
-2. 開発状況生成プロンプトのレビューと改善 [Issue #None]
-   - 最初の小さな一歩: 現在の`development-status-prompt.md`が、期待される「Development Status」出力をどの程度満たしているかを評価する。
+2. `src/converter.rs` のテストコード追加
+   - 最初の小さな一歩: `src/converter.rs` 内のMML変換ロジックのうち、最も単純な変換関数（例: 単音符の変換）を特定し、その関数に対する最初のユニットテストを記述する。
    - Agent実行プロンプト:
      ```
-     対象ファイル: .github/actions-tmp/.github_automation/project_summary/prompts/development-status-prompt.md, .github/actions-tmp/generated-docs/development-status.md
+     対象ファイル: `src/converter.rs`
 
-     実行内容: `.github/actions-tmp/.github_automation/project_summary/prompts/development-status-prompt.md`の内容と、それを用いて生成された`.github/actions-tmp/generated-docs/development-status.md`の内容を比較し、プロンプトの指示がどの程度守られているか、またハルシネーションが発生していないかを分析してください。特に、「現在のIssues」の要約方法、「次の一手候補」の適切性、および「Agent実行プロンプト」の品質に焦点を当ててください。
+     実行内容: `src/converter.rs` 内に定義されているMML変換に関連する主要な公開関数を特定し、その関数に対するユニットテストを実装してください。具体的には、happy path (正常系) の入力と期待される出力、および簡単なエラーケース (異常系) のテストケースを少なくとも3つ追加してください。テストはRustの `#[test]` マクロを使用して記述し、既存のコードに新しいテストモジュールを追加する形式で実装してください。
 
-     確認事項: プロンプトのガイドライン（生成するもの、しないもの、Agent実行プロンプトの必須要素）が適切に反映されているか。生成されたドキュメントが具体的な開発者のアクションに繋がるものになっているか。
+     確認事項: 既存のコードの変更を最小限に抑え、追加するテストが網羅的かつ正確であることを確認してください。テスト実行時に他のテストやプロジェクト全体に影響を与えないことを保証してください。
 
-     期待する出力: 現在の`.github/actions-tmp/.github_automation/project_summary/prompts/development-status-prompt.md`の改善案をMarkdown形式で提案してください。具体的には、プロンプトの表現の明確化、ハルシネーション防止策の強化、および「次の一手候補」の具体性を高めるための変更点を含めてください。
+     期待する出力: `src/converter.rs` に追加されたテストコードを含むファイル全体の修正後の内容と、追加されたテストの概要をmarkdown形式で出力してください。
      ```
 
-3. `.github/actions-tmp`ディレクトリの役割調査と整理 [Issue #None]
-   - 最初の小さな一歩: `.github/actions-tmp`ディレクトリ内のファイルが、プロジェクトのどの部分で、どのように利用されているかを特定する。
+3. `.github/actions-tmp` ディレクトリの整理と統合計画の検討
+   - 最初の小さな一歩: `.github/actions-tmp` ディレクトリ内の最も単純なワークフローファイル（例: `callgraph.yml`）を選択し、そのワークフローの目的と、現在のプロジェクトにおける利用状況を調査する。
    - Agent実行プロンプト:
      ```
-     対象ファイル: .github/actions-tmp/ ディレクトリ配下の全ファイル、および .github/workflows/ ディレクトリ配下の呼び出し元となる可能性のあるワークフローファイル
+     対象ファイル: `.github/actions-tmp/` 以下の全ての `.yml` ファイル、および `./github/workflows/` 以下の全ての `.yml` ファイル
 
-     実行内容: `.github/actions-tmp/` 内の各ファイル/ディレクトリがプロジェクト内でどのように利用されているかを調査してください。特に、これらのファイルが直接GitHub Actionsで実行されているのか、あるいは他のスクリプトから呼び出されているのか、そのライフサイクルと目的を特定してください。
+     実行内容:
+     1. `.github/actions-tmp/` 内の各GitHub Actionsワークフロー（例: `callgraph.yml`, `daily-project-summary.yml`, `issue-note.yml`, `translate-readme.yml` など）の目的と、それが現在のプロジェクトで実際に利用されているか、または利用される予定があるかを詳細に分析してください。
+     2. これらのワークフローがメインの `.github/workflows/` ディレクトリ内の既存のワークフローとどのように関連しているか、重複があるか、または将来的に統合すべきかを評価してください。
+     3. `actions-tmp` というディレクトリ名が示唆するように、これらが一時的なファイルである場合、その理由と、削除または統合のスケジュールについて考察してください。
 
-     確認事項: このディレクトリが一時的なキャッシュ、サブモジュール、あるいはテスト用のコンテナの一部であるか。メインのワークフローからどのように参照されているか。
+     確認事項: プロジェクトの自動化プロセスに中断を引き起こすことなく、正確な分析結果を提供してください。既存の自動翻訳やプロジェクトサマリー生成プロセスが意図通りに機能し続けることを前提としてください。
 
-     期待する出力: `.github/actions-tmp`ディレクトリの現状の役割と、それがどのように利用されているかを説明するMarkdown形式のレポート。さらに、ディレクトリの目的が不明瞭な場合は、整理（例: リファクタリング、削除、ドキュメント化）のための具体的な提案を含めてください。
+     期待する出力: `.github/actions-tmp` ディレクトリの現状に関する詳細な分析結果と、その内容をメインの `.github/workflows` へ統合すべきか、あるいは現状維持とするべきかについての推奨事項をmarkdown形式で出力してください。推奨事項には、具体的な統合案や、現状維持の場合の管理方針を含めてください。
+     ```
 
 ---
-Generated at: 2025-11-23 07:03:24 JST
+Generated at: 2025-11-25 07:03:31 JST

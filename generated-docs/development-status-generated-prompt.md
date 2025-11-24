@@ -1,4 +1,4 @@
-Last updated: 2025-11-23
+Last updated: 2025-11-25
 
 # 開発状況生成プロンプト（開発者向け）
 
@@ -206,13 +206,13 @@ Last updated: 2025-11-23
 - README.md
 - _config.yml
 - generated-docs/project-overview-generated-prompt.md
+- issue-notes/31.md
 - src/app.rs
 - src/cli.rs
 - src/client_manager.rs
 - src/converter.rs
 - src/input.rs
 - src/main.rs
-- src/process_manager.rs
 
 ## 現在のオープンIssues
 オープン中のIssueはありません
@@ -222,27 +222,32 @@ Last updated: 2025-11-23
 
 ## 最近の変更（過去7日間）
 ### コミット履歴:
+37eaa27 Merge branch 'main' of github.com:cat2151/cat-play-mml into main
+4068cdc fix #31
+0f17649 Auto-translate README.ja.md to README.md [auto]
+90ac179 Merge branch 'main' of github.com:cat2151/cat-play-mml into main
+c26e078 状況を反映
+0747bcc Add issue note for #31 [auto]
+6a84209 Update project summaries (overview & development status) [auto]
 a969eae Merge branch 'main' of github.com:cat2151/cat-play-mml into main
 e8f1c6b JSON送信エラー時は直接printするようにした
 4320d33 Update project summaries (overview & development status) [auto]
-531c5b5 agent指示書をupdate
-99e0db5 Update project summaries (overview & development status) [auto]
-ac97655 Auto-translate README.ja.md to README.md [auto]
-f5b69a2 状況を反映
-91f1169 Auto-translate README.ja.md to README.md [auto]
-d8dca44 陳腐化したagent生成documentsをメンテ
-4583110 陳腐化していたagent生成ドキュメントを削除
 
 ### 変更されたファイル:
-.github/copilot-instructions.md
+Cargo.lock
 README.ja.md
 README.md
 generated-docs/development-status-generated-prompt.md
 generated-docs/development-status.md
 generated-docs/project-overview-generated-prompt.md
 generated-docs/project-overview.md
+issue-notes/31.md
+src/app.rs
 src/client_manager.rs
+src/converter.rs
+src/main.rs
+src/process_manager.rs
 
 
 ---
-Generated at: 2025-11-23 07:03:06 JST
+Generated at: 2025-11-25 07:02:55 JST

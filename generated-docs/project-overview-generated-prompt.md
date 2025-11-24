@@ -1,4 +1,4 @@
-Last updated: 2025-11-23
+Last updated: 2025-11-25
 
 
 # プロジェクト概要生成プロンプト（来訪者向け）
@@ -63,12 +63,12 @@ Last updated: 2025-11-23
 名前: 
 説明: # cat-play-mml
 
-🎵 Music Macro Language (MML) Parser and Player
-
 <p align="left">
   <a href="README.ja.md"><img src="https://img.shields.io/badge/🇯🇵-Japanese-red.svg" alt="Japanese"></a>
   <a href="README.md"><img src="https://img.shields.io/badge/🇺🇸-English-blue.svg" alt="English"></a>
 </p>
+
+🎵 Music Macro Language (MML) Parser and Player
 
 ## Quick Links
 | 項目 | リンク |
@@ -77,7 +77,7 @@ Last updated: 2025-11-23
 
 ## 概要
 
-`cat-play-mml` は、Music Macro Language (MML) によって音楽を再生するCLIツールです。文字列`cde`を入力すれば、音楽`ドレミ`を再生します。Windows用です。
+`cat-play-mml` は、Music Macro Language (MML) によって音楽を再生するCLIツールです。文字列`cde`を入力すれば、音楽`ドレミ`を再生します。Windows用です。Rustで書かれています。
 
 ## クイックスタートガイド
 
@@ -148,10 +148,8 @@ cat-play-mml --shutdown
 
 #### 手動サーバー起動（上級者向け）
 
-JSONファイルを指定してサーバーを起動：
-
 ```
-cat-play-mml --server output.json
+cat-play-mml --server
 ```
 
 ## MML (Music Macro Language) とは
@@ -203,7 +201,7 @@ MMLは、テキストで音楽を記述する言語です。以下のような�
 - 複雑なMML
 - リアルタイムMIDIメッセージ出力
 - エフェクトなど（LPF、オーバードライブ/ディストーション、ディレイなど）
-- GUIエディタ
+- GUIエディタ → TUIエディタは`cat-edit-mml`と、`ym2151-tone-editor`を参照ください
 
 ## 関連プロジェクト
 
@@ -235,11 +233,16 @@ MMLは、テキストで音楽を記述する言語です。以下のような�
 - Linux Python TDD agent で進める想定、ハルシネーションが出たら検討する
 
 ### Nuked-OPM friendly JSON player
-- 実装済（別リポジトリのlog player）
+- ライブラリとして実装済み : `ym2151-log-play-server`
+  - 当アプリもこのライブラリを利用しています
 - 用途は、開発をしやすくする用
   - デバッグしやすく、開発が頓挫するリスクを下げられる
 
-### リアルタイム FM tone editor 仮 検討中
+### リアルタイム FM tone editor
+- 実装済 : `ym2151-tone-editor`
+
+#### 案、草稿
+- 以下は草稿で、実装済みの仕様とは異なります、ひとまず置いておきます
 - ここに書く目的
   - ラバーダッキング
 - 用途
@@ -262,7 +265,8 @@ MMLは、テキストで音楽を記述する言語です。以下のような�
 - すべての仕様は仮で、破壊的変更を頻繁に行う、開発が楽なことを優先
 - これだけでもまだ仕様が多すぎる（小さく始めるには多すぎる）ので、もっと絞った仕様での仮の実装から小さく始める
 
-### cat-edit-ym2151-tone
+#### 案、草稿
+- 以下は草稿で、実装済みの仕様とは異なります、ひとまず置いておきます
 - output : キーを押すごとに演奏する
   - 内部的にはplay mmlする
   - まず極端にシンプルな実装で検証する
@@ -271,7 +275,9 @@ MMLは、テキストで音楽を記述する言語です。以下のような�
     - 小さく始める。一歩ずつやる。それが全体最適
 - 独立したTUIアプリとして切り分けたリポジトリにする。小さく始める
 
-### cat-edit-mmlabc
+### cat-edit-mml
+- 実装済
+- mmlabcのエディタ、演奏エンジンはym2151-log-play-server
 - output : キーを押すごとに演奏する
 - 用途 : cを押したらドが鳴る体験を提供する
 - 独立したTUIアプリとして切り分けたリポジトリにする。小さく始める
@@ -314,6 +320,8 @@ cat-play-mml cegb
 📖 README.md
 📄 _config.yml
 📁 generated-docs/
+📁 issue-notes/
+  📖 31.md
 📁 src/
   📄 app.rs
   📄 cli.rs
@@ -321,7 +329,6 @@ cat-play-mml cegb
   📄 converter.rs
   📄 input.rs
   📄 main.rs
-  📄 process_manager.rs
 
 ## ファイル詳細分析
 
@@ -334,6 +341,7 @@ cat-play-mml cegb
 .vscode/settings.json
 README.ja.md
 README.md
+issue-notes/31.md
 
 上記の情報を基に、プロンプトで指定された形式でプロジェクト概要を生成してください。
 特に以下の点を重視してください：
@@ -345,4 +353,4 @@ README.md
 
 
 ---
-Generated at: 2025-11-23 07:03:05 JST
+Generated at: 2025-11-25 07:02:54 JST

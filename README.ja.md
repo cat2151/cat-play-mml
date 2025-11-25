@@ -19,7 +19,7 @@
 ## クイックスタートガイド
 
 ### 環境構築
-- Windowsに、`Rust` と `Zig` をインストールしてください
+- Windowsに、`Rust` をインストールしてください
 
 ### インストール
 ```
@@ -114,7 +114,6 @@ MMLは、テキストで音楽を記述する言語です。以下のような�
 
 - Windows
 - Rust
-- Zig cc（mingwとmsys2は禁止）
 - agentのTDD用にLinux runner（agentがTDDできさえすればよい） + ALSA SDKと設定（ヘッドレス環境でもTDD可能にするため）
 
 ### 使用するライブラリ

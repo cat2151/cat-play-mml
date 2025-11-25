@@ -1,4 +1,4 @@
-Last updated: 2025-11-25
+Last updated: 2025-11-26
 
 # 開発状況生成プロンプト（開発者向け）
 
@@ -222,6 +222,9 @@ Last updated: 2025-11-25
 
 ## 最近の変更（過去7日間）
 ### コミット履歴:
+6d83d3d Auto-translate README.ja.md to README.md [auto]
+346c8a3 zig ccへの言及を削除（別件と勘違いしていた）
+dcb7823 Update project summaries (overview & development status) [auto]
 37eaa27 Merge branch 'main' of github.com:cat2151/cat-play-mml into main
 4068cdc fix #31
 0f17649 Auto-translate README.ja.md to README.md [auto]
@@ -229,11 +232,9 @@ Last updated: 2025-11-25
 c26e078 状況を反映
 0747bcc Add issue note for #31 [auto]
 6a84209 Update project summaries (overview & development status) [auto]
-a969eae Merge branch 'main' of github.com:cat2151/cat-play-mml into main
-e8f1c6b JSON送信エラー時は直接printするようにした
-4320d33 Update project summaries (overview & development status) [auto]
 
 ### 変更されたファイル:
+.github/copilot-instructions.md
 Cargo.lock
 README.ja.md
 README.md
@@ -250,4 +251,4 @@ src/process_manager.rs
 
 
 ---
-Generated at: 2025-11-25 07:02:55 JST
+Generated at: 2025-11-26 07:03:09 JST

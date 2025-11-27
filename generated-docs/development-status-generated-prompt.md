@@ -1,4 +1,4 @@
-Last updated: 2025-11-26
+Last updated: 2025-11-28
 
 # 開発状況生成プロンプト（開発者向け）
 
@@ -222,33 +222,25 @@ Last updated: 2025-11-26
 
 ## 最近の変更（過去7日間）
 ### コミット履歴:
+c2b8892 Auto-translate README.ja.md to README.md [auto]
+9974226 Update README.ja.md for clarity on status
+9943d84 Add status section to README.ja.md
+05dc7a5 Auto-translate README.ja.md to README.md [auto]
+55f97aa Add features section to README.ja.md
+4470051 Update project summaries (overview & development status) [auto]
 6d83d3d Auto-translate README.ja.md to README.md [auto]
 346c8a3 zig ccへの言及を削除（別件と勘違いしていた）
 dcb7823 Update project summaries (overview & development status) [auto]
 37eaa27 Merge branch 'main' of github.com:cat2151/cat-play-mml into main
-4068cdc fix #31
-0f17649 Auto-translate README.ja.md to README.md [auto]
-90ac179 Merge branch 'main' of github.com:cat2151/cat-play-mml into main
-c26e078 状況を反映
-0747bcc Add issue note for #31 [auto]
-6a84209 Update project summaries (overview & development status) [auto]
 
 ### 変更されたファイル:
-.github/copilot-instructions.md
-Cargo.lock
 README.ja.md
 README.md
 generated-docs/development-status-generated-prompt.md
 generated-docs/development-status.md
 generated-docs/project-overview-generated-prompt.md
 generated-docs/project-overview.md
-issue-notes/31.md
-src/app.rs
-src/client_manager.rs
-src/converter.rs
-src/main.rs
-src/process_manager.rs
 
 
 ---
-Generated at: 2025-11-26 07:03:09 JST
+Generated at: 2025-11-28 07:03:03 JST

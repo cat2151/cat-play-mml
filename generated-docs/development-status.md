@@ -1,50 +1,52 @@
-Last updated: 2025-11-26
+Last updated: 2025-11-28
 
 # Development Status
 
 ## 現在のIssues
-- 現在、オープン状態のIssueは存在せず、全てのタスクが完了しています。
-- これにより、開発プロジェクトは一時的に安定した状態にあると言えます。
-- 次の一手として、既存のコードベースのレビューやドキュメントの整備を検討します。
+オープン中のIssueはありません。
 
 ## 次の一手候補
-1. [Issue #31](../issue-notes/31.md)の修正内容の最終確認と関連機能の動作検証
-   - 最初の小さな一歩: `src/app.rs`, `src/client_manager.rs`, `src/converter.rs`, `src/main.rs`などの変更されたファイルを対象に、[Issue #31](../issue-notes/31.md)で報告されていた問題が解決されていることを手動で検証するためのテスト計画を立案する。
+1. README自動翻訳の品質と正確性のレビュー (新規Issueの検討)
+   - 最初の小さな一歩: `README.md`と`README.ja.md`の最新版を比較し、翻訳の整合性と自然さを評価する。
    - Agent実行プロンプト:
      ```
-     対象ファイル: `issue-notes/31.md`, `src/app.rs`, `src/client_manager.rs`, `src/converter.rs`, `src/main.rs`, `src/process_manager.rs`
+     対象ファイル: `README.md`, `README.ja.md`
 
-     実行内容: [Issue #31](../issue-notes/31.md)の記述を元に、コミット`4068cdc`によって修正された内容が、これらのファイルでどのように実装されたかを分析し、その修正が意図通りに機能するかを検証するための具体的なテストシナリオ（入力、期待される出力、確認項目）をMarkdown形式で記述してください。
+     実行内容: `README.md`と`README.ja.md`の内容を比較し、特に最近の変更点（例: `Add status section to README.ja.md`, `Add features section to README.ja.md`）が正確かつ自然な日本語に翻訳されているか、不整合がないかを分析してください。具体的な改善点や指摘事項をMarkdown形式で出力してください。
 
-     確認事項: [Issue #31](../issue-notes/31.md)の内容と、変更されたファイルの差分を正確に把握し、修正の目的を理解してください。
+     確認事項: 既存のREADMEファイルの意図と整合性を保ちながら、翻訳の品質向上を目指してください。
 
-     期待する出力: Markdown形式で、[Issue #31](../issue-notes/31.md)の修正内容を検証するためのテスト計画（テストケース、手順、期待結果）を出力してください。
+     期待する出力: 翻訳のレビュー結果と具体的な改善提案をMarkdown形式で生成してください。
      ```
 
-2. README自動翻訳ワークフローの健全性確認
-   - 最初の小さな一歩: `README.ja.md`と`README.md`の最新の内容を比較し、翻訳の整合性を目視で確認する。
+2. 自動生成される開発状況レポートの有用性評価と改善 (新規Issueの検討)
+   - 最初の小さな一歩: `generated-docs/development-status.md` と `generated-docs/project-overview.md` の最近の生成結果を確認し、開発者にとって本当に役立つ情報が提供されているかを自己評価する。
    - Agent実行プロンプト:
      ```
-     対象ファイル: `.github/workflows/translate-readme.yml`, `.github/workflows/call-translate-readme.yml`, `.github/actions-tmp/.github_automation/translate/scripts/translate-readme.cjs`, `README.ja.md`, `README.md`
+     対象ファイル: .github/actions-tmp/.github_automation/project_summary/prompts/development-status-prompt.md, .github/actions-tmp/.github_automation/project_summary/prompts/project-overview-prompt.md, generated-docs/development-status.md, generated-docs/project-overview.md
 
-     実行内容: 自動翻訳ワークフロー（`translate-readme.yml`と`call-translate-readme.yml`）の現在の設定と、`translate-readme.cjs`のスクリプトを分析してください。特に、翻訳のトリガー、使用されている翻訳サービス（存在する場合）、エラー発生時の挙動、および`README.ja.md`と`README.md`の最新の差分を確認し、翻訳の整合性が保たれているかを評価してください。
+     実行内容: 上記ファイルを分析し、現在自動生成されている開発状況レポート（`development-status.md`）とプロジェクト概要レポート（`project-overview.md`）の以下の観点から評価を行い、改善提案をMarkdown形式で出力してください：
+     1) 開発者にとっての情報の有用性
+     2) 情報の正確性と最新性
+     3) より効果的なレポートにするための追加情報やフォーマットの改善点
 
-     確認事項: ワークフローのトリガー条件、`translate-readme.cjs`のロジック、および実際の`README`ファイルの同期状態を確認してください。
+     確認事項: プロンプトの「生成しないもの」の制約（ハルシネーションの回避、無価値なタスクの提案禁止）を遵守し、既存の情報に基づいた現実的な改善策を提案してください。
 
-     期待する出力: Markdown形式で、自動翻訳ワークフローの現状の評価（問題点、改善点があれば提案を含む）と、`README.ja.md`と`README.md`間の翻訳の整合性に関する詳細な分析結果を出力してください。
+     期待する出力: 開発状況レポートとプロジェクト概要レポートの評価結果、および具体的な改善提案をMarkdown形式で生成してください。
      ```
 
-3. 自動生成ドキュメントの正確性と生成プロセスのレビュー
-   - 最初の小さな一歩: `generated-docs/development-status.md`と`generated-docs/project-overview.md`の内容を、現在のプロジェクトのファイル一覧やコミット履歴と照らし合わせ、情報が最新であるか、矛盾がないかを確認する。
+3. Callgraph生成ワークフローの機能確認と活用促進 (新規Issueの検討)
+   - 最初の小さな一歩: `.github/workflows/call-callgraph.yml`と`.github/actions-tmp/.github_automation/callgraph/docs/callgraph.md`を読み込み、Callgraphがどのように生成され、どのように利用できるかを理解する。
    - Agent実行プロンプト:
      ```
-     対象ファイル: `generated-docs/development-status.md`, `generated-docs/project-overview.md`, `.github/actions-tmp/.github_automation/project_summary/prompts/development-status-prompt.md`, `.github/actions-tmp/.github_automation/project_summary/prompts/project-overview-prompt.md`, `.github/actions-tmp/.github_automation/project_summary/scripts/development/DevelopmentStatusGenerator.cjs`, `.github/actions-tmp/.github_automation/project_summary/scripts/overview/ProjectOverviewGenerator.cjs`
+     対象ファイル: .github/workflows/call-callgraph.yml, .github/actions-tmp/.github_automation/callgraph/scripts/generate-html-graph.cjs, .github/actions-tmp/.github_automation/callgraph/docs/callgraph.md
 
-     実行内容: `generated-docs/development-status.md`と`generated-docs/project-overview.md`の内容が、現在のプロジェクトの状態（ファイル一覧、コミット履歴、オープンIssueなし）と正確に一致しているかを分析してください。また、これらのドキュメントを生成するために使用されているプロンプトファイルとスクリプトが、現在のプロジェクトの状態を正確に反映するための適切なロジックを含んでいるかを評価してください。
+     実行内容: これらのファイルを分析し、Callgraphの生成プロセス（トリガー、スクリプトの役割、出力形式）を説明してください。また、このCallgraphがプロジェクトの開発・保守においてどのように役立つか、およびその活用を促進するための具体的なステップをMarkdown形式で提案してください。
 
-     確認事項: 自動生成されたドキュメントの最新性、正確性、および生成ロジックとプロンプトの妥当性を確認してください。
+     確認事項: Callgraphが現状のプロジェクト構造とどの程度適合しているか、および導入の容易性を考慮した提案をしてください。
 
-     期待する出力: Markdown形式で、自動生成ドキュメントの現状評価（正確性、最新性）と、それらの生成プロセス（プロンプトとスクリプト）に関する改善提案を出力してください。
+     期待する出力: Callgraph生成ワークフローの解説と、その開発・保守への具体的な活用提案をMarkdown形式で生成してください。
+     ```
 
 ---
-Generated at: 2025-11-26 07:03:26 JST
+Generated at: 2025-11-28 07:03:27 JST

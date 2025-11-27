@@ -16,6 +16,9 @@
 
 `cat-play-mml` は、Music Macro Language (MML) によって音楽を再生するCLIツールです。文字列`cde`を入力すれば、音楽`ドレミ`を再生します。Windows用です。Rustで書かれています。
 
+## 状況
+- 未実装MMLコマンドが多数あります。READMEのメンテも途中です。今後進めていく予定です
+
 ## 特徴
 
 - 100ms

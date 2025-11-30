@@ -1,52 +1,50 @@
-Last updated: 2025-11-28
+Last updated: 2025-12-01
 
 # Development Status
 
 ## 現在のIssues
-オープン中のIssueはありません。
+現在、オープン中のissuesはありません。プロジェクトは安定しており、大きな問題は見当たりません。
+今後は既存の自動化ワークフローの品質向上や機能拡張が主要な開発テーマとなります。
 
 ## 次の一手候補
-1. README自動翻訳の品質と正確性のレビュー (新規Issueの検討)
-   - 最初の小さな一歩: `README.md`と`README.ja.md`の最新版を比較し、翻訳の整合性と自然さを評価する。
+1. `development-status.md` 生成の精度向上
+   - 最初の小さな一歩: 現在の `development-status-prompt.md` が適切に機能しているか、または改善の余地がないかレビューする。
    - Agent実行プロンプト:
      ```
-     対象ファイル: `README.md`, `README.ja.md`
+     対象ファイル: .github/actions-tmp/.github_automation/project_summary/prompts/development-status-prompt.md, generated-docs/development-status.md, README.ja.md, README.md
 
-     実行内容: `README.md`と`README.ja.md`の内容を比較し、特に最近の変更点（例: `Add status section to README.ja.md`, `Add features section to README.ja.md`）が正確かつ自然な日本語に翻訳されているか、不整合がないかを分析してください。具体的な改善点や指摘事項をMarkdown形式で出力してください。
+     実行内容: `development-status-prompt.md` の内容と、それによって生成された最新の `generated-docs/development-status.md` を比較し、現在のプロジェクト状況やREADMEの変更点が正確に反映されているかを分析してください。特に、情報の網羅性、要約の的確さ、ハルシネーションの有無に注目してください。
 
-     確認事項: 既存のREADMEファイルの意図と整合性を保ちながら、翻訳の品質向上を目指してください。
+     確認事項: `development-status-prompt.md` が参照している可能性のあるスクリプト（例: `DevelopmentStatusGenerator.cjs`）の入力・出力仕様。また、`README.ja.md` や `README.md` の最新の変更点。
 
-     期待する出力: 翻訳のレビュー結果と具体的な改善提案をMarkdown形式で生成してください。
+     期待する出力: `development-status.md` の現状の課題点と、`development-status-prompt.md` をどのように改善すべきかについて、具体的な変更案をMarkdown形式で提案してください。
      ```
 
-2. 自動生成される開発状況レポートの有用性評価と改善 (新規Issueの検討)
-   - 最初の小さな一歩: `generated-docs/development-status.md` と `generated-docs/project-overview.md` の最近の生成結果を確認し、開発者にとって本当に役立つ情報が提供されているかを自己評価する。
+2. `project-overview.md` の情報網羅性検証
+   - 最初の小さな一歩: `project-overview-prompt.md` がプロジェクト全体を適切に概観できているか、主要なファイル群やディレクトリ構造が漏れなく考慮されているかを確認する。
    - Agent実行プロンプト:
      ```
-     対象ファイル: .github/actions-tmp/.github_automation/project_summary/prompts/development-status-prompt.md, .github/actions-tmp/.github_automation/project_summary/prompts/project-overview-prompt.md, generated-docs/development-status.md, generated-docs/project-overview.md
+     対象ファイル: .github/actions-tmp/.github_automation/project_summary/prompts/project-overview-prompt.md, generated-docs/project-overview.md, .github/actions-tmp/.github_automation/project_summary/scripts/overview/ProjectDataCollector.cjs, .github/actions-tmp/.github_automation/project_summary/scripts/overview/CodeAnalyzer.cjs
 
-     実行内容: 上記ファイルを分析し、現在自動生成されている開発状況レポート（`development-status.md`）とプロジェクト概要レポート（`project-overview.md`）の以下の観点から評価を行い、改善提案をMarkdown形式で出力してください：
-     1) 開発者にとっての情報の有用性
-     2) 情報の正確性と最新性
-     3) より効果的なレポートにするための追加情報やフォーマットの改善点
+     実行内容: `project-overview-prompt.md` に基づいて生成された `generated-docs/project-overview.md` を分析し、プロジェクトの全体像を正確かつ網羅的に捉えているか評価してください。特に、主要な機能（例：callgraph, issue-note, translate-readme）に関する説明が十分か、また新しいRustコードベースが適切に考慮されているかを確認してください。
 
-     確認事項: プロンプトの「生成しないもの」の制約（ハルシネーションの回避、無価値なタスクの提案禁止）を遵守し、既存の情報に基づいた現実的な改善策を提案してください。
+     確認事項: `ProjectDataCollector.cjs` や `CodeAnalyzer.cjs` がどのような情報を収集し、`ProjectOverviewGenerator.cjs` に渡しているかの処理フロー。プロジェクトファイル一覧全体との整合性。
 
-     期待する出力: 開発状況レポートとプロジェクト概要レポートの評価結果、および具体的な改善提案をMarkdown形式で生成してください。
+     期待する出力: `project-overview.md` が現状提供していない重要な情報や、改善すべき点があれば、`project-overview-prompt.md` や関連スクリプトの改善案を含めてMarkdown形式で報告してください。
      ```
 
-3. Callgraph生成ワークフローの機能確認と活用促進 (新規Issueの検討)
-   - 最初の小さな一歩: `.github/workflows/call-callgraph.yml`と`.github/actions-tmp/.github_automation/callgraph/docs/callgraph.md`を読み込み、Callgraphがどのように生成され、どのように利用できるかを理解する。
+3. 自動生成ドキュメントの品質チェックワークフローの検討
+   - 最初の小さな一歩: `README.md` や `generated-docs` 内のMarkdownファイルに対して、形式的な整合性（例：リンク切れ、見出し構造、コードブロックの書式）をチェックする簡単なスクリプトの導入可能性を調査する。
    - Agent実行プロンプト:
      ```
-     対象ファイル: .github/workflows/call-callgraph.yml, .github/actions-tmp/.github_automation/callgraph/scripts/generate-html-graph.cjs, .github/actions-tmp/.github_automation/callgraph/docs/callgraph.md
+     対象ファイル: README.md, README.ja.md, generated-docs/development-status.md, generated-docs/project-overview.md, .github/workflows/call-daily-project-summary.yml, .github/workflows/call-translate-readme.yml
 
-     実行内容: これらのファイルを分析し、Callgraphの生成プロセス（トリガー、スクリプトの役割、出力形式）を説明してください。また、このCallgraphがプロジェクトの開発・保守においてどのように役立つか、およびその活用を促進するための具体的なステップをMarkdown形式で提案してください。
+     実行内容: `README.md` や `generated-docs` 配下のMarkdownファイルの品質を自動的にチェックするシンプルなワークフローの導入について調査し、実現可能性を分析してください。特に、既存のCI/CDパイプライン（`call-daily-project-summary.yml`, `call-translate-readme.yml`など）への組み込みを想定し、Markdownリンター（例：`markdownlint-cli`）やカスタムスクリプトの利用を検討してください。
 
-     確認事項: Callgraphが現状のプロジェクト構造とどの程度適合しているか、および導入の容易性を考慮した提案をしてください。
+     確認事項: 既存のGitHub Actionsワークフローの実行タイミングと依存関係。品質チェックツール導入によるビルド時間やリソース消費への影響。
 
-     期待する出力: Callgraph生成ワークフローの解説と、その開発・保守への具体的な活用提案をMarkdown形式で生成してください。
+     期待する出力: 自動生成されたMarkdownドキュメントの品質を担保するための、具体的なチェック項目と、それを実現するための推奨ツール、および簡単なワークフロー実装の提案（擬似コードまたは概念図）をMarkdown形式で記述してください。
      ```
 
 ---
-Generated at: 2025-11-28 07:03:27 JST
+Generated at: 2025-12-01 07:03:08 JST

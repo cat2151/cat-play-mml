@@ -1,4 +1,4 @@
-Last updated: 2025-11-28
+Last updated: 2025-12-01
 
 # 開発状況生成プロンプト（開発者向け）
 
@@ -222,6 +222,9 @@ Last updated: 2025-11-28
 
 ## 最近の変更（過去7日間）
 ### コミット履歴:
+c50faaa Auto-translate README.ja.md to README.md [auto]
+7223793 Update project goals in Japanese README
+3577ad1 Update project summaries (overview & development status) [auto]
 c2b8892 Auto-translate README.ja.md to README.md [auto]
 9974226 Update README.ja.md for clarity on status
 9943d84 Add status section to README.ja.md
@@ -229,9 +232,6 @@ c2b8892 Auto-translate README.ja.md to README.md [auto]
 55f97aa Add features section to README.ja.md
 4470051 Update project summaries (overview & development status) [auto]
 6d83d3d Auto-translate README.ja.md to README.md [auto]
-346c8a3 zig ccへの言及を削除（別件と勘違いしていた）
-dcb7823 Update project summaries (overview & development status) [auto]
-37eaa27 Merge branch 'main' of github.com:cat2151/cat-play-mml into main
 
 ### 変更されたファイル:
 README.ja.md
@@ -243,4 +243,4 @@ generated-docs/project-overview.md
 
 
 ---
-Generated at: 2025-11-28 07:03:03 JST
+Generated at: 2025-12-01 07:02:52 JST

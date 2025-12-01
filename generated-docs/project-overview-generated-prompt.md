@@ -1,4 +1,4 @@
-Last updated: 2025-12-01
+Last updated: 2025-12-02
 
 
 # プロジェクト概要生成プロンプト（来訪者向け）
@@ -328,6 +328,7 @@ cat-play-mml cegb
 📖 README.md
 📄 _config.yml
 📁 generated-docs/
+🌐 googled947dc864c270e07.html
 📁 issue-notes/
   📖 31.md
 📁 src/
@@ -339,7 +340,9 @@ cat-play-mml cegb
   📄 main.rs
 
 ## ファイル詳細分析
-
+**googled947dc864c270e07.html** (1行, 53バイト)
+  - 関数: なし
+  - インポート: なし
 
 ## 関数呼び出し階層
 関数呼び出し階層を分析できませんでした
@@ -349,6 +352,7 @@ cat-play-mml cegb
 .vscode/settings.json
 README.ja.md
 README.md
+googled947dc864c270e07.html
 issue-notes/31.md
 
 上記の情報を基に、プロンプトで指定された形式でプロジェクト概要を生成してください。
@@ -361,4 +365,4 @@ issue-notes/31.md
 
 
 ---
-Generated at: 2025-12-01 07:02:52 JST
+Generated at: 2025-12-02 07:02:58 JST

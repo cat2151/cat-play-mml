@@ -1,4 +1,4 @@
-Last updated: 2025-12-01
+Last updated: 2025-12-02
 
 # 開発状況生成プロンプト（開発者向け）
 
@@ -162,6 +162,7 @@ Last updated: 2025-12-01
 - .github/actions-tmp/generated-docs/project-overview-generated-prompt.md
 - .github/actions-tmp/generated-docs/project-overview.md
 - .github/actions-tmp/generated-docs/style.css
+- .github/actions-tmp/googled947dc864c270e07.html
 - .github/actions-tmp/issue-notes/10.md
 - .github/actions-tmp/issue-notes/11.md
 - .github/actions-tmp/issue-notes/12.md
@@ -206,6 +207,7 @@ Last updated: 2025-12-01
 - README.md
 - _config.yml
 - generated-docs/project-overview-generated-prompt.md
+- googled947dc864c270e07.html
 - issue-notes/31.md
 - src/app.rs
 - src/cli.rs
@@ -222,6 +224,9 @@ Last updated: 2025-12-01
 
 ## 最近の変更（過去7日間）
 ### コミット履歴:
+03ca99a Google検索にindexさせる用
+6e76db5 Google検索にindexさせる用
+2facc2c Update project summaries (overview & development status) [auto]
 c50faaa Auto-translate README.ja.md to README.md [auto]
 7223793 Update project goals in Japanese README
 3577ad1 Update project summaries (overview & development status) [auto]
@@ -229,18 +234,17 @@ c2b8892 Auto-translate README.ja.md to README.md [auto]
 9974226 Update README.ja.md for clarity on status
 9943d84 Add status section to README.ja.md
 05dc7a5 Auto-translate README.ja.md to README.md [auto]
-55f97aa Add features section to README.ja.md
-4470051 Update project summaries (overview & development status) [auto]
-6d83d3d Auto-translate README.ja.md to README.md [auto]
 
 ### 変更されたファイル:
 README.ja.md
 README.md
+_config.yml
 generated-docs/development-status-generated-prompt.md
 generated-docs/development-status.md
 generated-docs/project-overview-generated-prompt.md
 generated-docs/project-overview.md
+googled947dc864c270e07.html
 
 
 ---
-Generated at: 2025-12-01 07:02:52 JST
+Generated at: 2025-12-02 07:02:58 JST

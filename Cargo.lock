@@ -368,7 +368,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "39cab71617ae0d63f51a36d69f866391735b51691dbda63cf6f96d042b63efeb"
 dependencies = [
  "libc",
- "windows-sys 0.61.2",
+ "windows-sys 0.59.0",
 ]
 
 [[package]]
@@ -536,7 +536,7 @@ dependencies = [
 [[package]]
 name = "mmlabc-to-smf"
 version = "0.1.0"
-source = "git+https://github.com/cat2151/mmlabc-to-smf-rust#5d0aa2aa360e7fdfb8251f3b45ab21a7b3a8c100"
+source = "git+https://github.com/cat2151/mmlabc-to-smf-rust#723d219fc48dfc5496280f275e87f23a58bed0eb"
 dependencies = [
  "anyhow",
  "cc",
@@ -858,7 +858,7 @@ dependencies = [
  "errno",
  "libc",
  "linux-raw-sys",
- "windows-sys 0.61.2",
+ "windows-sys 0.59.0",
 ]
 
 [[package]]
@@ -1193,7 +1193,7 @@ version = "0.1.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c2a7b1c03c876122aa43f3020e6c3c3ee5c05081c9a00739faf7503aeba10d22"
 dependencies = [
- "windows-sys 0.61.2",
+ "windows-sys 0.59.0",
 ]
 
 [[package]]

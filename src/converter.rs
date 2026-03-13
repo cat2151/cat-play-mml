@@ -31,7 +31,8 @@ fn convert_mml_to_json(mml: &str, verbosity: &VerbosityConfig) -> Result<String>
     verbosity.print_verbose("Step 1: Converting MML to SMF...");
     let tokens = pass1_parser::parse_mml(mml);
     let ast = pass2_ast::tokens_to_ast(&tokens);
-    let events = pass3_events::ast_to_events(&ast, false);
+    let use_drum_channel_for_128 = false;
+    let events = pass3_events::ast_to_events(&ast, use_drum_channel_for_128);
     let smf_data = pass4_midi::events_to_midi(&events)?;
     verbosity.print_verbose(&format!("  SMF data generated: {} bytes", smf_data.len()));
 

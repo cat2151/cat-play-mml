@@ -13,7 +13,7 @@ fn is_valid_sha1(s: &str) -> bool {
     s.len() == 40 && s.chars().all(|c| c.is_ascii_hexdigit())
 }
 
-fn validate_check_hash(local_hash: &'static str) -> Result<&'static str> {
+fn validate_check_hash(local_hash: &str) -> Result<&str> {
     if local_hash == "unknown" || !is_valid_sha1(local_hash) {
         bail!(
             "このビルドでは commit hash を取得できないため `cat-play-mml check` を実行できません。git clone した作業ツリーからビルドし直してください。"

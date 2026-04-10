@@ -46,6 +46,8 @@ fn git_dir() -> Option<PathBuf> {
     if path.is_absolute() {
         Some(path.to_path_buf())
     } else {
+        // `git rev-parse --git-dir` may return a path relative to the crate root.
+        // Resolve it eagerly so `rerun-if-changed` points at a stable location.
         Some(std::env::current_dir().ok()?.join(path))
     }
 }

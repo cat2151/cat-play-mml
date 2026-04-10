@@ -5,6 +5,7 @@ mod cli;
 mod client_manager;
 mod converter;
 mod input;
+mod updater;
 
 use app::App;
 

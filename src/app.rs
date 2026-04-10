@@ -2,9 +2,10 @@ use anyhow::Result;
 use clap::Parser;
 use ym2151_log_play_server::server::Server;
 
-use crate::cli::Args;
+use crate::cli::{Args, Command};
 use crate::client_manager::ClientManager;
 use crate::converter::generate_json_from_input;
+use crate::updater;
 
 #[derive(Clone, Copy)]
 pub struct VerbosityConfig {
@@ -38,17 +39,27 @@ impl App {
 
     pub fn run(&self) -> Result<()> {
         let args = Args::parse();
+        args.validate()?;
         let verbosity = VerbosityConfig::from_args(&args);
 
         match self.determine_mode(&args) {
             AppMode::Server => self.run_server_mode(&verbosity),
             AppMode::StopPlayback => self.handle_stop_command(&verbosity),
             AppMode::Shutdown => self.handle_shutdown_command(&verbosity),
+            AppMode::CheckForUpdate => updater::run_check(),
+            AppMode::RunUpdate => updater::run_update(),
             AppMode::PlayInput(input) => self.handle_play_input(&input, &verbosity),
         }
     }
 
     fn determine_mode(&self, args: &Args) -> AppMode {
+        if let Some(command) = &args.command {
+            return match command {
+                Command::Check => AppMode::CheckForUpdate,
+                Command::Update => AppMode::RunUpdate,
+            };
+        }
+
         if args.server {
             return AppMode::Server;
         }
@@ -87,7 +98,7 @@ impl App {
         if input.is_empty() {
             // 注意、コマンドライン引数チェック側に統合したほうがよいかも。今後検討するつもり
             return Err(anyhow::anyhow!(
-                "INPUT is required unless using --server, --stop, or --shutdown"
+                "INPUT is required unless using --server, --stop, --shutdown, check, or update"
             ));
         }
 
@@ -107,5 +118,7 @@ enum AppMode {
     Server,
     StopPlayback,
     Shutdown,
+    CheckForUpdate,
+    RunUpdate,
     PlayInput(String),
 }

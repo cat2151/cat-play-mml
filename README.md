@@ -92,6 +92,18 @@ Shut down the server:
 cat-play-mml --shutdown
 ```
 
+Check whether a newer build is available:
+
+```
+cat-play-mml check
+```
+
+Start the self-update flow:
+
+```
+cat-play-mml update
+```
+
 #### Manual Server Startup (Advanced)
 
 ```

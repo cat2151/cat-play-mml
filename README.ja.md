@@ -92,6 +92,18 @@ cat-play-mml --stop
 cat-play-mml --shutdown
 ```
 
+新しいビルドがあるか確認：
+
+```
+cat-play-mml check
+```
+
+セルフアップデートを開始：
+
+```
+cat-play-mml update
+```
+
 #### 手動サーバー起動（上級者向け）
 
 ```

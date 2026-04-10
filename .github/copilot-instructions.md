@@ -1,8 +1,3 @@
-# cat-play-mml 向け AI コーディングエージェント指示書
-
-## プロジェクト概要
-`cat-play-mml` は、Windows に特化した MML (Music Macro Language) から音声への変換パイプラインで、`"cde"` のようなテキストをリアルタイム音声再生（「ド・レ・ミ」）に変換します。アーキテクチャは、各段階に独立したクレートを持つ **4 層変換パイプライン** に従っています。
-
 ## アーキテクチャとデータフロー
 アプリケーションは、複数の Git リポジトリにわたる **モジュラー変換パイプライン** を使用しています：
 1. **MML → SMF**: `mmlabc-to-smf-rust` (4 パス: parser → AST → events → MIDI)
@@ -10,24 +5,12 @@
 3. **YM2151 Log → Audio**: `ym2151-log-play-server` (Nuked-OPM synthesis)
 4. **Client Orchestration**: このリポジトリがパイプラインを調整
 
-`src/` 内の主要コンポーネント：
-- `app.rs`: 出力制御のための `VerbosityConfig` を持つメインオーケストレーター
-- `converter.rs`: パイプライン統合 (`generate_json_from_input`)
-- `input.rs`: ファイル形式検出 (MML/MIDI/JSON)
-- `client_manager.rs`: 名前付きパイプ経由でのサーバー通信
-- `process_manager.rs`: デタッチされたサーバーモードでの Windows プロセス生成
-
 ## 重要な開発パターン
 
 ### サーバーアーキテクチャ
 - **デュアルモード動作**: クライアントコマンド vs. バックグラウンドサーバー (`--server`)
 - **自動サーバー起動**: サーバーが動作していない場合、クライアントが自動的にサーバーを開始
 - **Windows 固有プロセス処理**: `CREATE_NEW_PROCESS_GROUP | DETACHED_PROCESS` を使用
-
-### エラーハンドリング戦略
-- 全体を通して `anyhow::Result` を使用
-- サーバー接続エラーは `client_manager.rs` 内の自動起動ロジックを起動
-- Windows ロケールサポートのための日本語エラーメッセージ検出
 
 ### ビルドと依存関係管理
 - **Git 依存関係**: すべての音楽処理クレートは Git サブモジュール
@@ -90,3 +73,5 @@ cat-play-mml --shutdown         # サーバー終了
   - それを用いて、サーバーモードでの起動、クライアントとしてサーバーへの接続、を実現しています。
   - クライアント・サーバー機能で問題があったときは、まず、 **ym2151-log-play-server** について調査してください。
   - サーバーモード時は、 **ym2151-log-play-server** の機能により、受信メッセージに従ってインタラクティブモードと非インタラクティブモードを切り替えることができます。
+- プルリクエストは日本語で書く
+- cat2151のライブラリはtag指定禁止

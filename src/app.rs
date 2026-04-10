@@ -98,7 +98,7 @@ impl App {
         if input.is_empty() {
             // 注意、コマンドライン引数チェック側に統合したほうがよいかも。今後検討するつもり
             return Err(anyhow::anyhow!(
-                "INPUT is required unless using --server, --stop, --shutdown, check, or update"
+                "INPUT is required unless using --server, --stop, --shutdown, or a subcommand (check/update)"
             ));
         }
 

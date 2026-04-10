@@ -7,7 +7,9 @@ fn main() {
 
     if let Some(git_dir) = git_dir() {
         let head_path = git_dir.join("HEAD");
+        let packed_refs_path = git_dir.join("packed-refs");
         println!("cargo:rerun-if-changed={}", head_path.display());
+        println!("cargo:rerun-if-changed={}", packed_refs_path.display());
 
         if let Ok(head_contents) = fs::read_to_string(&head_path) {
             if let Some(reference) = head_contents.trim().strip_prefix("ref: ") {

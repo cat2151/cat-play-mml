@@ -14,14 +14,14 @@
 
 ## Overview
 
-`cat-play-mml` is a CLI tool that plays music using Music Macro Language (MML). If you input the string `cde`, it will play the notes `Do-Re-Mi`. It is for Windows and written in Rust.
+`cat-play-mml` is a CLI tool that plays music using Music Macro Language (MML). Inputting the string `cde` will play the "do-re-mi" musical notes. It is for Windows and written in Rust.
 
 ## Status
-- Breaking changes occur frequently. Many MML commands are unimplemented. The README maintenance is in progress and will be advanced in the future.
+- Breaking changes occur frequently. Many MML commands are not yet implemented. README maintenance is in progress and will be advanced going forward.
 
 ## Features
 
-- 100ms
+- Low Latency (100ms)
   - Sound plays within 100ms to 500ms after executing the CLI.
     - Just specify `"cde"` as a command-line argument!
 
@@ -32,33 +32,35 @@
 
 ### Installation
 ```
-cargo install --git https://github.com/cat2151/cat-play-mml.git --branch main --bin cat-play-mml
+cargo install --force --git https://github.com/cat2151/cat-play-mml.git
 ```
-That's it! It will be installed on your Windows from GitHub.
+
+That's it! It will be installed on your Windows machine directly from GitHub.
 
 ### Playing Music
 ```
 cat-play-mml cde
 ```
+
 Do-Re-Mi will play.
 
-## Future Plans (Potential Issues for Related Projects)
+## Future Plans / Candidates for related project issues
 
-- [mmlabc-to-smf-rust](https://github.com/cat2151/mmlabc-to-smf-rust/issues)：
-  - Implement MML `;`. `c;e;g` will form a C major chord. To allow assigning different timbres in the future, it should be ch1 C, ch2 E, ch3 G (1-based notation) instead of ch1 C-E-G.
+- [mmlabc-to-smf-rust](https://github.com/cat2151/mmlabc-to-smf-rust/issues):
+  - Implement MML `;`. `c;e;g` will form a C major chord. To allow assigning different timbres in the future, it should be ch1 C, ch2 E, ch3 G (1-based notation) instead of a C major chord on ch1.
   - Output MIDI Program Change 0 (0-based notation) at the beginning of each SMF channel. Do not output to channels without note output.
 
 - [smf-to-ym2151log-rust](https://github.com/cat2151/smf-to-ym2151log-rust/issues)
-  - Support multiple channels with the implementation of MML `;`. Chords within a channel will be considered separately; for now, undefined behavior is acceptable.
-  - MIDI Program Change 0 (0-based notation) should result in an acoustic grand piano-like timbre. More specifically, anything other than a sine wave is acceptable.
+  - Along with the MML `;` implementation, support multiple channels. For chords within a channel, this will be considered separately for now and can remain undefined behavior.
+  - MIDI Program Change 0 (0-based notation) will represent an acoustic grand piano-like timbre. More specifically, it just needs to not be a sine wave.
 
 - [ym2151-log-play-server](https://github.com/cat2151/ym2151-log-play-server/issues)
 
 ### Key Features
 
 - **Simple, instant playback**: Just pass "cde" as an argument to play Do-Re-Mi.
-- **Low Latency**: Real-time music playback.
-- **Background Playback**: Perform other operations while music plays in server mode.
+- **Low latency**: Real-time music playback.
+- **Background playback**: Play music in server mode while performing other operations.
 
 ### Usage
 
@@ -67,9 +69,10 @@ Do-Re-Mi will play.
 ```
 cat-play-mml cde
 ```
-On the first run, the server automatically starts, and playback begins in the background. The command exits immediately, allowing you to enter the next command.
 
-For subsequent runs, playback is sent to the already running server:
+Upon first execution, the server automatically starts in the background, and music playback begins. The command immediately exits, allowing you to input the next command.
+
+For subsequent executions, it sends the music to the already running server:
 
 ```
 cat-play-mml efg
@@ -109,9 +112,9 @@ cat-play-mml --server
 
 ## What is MML (Music Macro Language)?
 
-MML is a language for describing music in text. It uses the following notation:
+MML is a language for describing music using text. It uses the following notation:
 
-- `c`, `d`, `e`, `f`, `g`, `a`, `b`: Scale notes (Do, Re, Mi, Fa, Sol, La, Si)
+- `c`, `d`, `e`, `f`, `g`, `a`, `b`: Notes (C, D, E, F, G, A, B)
 - `o4`: Octave setting (4th octave)
 - `l4`: Note length setting (quarter note)
 - `t120`: Tempo setting (BPM 120)
@@ -123,16 +126,16 @@ MML is a language for describing music in text. It uses the following notation:
 
 ### Architecture
 
-1. **Parser**: Converts MML text to AST using tree-sitter.
-2. **Intermediate Representation**: Converts AST to musical data structure.
-3. **Audio Generation**: Generates audio waveforms from the intermediate representation.
-4. **Playback**: Outputs audio using an audio library.
+1.  **Parser**: Uses tree-sitter to convert MML text into an AST.
+2.  **Intermediate Representation**: Converts AST into musical data structures.
+3.  **Audio Generation**: Generates audio waveforms from the intermediate representation.
+4.  **Playback**: Outputs audio using an audio library.
 
 ### Development Environment
 
 - Windows
 - Rust
-- Linux runner for agent's TDD (as long as the agent can do TDD) + ALSA SDK and setup (to enable TDD in a headless environment).
+- Linux runner for agent's TDD (as long as the agent can do TDD) + ALSA SDK and setup (to enable TDD even in headless environments).
 
 ### Libraries Used
 
@@ -142,13 +145,13 @@ MML is a language for describing music in text. It uses the following notation:
 ## Project Goals
 
 ### Top Priority Goals
-- [x] Provide the experience of playing Do-Re-Mi in real-time by executing `cat-play-mml "cde"` as a Windows Rust executable.
+- [x] Provide the experience of executing `cat-play-mml "cde"` as a Windows Rust executable, resulting in real-time playback of Do-Re-Mi.
 
 ### Next Goals
 - mmlabc grammar
   - Priority
     - `;`
-- Intermediate representation file output (including Standard MIDI Files).
+- File output for intermediate representation (including Standard MIDI Files).
 
 ## Out of Scope
 
@@ -165,94 +168,94 @@ MML is a language for describing music in text. It uses the following notation:
 
 ### Future Outlook for MML to SMF
 - Status
-  - Only 'cde' has been implemented.
-    - Goal: By focusing on minimal implementation initially, we aim to smooth out problem-solving until real-time Do-Re-Mi playback is achieved.
-  - Using SMF
-    - Goal: Using SMF makes verification and development easier, reducing the risk of stalled development.
-- The MML dialect is assumed to be mmlabc, for which there is expertise and a clear format.
-- Anticipated to proceed with a TDD agent; if hallucinations occur, they will be investigated.
+  - Only `cde` has been implemented.
+    - Goal: Initially, focus on a minimal implementation to smoothly resolve issues leading up to real-time Do-Re-Mi playback.
+  - Uses SMF
+    - Goal: Using SMF makes verification and development easier, reducing the risk of development stagnation.
+- The MML dialect is assumed to be mmlabc, as there is existing know-how and a clear format.
+- Assumed to proceed with a TDD agent; will consider if hallucinations occur.
 
-### SMF to Nuked-OPM Friendly JSON (Under Consideration)
+### SMF to Nuked-OPM friendly JSON (Under Consideration)
 - Example
-  - Delay Vibrato
+  - Delay vibrato
     - Based on the `tone modify delay vibrato` value in `tone settings toml`,
       - From an OPM sound driver perspective,
         - Generate soft LFO register events for each tick.
-    - Separating SMF and toml is intended to simplify the MIDI implementation on the SMF side.
-      - The toml side makes it easier to introduce breaking changes for timbres and OPM sound driver-like processing, following the ETC principle.
+    - Separating SMF and toml is to simplify the MIDI implementation on the SMF side.
+      - The toml side makes it easier to implement breaking changes for timbres and OPM sound driver-like processing, adhering to the ETC principle.
 - The following passes are envisioned:
-  - SMF to intermediate representation * (JSON representing SMF as text is envisioned)
-  - Intermediate representation to intermediate representation * (n times) * (Delay vibrato is envisioned here)
-  - Intermediate representation to Nuked-OPM friendly JSON
-- Anticipated to proceed with a Linux Python TDD agent; if hallucinations occur, they will be investigated.
+  - SMF to Intermediate Representation *Assumes SMF represented as text in JSON*
+  - Intermediate Representation to Intermediate Representation *n times* *Delay vibrato is envisioned here*
+  - Intermediate Representation to Nuked-OPM friendly JSON
+- Assumed to proceed with a Linux Python TDD agent; will consider if hallucinations occur.
 
 ### Nuked-OPM friendly JSON player
 - Already implemented as a library: `ym2151-log-play-server`
   - This application also uses this library.
-- Its purpose is to facilitate development.
-  - Easier to debug, reducing the risk of stalled development.
+- Purpose: To facilitate development.
+  - Easier to debug, reduces the risk of development stagnation.
 
 ### Real-time FM Tone Editor
 - Implemented: `ym2151-tone-editor`
 
-#### Draft Proposal
-- The following is a draft proposal and differs from the already implemented specifications; it is placed here for now.
+#### Proposal, Draft
+- The following is a draft and differs from the already implemented specifications; it is placed here for now.
 - Purpose of writing here
   - Rubber ducking
-- Purpose
+- Use case
   - For verification
 - Priority
-  - Prioritize ease of development and the ability to sketch timbres with minimal operations.
+  - Prioritize ease of development and the use case of sketching timbres with minimal operations.
 - Operations
-  - Right hand: Increase/decrease values assigned to mouse x,y respectively.
-  - Left hand: WASD+QE for cursor movement, SPACE for confirmation, ESC for cancel, Z for UNDO (this is still vague).
-  - x,y switches DecayRate, ModulatorTL, FB, MUL by cursor movement.
-  - WASD+QE, UNDO are vague.
-  - Instead of cursor movement and confirmation, pressing a specific key to instantly apply effects for fast editing might be quicker, so that will also be tried, possibly with a configuration toml file.
+  - Right hand: Mouse X, Y to increase/decrease values assigned to each.
+  - Left hand: WASD+QE for cursor movement, SPACE to confirm, ESC to cancel, Z for UNDO (this is still fuzzy).
+  - X, Y switch between DecayRate, ModulatorTL, FB, MUL with cursor movement.
+  - WASD+QE, UNDO are fuzzy.
+  - Instead of cursor movement and confirmation, pressing a specific key to instantly apply an effect for faster editing might be more efficient, so that will also be tried, possibly with a settings toml file.
 - Sound
-  - Switch between pluck and long tone timbres with cursor movement.
-  - OP connection algorithm is 2op parallel, detune has 4 distinct values.
+  - Timbre switches between pluck and long tone with cursor movement.
+  - OP connection algorithm is 2-op parallel, detune has 4 different values.
 - Display
   - Windows TUI 80x24
-  - Timbre parameter display is in mdx note.x format.
-  - While running, save the timbre in mdx note.x format to the clipboard 1 second after the last numerical change; output is limited to this only, for now.
-- All specifications are provisional, subject to frequent breaking changes, prioritizing ease of development.
-- Even with this, the specifications are still too numerous (too much to start small), so we will begin with a smaller, provisional implementation with more focused specifications.
+  - Timbre parameter display in mdx note.x format.
+  - While running, save timbre in mdx note.x format to clipboard 1 second after the last numerical change; output is temporarily limited to this.
+- All specifications are provisional, subject to frequent breaking changes; ease of development is prioritized.
+- Even this is still too many specifications (too many to start small), so we will start small with a provisional implementation with more limited specifications.
 
-#### Draft Proposal
-- The following is a draft proposal and differs from the already implemented specifications; it is placed here for now.
-- Output: Plays a note each time a key is pressed.
-  - Internally, it plays MML.
+#### Proposal, Draft
+- The following is a draft and differs from the already implemented specifications; it is placed here for now.
+- Output: Plays music with each key press.
+  - Internally, it `play mml`.
   - First, verify with an extremely simple implementation.
-- Purpose: For verifying the provision of a timbre creation experience, which is one of the joys of synthesizers.
-  - While various specifications are necessary to provide a better successful experience, these will be excluded from the initial implementation (otherwise, it will be endless and get lost).
+- Purpose: For verification of providing one of the core synthesizer experiences: timbre creation.
+  - Many specifications are needed to provide a better successful experience, but these will be excluded from the initial implementation (otherwise, it will become endless and get lost).
     - Start small. Take one step at a time. That's global optimization.
-- It will be separated into an independent TUI application repository. Start small.
+- Split into a separate repository as an independent TUI application. Start small.
 
 ### cat-edit-mml
 - Implemented
-- mmlabc editor, playback engine is ym2151-log-play-server.
-- Output: Plays a note each time a key is pressed.
-- Purpose: Provide the experience of playing Do when 'c' is pressed.
-- It will be separated into an independent TUI application repository. Start small.
+- An mmlabc editor, with `ym2151-log-play-server` as the playback engine.
+- Output: Plays music with each key press.
+- Purpose: To provide the experience of pressing 'c' and hearing 'do'.
+- Split into a separate repository as an independent TUI application. Start small.
 
-## Additional Information
+## Additional Notes
 
-### How to Build, Install, and Run for Developers
+### For Developers: How to Build, Install, and Run
 
 ```powershell
-# Build & Run *In the cloned directory
+# Build & Run *In the cloned directory*
 cargo run --release cegb
 
-# Install *In the cloned directory
+# Install *In the cloned directory*
 cargo install --path .
 
-# Run *Once installed, you can run it from any directory like this
+# Run *Once installed, you can run it from any directory like this*
 cat-play-mml cegb
 ```
 
 ## License
 
-This project is released under the [MIT License](LICENSE).
+This project is licensed under the [MIT License](LICENSE).
 
 *The English README.md is automatically generated by GitHub Actions using Gemini's translation based on README.ja.md.

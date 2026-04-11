@@ -32,7 +32,7 @@
 
 ### インストール
 ```
-cargo install --git https://github.com/cat2151/cat-play-mml.git --branch main --bin cat-play-mml
+cargo install --force --git https://github.com/cat2151/cat-play-mml.git
 ```
 
 これだけ！GitHubからあなたのWindowsへインストールされます
